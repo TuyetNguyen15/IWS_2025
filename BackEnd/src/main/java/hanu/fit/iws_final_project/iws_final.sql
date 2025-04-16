@@ -1,0 +1,6 @@
+create database iws_final;
+use iws_final;
+INSERT INTO `room` (`id`, `number`, `type`, `price`, `status`, `image_url`, `description`, `area`, `capacity`, `amenities`) VALUES
+                                                                                                                                (1, '101', 'Couple Simple Room', 60.00, 'Available', 'assets/images/rooms/Couple Simple Room/couple01.jpg', 'A cozy room for couples.', 25.5, 2, 'WiFi, TV'),
+                                                                                                                                (2, '102', 'Deluxe Room', 80.00, 'Booked', 'assets/images/rooms/Deluxe Room/deluxe01.jpg', 'A luxurious deluxe room.', 30.0, 2, 'WiFi, Mini Bar'),
+                                                                                                                                (3, '103', 'Family Room', 100.00, 'Booked', 'assets/images/rooms/Family Room/family01.jpg', 'Spacious room for families.', 40.0, 4, 'WiFi, TV, Balcony');
