@@ -8,6 +8,7 @@
 - API Docs: Swagger UI
 - Styling: Tailwind CSS
 
+
 📌 System Features
 1. Sign in
 2. Sign up
@@ -24,7 +25,9 @@
 13. Logout
 
 
+
 📌📌 API Endpoints Assignment
+
 👤 Person 1: Authentication & Profile Management
 1. POST    /api/auth/signin                (UC1)
 2. POST    /api/auth/signup                (UC2)
@@ -34,6 +37,7 @@
 6. GET     /api/customer/profile           (UC12 - View profile customer)
 7. PUT     /api/customer/profile           (UC12 - Update profile customer)
 
+
 👤 Person 2: Room Management
 1. GET     /api/rooms/highlights                     (UC3 - Get a list of outstanding rooms)
 2. GET     /api/rooms                                (UC4,5 - Filter Room + Pagination)
@@ -42,6 +46,7 @@
 5. POST    /api/admin/rooms                          (UC6 - Add Room)
 6. PUT     /api/admin/rooms/{roomId}                 (UC6 - Edit Room)
 7. DELETE  /api/admin/rooms/{roomId}                 (UC6 - Delete Room)
+
 
 👤 Person 3: Booking Management
 1. POST    /api/bookings                                                     (UC10 - Make Booking for Customer)
