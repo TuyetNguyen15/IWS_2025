@@ -1,3 +1,27 @@
+/* container */
+.body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #583101;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  padding-bottom: 20px;
+  color: #583101;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+/* header */
 .bg-customer{
     background-color:#F5F5F5;
   
@@ -19,8 +43,184 @@
   /* .hero-section {
     width: 100%;
     height: 250px;
-    background-image: url("./assets/images/rooms/03.jpg");
+    background-image: 'assets/images/rooms/01.jpg';
     background-size: cover;
     background-position: 30% 80%;
     background-repeat: no-repeat;
 } */
+
+/* home */
+/* about seaction */
+.about-section {
+  margin-bottom: 40px;
+}
+
+.about-content {
+  text-align: left;
+  padding: 20px;
+}
+
+.about-images {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+}
+
+.about-images img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.img-back {
+  width: 60%;
+  height: auto;
+}
+
+.img-front {
+  width: 50%;
+  height: auto;
+  position: absolute;
+  bottom: -20px;
+  right: 40%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.box2 {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+
+/* room card */
+.room-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.room-card-link:hover {
+  transform: translateY(-5px);
+}
+
+.room-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+  height: 100%;
+  background-color: #000;
+}
+
+.room-img {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.room-card:hover .room-img {
+  transform: scale(1.03);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 25px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  color: white;
+}
+
+.card-overlay h5 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-overlay p {
+  margin: 5px 0 0;
+  font-size: 1rem;
+}
+/* footer */
+footer {
+  background-color: #E6E6E6;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: auto;
+}
+
+ .hotline,
+ .address,
+ .company {
+  display: flex;
+  align-items: center;
+}
+
+.hotline i,
+ .address i {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color: #794b31;
+}
+
+ .element {
+  font-size: 1em;
+  color: #794b31;
+  margin: 0 10px;
+}
+
+
+/* ========== RESPONSIVE STYLES ========== */
+@media (max-width: 992px) {
+  .col-md-3 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section .row {
+      flex-direction: column;
+  }
+
+  .about-content, .about-images {
+      width: 100%;
+      padding: 10px;
+  }
+
+  .img-back {
+      width: 60%;
+  }
+
+  .img-front {
+      width: 50%;
+      right: 40%;
+      bottom: -10px;
+  }
+
+  .about-images {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-md-3 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+
+  .img-front {
+      width: 50%;
+      right: 40%;
+      bottom: -5px;
+  }
+}

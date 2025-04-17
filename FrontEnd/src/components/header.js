@@ -55,7 +55,7 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <div class="hero-section"></div>
+      <div className="hero-section"></div>
     </nav>
   );
   
