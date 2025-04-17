@@ -1,5 +1,6 @@
 package hanu.fit.iws_final_project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,29 +33,7 @@ public class Room {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
-
-    @Column(name = "image_url")
-    private String photoUrl;
-
-    @Column(name = "image_url2")
-    private String imageUrl2;
-
-    @Column(name = "image_url3")
-    private String imageUrl3;
-    @Column(name = "image_url4")
-    private String imageUrl4;
-
-    @Column(name = "image_url5")
-    private String imageUrl5;
-    @Column(name = "image_url6")
-    private String imageUrl6;
-
-    @Column(name = "image_url7")
-    private String imageUrl7;
-
-
-    // Optional: Remove if not needed in the database
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "Text")
     private String description;
 
     @Column(name = "area")
@@ -65,26 +44,18 @@ public class Room {
 
     @Column(name = "amenities")
     private String amenities;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<RoomImage> images;
 
     public Room() {
 
     }
-
-//    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<BookedRoom> bookings;
-
-//    public Room() {
-//        this.bookings = new ArrayList<>();
-//    }
-    public List<String> getAllImages() {
-        List<String> images = new ArrayList<>();
-        if (imageUrl2 != null && !imageUrl2.isEmpty()) images.add(imageUrl2);
-        if (imageUrl3 != null && !imageUrl3.isEmpty()) images.add(imageUrl3);
-        if (imageUrl4 != null && !imageUrl4.isEmpty()) images.add(imageUrl4);
-        if (imageUrl5 != null && !imageUrl5.isEmpty()) images.add(imageUrl5);
-        if (imageUrl6 != null && !imageUrl6.isEmpty()) images.add(imageUrl6);
-        if (imageUrl7 != null && !imageUrl7.isEmpty()) images.add(imageUrl7);
-        return images;
+    public void setImages(List<RoomImage> images) {
+        this.images = images;
+        for (RoomImage image : images) {
+            image.setRoom(this);
+        }
     }
 
 
