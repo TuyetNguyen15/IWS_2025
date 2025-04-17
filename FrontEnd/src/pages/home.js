@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchRooms } from "../services/roomService";
 import Header from "../components/header";
 import { getRoomThumbnail } from "../utils/imageUtils";
-import '../components/styles.css'; // Nhớ import đúng file CSS của bạn
+import '../components/styles.css'; 
 import Footer from "../components/footer";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
         const fixedFive = res.data.slice(0, 5); 
         setRooms(fixedFive);
       })
-      .catch((err) => console.error("Lỗi khi tải phòng:", err));
+      .catch((err) => console.error("Load error:", err));
   }, []);
 
   return (
