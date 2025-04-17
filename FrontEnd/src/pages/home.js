@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchRooms } from "../services/roomService";
 import Header from "../components/header";
-import { getRoomImage } from "../utils/imageUtils";
+import { getRoomThumbnail } from "../utils/imageUtils";
 import '../components/styles.css'; // Nhớ import đúng file CSS của bạn
 import Footer from "../components/footer";
 
@@ -52,8 +52,8 @@ const Home = () => {
             <div className="col-md-4 my-4" style={{ height: '550px'}}>
               <a>
                 <div className="card room-card">
-                  <img src={`http://localhost:8080/${rooms[1].images[0]?.imageUrl}`}
-                    alt={`Phòng ${rooms[1].roomNumber}`}
+                  <img src={getRoomThumbnail(rooms[1])}
+                    alt={`Room ${rooms[1].roomNumber}`}
                     className="room-img"/>
                     <div className="card-overlay">
                                 <h5>{rooms[1].roomType}</h5>
@@ -67,8 +67,8 @@ const Home = () => {
             <div className="col-md-8 my-4" style={{ height: '550px'}}>
               <a>
                 <div className="card room-card">
-                  <img src={`http://localhost:8080/${rooms[2].images[0]?.imageUrl}`}
-                    alt={`Phòng ${rooms[2].roomNumber}`}
+                  <img src={getRoomThumbnail(rooms[1])}
+                    alt={`Room ${rooms[2].roomNumber}`}
                     className="room-img"/>
                     <div className="card-overlay">
                                 <h5>{rooms[2].roomType}</h5>
@@ -82,8 +82,8 @@ const Home = () => {
             <div key={room.id} className="col-md-4 my-4" style={{ height: '400px'}}>
               <a>
                 <div className="card room-card">
-                  <img src={`http://localhost:8080/${room.images[0]?.imageUrl}`}
-                    alt={`Phòng ${room.roomNumber}`}
+                  <img src={getRoomThumbnail(room)}
+                    alt={`Room ${room.roomNumber}`}
                     className="room-img"/>
                     <div className="card-overlay">
                                 <h5>{room.roomType}</h5>

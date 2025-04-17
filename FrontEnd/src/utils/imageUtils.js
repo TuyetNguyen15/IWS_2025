@@ -1,7 +1,15 @@
-export function getRoomImage(room){
-    if(room.image && room.image.length > 0){
-        return `http://localhost:8080${room.images[1].imageUrl}`;
-    }else{
-        return''
-    }
-}
+
+
+const BASE_URL = "http://localhost:8080";
+export const getRoomThumbnail = (room) => {
+  if (!room || !room.images || room.images.length === 0) {
+    return "/assets/images/no-image-available.png";
+  }
+  return `${BASE_URL}/${room.images[0].imageUrl}`;
+};
+export const getAllRoomImages = (room) => {
+  if (!room || !room.images || room.images.length === 0) {
+    return ["/assets/images/no-image-available.png"];
+  }
+  return room.images.map((img) => `${BASE_URL}/${img.imageUrl}`);
+};
