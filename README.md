@@ -49,11 +49,11 @@
 
 
 👤 Person 3: Booking Management
-1. POST    /api/bookings                                                     (UC10 - Make Booking for Customer)
-2. GET     /api/admin/bookings                                               (UC7 - Search Booking for Admin)
-3. PUT     /api/admin/bookings/{bookingId}                                   (UC7 - Edit Booking for Admin)
-4. PUT     /api/admin/bookings/{bookingId}/status                            (UC7 - Accept/Decline Booking for Admin)
-5. DELETE  /api/admin/bookings/{bookingId}                                   (UC7 - Delete Booking for Admin)
-6. GET     /api/customer/bookings                                            (UC8 - Booking List of Customer)
-7. PUT     /api/customer/bookings/{bookingId}/cancel                         (UC8 - Cancel Booking for Customer)
-8. DELETE  /api/customer/bookings/{bookingId}                                (UC8 - Delete booking for Customer)
+1. POST    /api/bookings                                                     (UC10 - Make Booking for customer)
+2. GET     /api/admin/bookings                                               (UC7 - Search Booking for admin)
+3. PUT     /api/admin/bookings/{bookingId}                                   (UC7 - Edit Booking for admin)
+4. PUT     /api/admin/bookings/{bookingId}/status                            (UC7 - Accept/Decline Booking for admin)
+5. DELETE  /api/admin/bookings/{bookingId}                                   (UC7 - Delete Booking for admin)
+6. GET     /api/customer/bookings                                            (UC8 - Booking List of customer)
+7. PUT     /api/customer/bookings/{bookingId}/cancel                         (UC8 - Cancel Booking for customer)
+8. DELETE  /api/customer/bookings/{bookingId}                                (UC8 - Delete booking for customer)
