@@ -32,11 +32,7 @@
   .bg-customer .navbar-brand{
     color: #BF907E;
   }
-  .btn{
-    background-color: #F5F5F5;
-    
-    color: #BF907E;
-  }
+ 
   .nav-item{
     border-radius: 0;
   }
@@ -143,6 +139,81 @@
 .card-overlay p {
   margin: 5px 0 0;
   font-size: 1rem;
+}
+
+/* browsePage */
+.btn{
+  background-color: #794b31;
+  
+  color: #ffffff;
+
+}
+.btn:hover{
+  background-color: #583101;
+  color: #ffffff;
+  
+}
+
+.room-cardb {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.room-cardb img {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px 8px 0 0;
+  object-fit: cover;
+}
+
+.room-cardb .content {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-cardb h3 {
+  font-size: 1.5em;
+  color: #1E0E62;
+  margin-bottom: 10px;
+}
+
+.room-cardb p {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.room-cardb .price {
+  font-size: 1.2em;
+  color: #1E0E62;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.room-cardb .linking-view-details {
+  color: #794b31;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.room-cardb .linking-view-details:hover {
+  text-decoration: underline;
+}
+.room-features{
+  display: flex;
+  justify-content: center;
 }
 
 /* footer */
@@ -266,3 +337,4 @@
     font-size: 1em;
   }
 }
+

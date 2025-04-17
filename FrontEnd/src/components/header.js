@@ -3,15 +3,14 @@ import './styles.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-
 const Header = () => {
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
 
   return (
     <nav className="navbar navbar-expand-lg bg-customer  px-4" >
-      <a className="navbar-brand fw-bold" href="#" >
+      <span className="navbar-brand fw-bold" >
         Mercy Hotel
-      </a>
+      </span>
 
       <button
         className="navbar-toggler"
@@ -28,16 +27,16 @@ const Header = () => {
       <div className="collapse navbar-collapse justify-content-between"  id="navbarContent" >
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="/">Home</a>
+            <Link className="nav-link" to="/">Home</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Browse Rooms</a>
+            <Link className="nav-link" to="/browseRooms">Browse Rooms</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Manage Room</a>
+            <Link className="nav-link" >Manage Room</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">My Booking</a>
+            <Link className="nav-link">My Booking</Link>
           </li>
         </ul>
 
