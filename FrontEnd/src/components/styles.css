@@ -144,34 +144,32 @@
   margin: 5px 0 0;
   font-size: 1rem;
 }
+
 /* footer */
-footer {
+.footer-container {
   background-color: #E6E6E6;
   color: white;
   padding: 20px 0;
-  text-align: center;
   font-family: Arial, sans-serif;
   margin-top: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
- .hotline,
- .address,
- .company {
+.element {
+  font-size: 1em;
+  color: #794b31;
+  margin: 10px;
   display: flex;
   align-items: center;
 }
 
-.hotline i,
- .address i {
+.element i {
   margin-right: 8px;
   font-size: 1.2em;
   color: #794b31;
-}
-
- .element {
-  font-size: 1em;
-  color: #794b31;
-  margin: 0 10px;
 }
 
 
@@ -222,5 +220,49 @@ footer {
       width: 50%;
       right: 40%;
       bottom: -5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer-container {
+    padding: 20px 5%;
+  }
+  
+  .element {
+    margin: 8px;
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+  
+  .element {
+    margin: 8px 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .element i {
+    margin-right: 6px;
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 576px) {
+  .element {
+    font-size: 0.9em;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .element i {
+    margin-right: 0;
+    margin-bottom: 5px;
+    font-size: 1em;
   }
 }
