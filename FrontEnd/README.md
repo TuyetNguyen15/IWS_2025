@@ -1,136 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+==============  🏨 Hotel Booking System - SpringBoot & React  =============
 
-## Available Scripts
+🛠️ Tech Stack
+- Backend: Spring Boot (Java 17+)
+- Frontend: React 
+- Database: MySQL
+- Authentication: JWT with Spring Security
+- API Docs: Swagger UI
+- Styling: Tailwind CSS
 
-In the project directory, you can run:
 
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+📌 System Features
+1. Sign in
+2. Sign up
+3. Home Page (about us + some highlight rooms) 
+4. Browse Page (with pagination)
+5. Search Filter (check-in, check-out, room type)
+6. Manage Room (Add/Edit/Delete/Search room) for Admin
+7. Manage Booking (Edit/Delete/Search customer's confirmed booking and Accept/Decline customer's pending booking) for Admin
+8. My Booking (list of booking detail + button Cancel Booking for pending booking and button Delete for cancelled/failed booking) for Customer
+9. Room Detail Page (both Admin and Customer can access/view)
+10. Booking Form (link from Room Detail Page when Customer clicks on Booking Now) for Customer fills in information to book room
+11. Admin Profile (Edit information)
+12. Customer Profile (Edit information)
+13. Logout
 
 
 
+📌📌 API Endpoints Assignment
+
+👤 Person 1: Authentication & Profile Management
+1. POST    /api/auth/signin               ------- (UC1)
+2. POST    /api/auth/signup               ------- (UC2)
+3. POST    /api/auth/logout               ------- (UC13)
+4. GET     /api/admin/profile             ------- (UC11 - View profile admin)
+5. PUT     /api/admin/profile             ------- (UC11 - Update profile admin)
+6. GET     /api/customer/profile          ------- (UC12 - View profile customer)
+7. PUT     /api/customer/profile          ------- (UC12 - Update profile customer)
 
 
-<div className="container py-5">
-        <h2 className="text-center text-uppercase text-secondary mb-4">Our Choice</h2>
-        <h3 className="text-center text-primary mb-5">The best room just for you!</h3>
+👤 Person 2: Room Management
+1. GET     /api/rooms/highlights                    ------- (UC3 - Get a list of outstanding rooms)
+2. GET     /api/rooms                               ------- (UC4,5 - Filter Room + Pagination)
+3. GET     /api/rooms/{roomId}                      ------- (UC9 - Room Detail)
+4. GET     /api/admin/rooms                         ------- (UC6 - Search room for Admin)
+5. POST    /api/admin/rooms                         ------- (UC6 - Add Room)
+6. PUT     /api/admin/rooms/{roomId}                ------- (UC6 - Edit Room)
+7. DELETE  /api/admin/rooms/{roomId}                ------- (UC6 - Delete Room)
 
 
-
-
-
-        {/* Layout bootstrap grid */}
-        <div className="row g-3">
-          {/* Bên trái: 4 ảnh nhỏ */}
-          <div className="col-md-8">
-            <div className="row g-3">
-              {rooms.slice(0, 4).map((room) => (
-                <div key={room.id} className="col-6">
-                  <div className="card h-100 nav-item">
-                    <div className="position-relative">
-                      <img
-                        src={`http://localhost:8080/${room.images[1]?.imageUrl}`}
-                        alt={`Phòng ${room.roomNumber}`}
-                        className="card-img-top"
-                        style={{ height: '200px', objectFit: 'cover' }}
-                      />
-                      {/* Giá overlay */}
-                      <div className="position-absolute top-0 start-0 bg-dark bg-opacity-75 text-white px-2 py-1 small rounded">
-                        ${room.roomPrice}/night
-                      </div>
-                    </div>
-                    {/* Tên phòng */}
-                    <div className="card-body p-2 text-center">
-                      <h6 className="card-title mb-0">{room.roomType}</h6>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bên phải: 1 ảnh to */}
-          {rooms[4] && (
-            <div className="col-md-4">
-              <div className="card h-100 nav-item">
-                <div className="position-relative">
-                  <img
-                    src={`http://localhost:8080/${rooms[2].images[0]?.imageUrl}`}
-                    alt={`Phòng ${rooms[4].roomNumber}`}
-                    className="card-img-top"
-                    style={{ height: '100%', objectFit: 'cover' }}
-                  />
-                  {/* Giá overlay */}
-                  <div className="position-absolute top-0 start-0 bg-dark bg-opacity-75 text-white px-2 py-1 small rounded">
-                    ${rooms[4].roomPrice}/night
-                  </div>
-                </div>
-                {/* Tên phòng */}
-                <div className="card-body p-2 text-center">
-                  <h5 className="card-title mb-0">{rooms[4].roomType}</h5>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+👤 Person 3: Booking Management
+1. POST    /api/bookings                                                    ------- (UC10 - Make Booking for customer)
+2. GET     /api/admin/bookings                                              ------- (UC7 - Search Booking for admin)
+3. PUT     /api/admin/bookings/{bookingId}                                  ------- (UC7 - Edit Booking for admin)
+4. PUT     /api/admin/bookings/{bookingId}/status                           ------- (UC7 - Accept/Decline Booking for admin)
+5. DELETE  /api/admin/bookings/{bookingId}                                  ------- (UC7 - Delete Booking for admin)
+6. GET     /api/customer/bookings                                           ------- (UC8 - Booking List of customer)
+7. PUT     /api/customer/bookings/{bookingId}/cancel                        ------- (UC8 - Cancel Booking for customer)
+8. DELETE  /api/customer/bookings/{bookingId}                               ------- (UC8 - Delete booking for customer)

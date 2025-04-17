@@ -1,9 +1,12 @@
 import React from "react";
 import './styles.css';
-
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 
 const Header = () => {
+  const { isAuthenticated, isAdmin, user, logout } = useAuth();
+
   return (
     <nav className="navbar navbar-expand-lg bg-customer  px-4" >
       <a className="navbar-brand fw-bold" href="#" >
@@ -25,7 +28,7 @@ const Header = () => {
       <div className="collapse navbar-collapse justify-content-between"  id="navbarContent" >
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="#">Home</a>
+            <a className="nav-link" href="/">Home</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#">Browse Rooms</a>
@@ -39,20 +42,27 @@ const Header = () => {
         </ul>
 
         <ul className="navbar-nav">
-          <li className="nav-item">
-            <a className="nav-link" href="#">Sign In</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Register</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Name</a>
-          </li>
-          <li className="nav-item">
-            <form>
-              <button className="nav-link">Logout</button>
-            </form>
-          </li>
+          {!isAuthenticated ? (
+            <>
+              <li className="nav-item">
+                <Link className="nav-link" to="/auth/login">Sign In</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/auth/register">Register</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="nav-item">
+                <Link className="nav-link" to={isAdmin ? "/admin/profile" : "/profile"}>
+                  {user?.fullName || user?.username}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link" onClick={logout}>Logout</button>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <div className="hero-section"></div>
