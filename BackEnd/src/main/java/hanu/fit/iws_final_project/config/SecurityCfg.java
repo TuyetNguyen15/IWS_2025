@@ -27,17 +27,17 @@ public class SecurityCfg {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Thêm cấu hình CORS
-                .anonymous(anonymous -> anonymous.disable())
+
+                .anonymous(anonymous -> anonymous.disable()) // No anonymous access
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/member/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/my-bookings").authenticated()
-                        .requestMatchers("/booking","/addRoom","/manageRoom","/edit/**").authenticated()
+                        .requestMatchers("/booking","/addRoom","/manageRoom","/edit/**").authenticated() // POST /booking requires sign-in
                         .requestMatchers("/", "/browseRoom", "/rooms/**", "/search", "/auth/**", "/booking**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .userDetailsService(jpaUserDetailsService)
+                .userDetailsService(jpaUserDetailsService) // Explicitly use JpaUserDetailsService
                 .formLogin(form -> form
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/login")
@@ -62,19 +62,6 @@ public class SecurityCfg {
                         .userDetailsService(jpaUserDetailsService)
                 )
                 .build();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Cho phép React app ở port 3000
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
     @Bean
