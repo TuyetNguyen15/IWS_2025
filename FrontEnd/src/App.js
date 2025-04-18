@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Home from './pages/home';
-import BrowseRoom from "./pages/browseRoom";
+import BrowseRoom from "./pages/room/browseRoom";
+import RoomDetail from "./pages/room/roomDetail";
 import SignIn from './pages/auth/SignIn';
 import SignUp from './pages/auth/SignUp';
 import UserProfile from './pages/profile/UserProfile';
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/browseRooms" element={<BrowseRoom />} />
+          <Route path="/rooms/:id" element={<RoomDetail />} />
           <Route path="/auth/login" element={<SignIn />} />
           <Route path="/auth/register" element={<SignUp />} />
           
