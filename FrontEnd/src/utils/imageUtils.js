@@ -1,5 +1,3 @@
-
-
 const BASE_URL = "http://localhost:8080";
 export const getRoomThumbnail = (room) => {
   if (!room || !room.images || room.images.length === 0) {

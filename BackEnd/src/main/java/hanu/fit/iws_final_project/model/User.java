@@ -1,93 +1,60 @@
 package hanu.fit.iws_final_project.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDate;
+import java.util.Collection;
 
 @Entity
-@Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-//@AllArgsConstructor
 public class User {
-
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
-
-
-    public User(String fullName) {
-        this.fullName = fullName;
-    }
-
-
-    private String gender;
-
-    private LocalDate dateOfBirth;
-
-    private String position;
-
-    public User(String gender, LocalDate dateOfBirth, String position, String profileImageUrl, Long id, String username, String password, String email, String role) {
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.position = position;
-        this.profileImageUrl = profileImageUrl;
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-    }
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] profileImage;
-
-    private String profileImageContentType;
-
-
-    private String profileImageUrl;
-
-    public @NotBlank(message = "Username cannot be blank") String getUsername() {
-        return username;
-    }
-
-    public @NotBlank(message = "Password cannot be blank") String getPassword() {
-        return password;
-    }
-
-    public @Email(message = "Email is not in correct format") @NotBlank(message = "Email cannot be blank") String getEmail() {
-        return email;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Username cannot be blank")
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank(message = "Password cannot be blank")
     @Column(nullable = false)
     private String password;
 
-    @Email(message = "Email is not in correct format")
-    @NotBlank(message = "Email cannot be blank")
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String role = "USER";
+    private String fullName;
+
+    private String avatar;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Collection<String> roles;
+
+    // Constructors
+    public User() {}
 
     public User(UserDto userDto, PasswordEncoder passwordEncoder) {
         this.username = userDto.getUsername();
-        this.fullName = userDto.getFullName();
         this.password = passwordEncoder.encode(userDto.getPassword());
         this.email = userDto.getEmail();
-        this.role = "USER";
+        this.fullName = userDto.getFullName();
+        this.roles = userDto.getRoles();
     }
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getEmail() { return email; }
+    public String getFullName() { return fullName; }
+    public String getAvatar() { return avatar; }
+    public Collection<String> getRoles() { return roles; }
+
+    // Setters
+    public void setId(Long id) { this.id = id; }
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setEmail(String email) { this.email = email; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
+    public void setRoles(Collection<String> roles) { this.roles = roles; }
 }

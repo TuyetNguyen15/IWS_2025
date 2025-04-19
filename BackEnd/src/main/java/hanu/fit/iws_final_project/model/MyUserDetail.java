@@ -1,14 +1,11 @@
 package hanu.fit.iws_final_project.model;
 
-
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
-@Getter
 public class MyUserDetail implements UserDetails {
     private final User user;
 
@@ -18,24 +15,25 @@ public class MyUserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole())
-        );
+        return user.getRoles().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
+
+    // Thêm các getters mới
+    public String getEmail() {
+        return user.getEmail();
+    }
+
     public String getFullName() {
         return user.getFullName();
     }
 
-
+    // Các methods cũ giữ nguyên
     @Override public String getPassword() { return user.getPassword(); }
     @Override public String getUsername() { return user.getUsername(); }
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }
     @Override public boolean isEnabled() { return true; }
-
-    public boolean hasRole(String role) {
-        return user.getRole().equalsIgnoreCase(role);
-    }
-
 }
