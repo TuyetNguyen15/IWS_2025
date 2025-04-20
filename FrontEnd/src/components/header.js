@@ -34,8 +34,9 @@ const Header = () => {
             <a className="nav-link" href="#">Manage Room</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">My Booking</a>
-          </li>
+  <a className="nav-link" href="/mybooking">My Booking</a>
+</li>
+
         </ul>
 
         <ul className="navbar-nav">
