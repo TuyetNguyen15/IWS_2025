@@ -79,7 +79,7 @@ const Home = () => {
               </Link>
             </div>
           )}
-          {rooms.slice(0, 4).map((room) =>
+          {rooms.slice(0, 3).map((room) =>
             <div key={room.id} className="col-md-4 my-4" style={{ height: '400px'}}>
               <Link to={`/rooms/${room.id}`}>
                 <div className="card room-card">
@@ -96,14 +96,6 @@ const Home = () => {
           )}
         </div>
       </div>
-
-
-
-
-
-
-
-
       </div>
       <Footer/>
     </div>

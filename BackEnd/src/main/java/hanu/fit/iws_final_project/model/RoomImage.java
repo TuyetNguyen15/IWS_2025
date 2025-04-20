@@ -18,16 +18,14 @@ public class RoomImage {
         @Column(name = "image_url", columnDefinition = "TEXT")
         private String imageUrl;
 
+        @Lob
+        @Column(name = "image_data", columnDefinition = "LONGBLOB")
+        private byte[] imageData;
+
         @ManyToOne
         @JoinColumn(name = "room_id")
         @JsonBackReference
         private Room room;
+
         public RoomImage() {}
-
-
-        public byte[] getImageData() {
-                return imageUrl.getBytes();
-        }
 }
-
-

@@ -29,7 +29,6 @@ api.interceptors.response.use(
 
 // Auth API
 export const login = async (credentials) => {
-    // Sử dụng FormData thay vì JSON để phù hợp với Spring Security mặc định
     const formData = new URLSearchParams();
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
@@ -44,6 +43,46 @@ export const logout = () => api.post("/logout");
 export const register = (userData) => api.post("/auth/register", userData);
 export const checkAuth = () => api.get("/member/home");
 
+
+
+
+
 // Rooms API (update your existing roomService.js)
 export const fetchRooms = () => api.get("/rooms");
 export const fetchRoomById = (id) => api.get(`/rooms/${id}`);
+
+export const checkRoomNumberExists = (roomNumber) => {
+  return api.get("/rooms/checkRoomNumber", {
+      params: { roomNumber },
+  }).then(response => response.data)
+    .catch(error => {
+      console.error("Error checking room number:", error);
+      return false;
+    });
+};
+
+export const createRoom = (roomData, images) => {
+  const formData = new FormData();
+  formData.append("room", new Blob([JSON.stringify(roomData)], { type: "application/json" }));
+
+  images.forEach(file => {
+      formData.append("images", file);
+  });
+
+  return api.post("/rooms", formData, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+      },
+  });
+};
+export const updateRoom = (id, formData) => {
+  return api.put(`/rooms/${id}`, formData, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+      },
+  });
+};
+// delete room
+export const deleteRoom = (id) => {
+  return api.delete(`/rooms/${id}`);
+};

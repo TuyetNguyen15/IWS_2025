@@ -15,7 +15,6 @@ const Header = () => {
         const response = await checkAuth();
         if (response.status === 200) {
           setIsAuthenticated(true);
-          // Giả sử API trả về fullName trong response.data
           setFullName(response.data.fullName || 'User');
         }
       } catch (err) {
@@ -63,7 +62,7 @@ const Header = () => {
           {isAuthenticated && (
             <>
               <li className="nav-item">
-                <Link className="nav-link">Manage Room</Link>
+                <Link className="nav-link" to="/manageRooms">Manage Room</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link">My Booking</Link>
@@ -90,7 +89,7 @@ const Header = () => {
               <li className="nav-item">
                 <button 
                   onClick={handleLogout} 
-                  className="btn btn-danger btn-sm"
+                  className="btn btn-sm"
                 >
                   Logout
                 </button>

@@ -44,7 +44,7 @@ public class Room {
 
     @Column(name = "amenities")
     private String amenities;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<RoomImage> images;
 
@@ -60,7 +60,6 @@ public class Room {
 
 
 }
-
 enum RoomStatus {
     Available, Booked
 }

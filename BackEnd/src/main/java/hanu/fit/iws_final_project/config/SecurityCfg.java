@@ -4,6 +4,7 @@ import hanu.fit.iws_final_project.service.JpaUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityCfg {
     private final JpaUserDetailsService jpaUserDetailsService;
 
@@ -31,13 +33,13 @@ public class SecurityCfg {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Yêu cầu role ADMIN
-                        .requestMatchers("/api/member/**").hasAnyRole("ADMIN", "USER") // Cả ADMIN và USER
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/member/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().permitAll()
                 )
                 .userDetailsService(jpaUserDetailsService)
                 .formLogin(form -> form
-                        .loginProcessingUrl("/api/login")  // Thêm dòng này
+                        .loginProcessingUrl("/api/login")
                         .successHandler((request, response, authentication) -> {
                             response.setStatus(HttpStatus.OK.value());
                             response.getWriter().write("Login successful");
