@@ -71,9 +71,9 @@ const MyBooking = () => {
                     <p><strong>Status:</strong> <span className={`badge ${booking.status === "CONFIRMED" ? "bg-success" : booking.status === "CANCELLED" ? "bg-danger" : "bg-warning text-dark"}`}>{booking.status}</span></p>
                     <div className="mt-3">
                       {booking.status !== "CANCELLED" && (
-                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleCancel(booking.id)}>Cancel</button>
+                        <button className="btn btn-sm me-2" onClick={() => handleCancel(booking.id)}>Cancel</button>
                       )}
-                      <button className="btn btn-danger btn-sm" onClick={() => handleDelete(booking.id)}>Delete</button>
+                      <button className="btn btn-sm" onClick={() => handleDelete(booking.id)}>Delete</button>
                     </div>
                   </div>
                 </div>

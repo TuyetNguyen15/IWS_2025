@@ -69,11 +69,11 @@ const BrowseRoom = () => {
                     </Link>
                     <Link
                       to={`/confirmBooking/${room.id}`}
-                      className="btn btn1"
+                      className="btn"
                     >
                       Book Now
                     </Link>
-                    <button className="btn" >Book Now</button>
+                   
                   </div>
                 </div>
               </div>

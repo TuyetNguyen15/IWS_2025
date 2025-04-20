@@ -123,6 +123,6 @@ public ResponseEntity<Room> updateRoomWithImages(
             return ResponseEntity.notFound().build();
         }
         roomRepository.deleteById(id);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.noContent().build();
     }
 }

@@ -28,12 +28,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/member/home" element={<Profile />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/browseRooms" element={<BrowseRoom />} />
-        <Route path="/rooms/:id" element={<RoomDetail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/member/home" element={<Profile />} />
         <Route path="/myBooking" element={<MyBooking />} />
         <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
       </Routes>
