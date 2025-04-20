@@ -39,7 +39,7 @@
 
 
 👤 Person 2: Room Management
-1. GET     /api/rooms/highlights                    ------- (UC3 - Get a list of outstanding rooms)
+1. GET     /api/home                    ------- (UC3 - Get a list of outstanding rooms)
 2. GET     /api/rooms                               ------- (UC4,5 - Filter Room + Pagination)
 3. GET     /api/rooms/{roomId}                      ------- (UC9 - Room Detail)
 4. GET     /api/admin/rooms                         ------- (UC6 - Search room for Admin)

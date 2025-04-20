@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchRooms } from "../services/roomService";
 import Header from "../components/header";
-import '../components/styles.css'; // Nhớ import đúng file CSS của bạn
+import { getRoomThumbnail } from "../utils/imageUtils";
+import '../components/styles.css'; 
+import Footer from "../components/footer";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [rooms, setRooms] = useState([]);
@@ -9,75 +12,100 @@ const Home = () => {
   useEffect(() => {
     fetchRooms()
       .then((res) => {
-        const fixedFive = res.data.slice(0, 5); // 🚀 Chỉ lấy 5 phòng đầu tiên
+        const fixedFive = res.data.slice(0, 5); 
         setRooms(fixedFive);
       })
-      .catch((err) => console.error("Lỗi khi tải phòng:", err));
+      .catch((err) => console.error("Load error:", err));
   }, []);
 
   return (
-    <div className="bg-customer">
+    <div>
       <Header />
-
-      <div className="container py-5">
-        <h2 className="text-center text-uppercase text-secondary mb-4">Our Choice</h2>
-        <h3 className="text-center text-primary mb-5">The best room just for you!</h3>
-
-        {/* Layout bootstrap grid */}
-        <div className="row g-3">
-          {/* Bên trái: 4 ảnh nhỏ */}
-          <div className="col-md-8">
-            <div className="row g-3">
-              {rooms.slice(0, 4).map((room) => (
-                <div key={room.id} className="col-6">
-                  <div className="card h-100 nav-item">
-                    <div className="position-relative">
-                      <img
-                        src={`http://localhost:8080/${room.images[1]?.imageUrl}`}
-                        alt={`Phòng ${room.roomNumber}`}
-                        className="card-img-top"
-                        style={{ height: '200px', objectFit: 'cover' }}
-                      />
-                      {/* Giá overlay */}
-                      <div className="position-absolute top-0 start-0 bg-dark bg-opacity-75 text-white px-2 py-1 small rounded">
-                        ${room.roomPrice}/night
-                      </div>
+      <div className="container">
+      <div className="about-section">
+        <div className="row">
+          <div class=" col-md-6 col-12 d-flex align-items-center ">
+                    <div class="about-content">
+                        <h2>ABOUT US</h2>
+                        <p class="lead font-weight-bold">Welcome to Mercy Hotel!</p>
+                        <p>
+                            At Mercy Hotel, we are committed to providing you with an exceptional stay. With luxurious and modern amenities, our hotel is the ideal destination for both leisure and business travelers. We take pride in our professional staff, who are always ready to serve and meet all your needs. From comfortable rooms to top-notch facilities, every detail is carefully curated to ensure your utmost satisfaction.
+                        </p>
                     </div>
-                    {/* Tên phòng */}
-                    <div className="card-body p-2 text-center">
-                      <h6 className="card-title mb-0">{room.roomType}</h6>
-                    </div>
-                  </div>
                 </div>
-              ))}
+                <div class="col-md-6 col-12">
+                    <div class="about-images">
+                        <img src="/assets/images/rooms/01.jpg" className="img-fluid img-back" alt="Hotel Image"/>
+                        <img src="/assets/images/rooms/02.jpg" className="img-fluid img-front" alt="Hotel Image"/>
+                    </div>
+                </div>
+        </div>
+      </div>
+      <div className="box2">
+        <div className="row">
+        <div className="col-12 text-center mb-4" >
+            <h2>OUR CHOICE</h2>
+            <p className="lead font-weight-bold">The best room just for you!</p>
+        </div>
+        </div>
+        <div className="row card-container g-4">
+        {rooms[1] && (
+            <div className="col-md-4 my-4" style={{ height: '550px'}}>
+              <Link to={`/rooms/${rooms[1].id}`} >
+                <div className="card room-card">
+                  <img src={getRoomThumbnail(rooms[1])}
+                    alt={`Room ${rooms[1].roomNumber}`}
+                    className="room-img"/>
+                    <div className="card-overlay">
+                                <h5>{rooms[1].roomType}</h5>
+                                <p>${rooms[1].roomPrice}/night</p>
+                    </div>
+                </div>
+              </Link>
             </div>
-          </div>
-
-          {/* Bên phải: 1 ảnh to */}
-          {rooms[4] && (
-            <div className="col-md-4">
-              <div className="card h-100 nav-item">
-                <div className="position-relative">
-                  <img
-                    src={`http://localhost:8080/${rooms[2].images[0]?.imageUrl}`}
-                    alt={`Phòng ${rooms[4].roomNumber}`}
-                    className="card-img-top"
-                    style={{ height: '100%', objectFit: 'cover' }}
-                  />
-                  {/* Giá overlay */}
-                  <div className="position-absolute top-0 start-0 bg-dark bg-opacity-75 text-white px-2 py-1 small rounded">
-                    ${rooms[4].roomPrice}/night
-                  </div>
+          )}
+           {rooms[2] && (
+            <div className="col-md-8 my-4" style={{ height: '550px'}}>
+              <Link to={`/rooms/${rooms[2].id}`} >
+                <div className="card room-card">
+                  <img src={getRoomThumbnail(rooms[1])}
+                    alt={`Room ${rooms[2].roomNumber}`}
+                    className="room-img"/>
+                    <div className="card-overlay">
+                                <h5>{rooms[2].roomType}</h5>
+                                <p>${rooms[2].roomPrice}/night</p>
+                    </div>
                 </div>
-                {/* Tên phòng */}
-                <div className="card-body p-2 text-center">
-                  <h5 className="card-title mb-0">{rooms[4].roomType}</h5>
+              </Link>
+            </div>
+          )}
+          {rooms.slice(0, 4).map((room) =>
+            <div key={room.id} className="col-md-4 my-4" style={{ height: '400px'}}>
+              <Link to={`/rooms/${room.id}`}>
+                <div className="card room-card">
+                  <img src={getRoomThumbnail(room)}
+                    alt={`Room ${room.roomNumber}`}
+                    className="room-img"/>
+                    <div className="card-overlay">
+                                <h5>{room.roomType}</h5>
+                                <p>${room.roomPrice}/night</p>
+                    </div>
                 </div>
-              </div>
+              </Link>
             </div>
           )}
         </div>
       </div>
+
+
+
+
+
+
+
+
+      </div>
+      <Footer/>
     </div>
   );
 };
