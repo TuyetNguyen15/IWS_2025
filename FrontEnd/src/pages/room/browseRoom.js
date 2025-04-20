@@ -65,7 +65,12 @@ const BrowseRoom = () => {
                     >
                       Details
                     </Link>
-                    <button className="btn">Book Now</button>
+                    <Link
+                      to={`/confirmBooking/${room.id}`}
+                      className="btn btn1"
+                    >
+                      Book Now
+                    </Link>
                   </div>
                 </div>
               </div>

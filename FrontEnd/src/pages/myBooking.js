@@ -1,22 +1,33 @@
-// src/pages/myBooking.js
-
 import React, { useEffect, useState } from "react";
 import Header from "../components/header";
+import Footer from "../components/footer";
 import '../components/styles.css';
 import { getCustomerBookings, cancelBooking, deleteBooking } from "../services/bookingService";
+import { fetchRoomById } from "../services/roomService";
+import { getRoomThumbnail } from "../utils/imageUtils";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
-  const customerEmail = "dummy@email.com"; // Replace with real login email later
+  const customerEmail = localStorage.getItem("userEmail");
 
   useEffect(() => {
     fetchBookings();
   }, []);
 
   const fetchBookings = () => {
+    if (!customerEmail) return;
     getCustomerBookings(customerEmail)
-      .then((res) => {
-        setBookings(res.data);
+      .then(async (res) => {
+        const bookingsWithRooms = await Promise.all(res.data.map(async (booking) => {
+          try {
+            const roomRes = await fetchRoomById(booking.roomId);
+            return { ...booking, room: roomRes.data };
+          } catch (err) {
+            console.error("Error fetching room:", err);
+            return booking;
+          }
+        }));
+        setBookings(bookingsWithRooms);
       })
       .catch((err) => console.error("Error fetching bookings:", err));
   };
@@ -34,29 +45,36 @@ const MyBooking = () => {
   };
 
   return (
-    <div className="bg-customer">
+    <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
-
-      <div className="container py-5">
-        <h2 className="text-center text-uppercase text-secondary mb-4">My Bookings</h2>
+      <div className="container my-4 flex-grow-1">
+        <h1 className="text-center mb-4">MY BOOKINGS</h1>
 
         <div className="row">
           {bookings.length > 0 ? (
             bookings.map((booking) => (
-              <div key={booking.id} className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Room ID: {booking.roomId}</h5>
-                    <p className="card-text">Check-in: {booking.checkInDate}</p>
-                    <p className="card-text">Check-out: {booking.checkOutDate}</p>
-                    <p className="card-text">Status: {booking.status}</p>
-
-                    <button className="btn btn-warning btn-sm me-2" onClick={() => handleCancel(booking.id)}>
-                      Cancel
-                    </button>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(booking.id)}>
-                      Delete
-                    </button>
+              <div key={booking.id} className="col-md-12 mb-4">
+                <div className="card d-flex flex-row">
+                  <div className="col-md-4 p-2">
+                    <img
+                      src={booking.room ? getRoomThumbnail(booking.room) : "https://via.placeholder.com/400x300"}
+                      alt="Room Thumbnail"
+                      className="img-fluid rounded"
+                      style={{ height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+                  <div className="col-md-8 p-3">
+                    <h4>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
+                    <p><strong>Customer:</strong> {booking.customerName || "Unknown"}</p>
+                    <p><strong>Check-in:</strong> {booking.checkInDate}</p>
+                    <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
+                    <p><strong>Status:</strong> <span className={`badge ${booking.status === "CONFIRMED" ? "bg-success" : booking.status === "CANCELLED" ? "bg-danger" : "bg-warning text-dark"}`}>{booking.status}</span></p>
+                    <div className="mt-3">
+                      {booking.status !== "CANCELLED" && (
+                        <button className="btn btn-warning btn-sm me-2" onClick={() => handleCancel(booking.id)}>Cancel</button>
+                      )}
+                      <button className="btn btn-danger btn-sm" onClick={() => handleDelete(booking.id)}>Delete</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -66,6 +84,7 @@ const MyBooking = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
