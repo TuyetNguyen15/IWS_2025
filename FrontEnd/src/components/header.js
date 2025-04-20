@@ -38,19 +38,9 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-customer px-4">
       <span className="navbar-brand fw-bold">Mercy Hotel</span>
-
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarContent"
-        aria-controls="navbarContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-
       <div className="collapse navbar-collapse justify-content-between" id="navbarContent">
         <ul className="navbar-nav">
           <li className="nav-item">

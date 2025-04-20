@@ -12,6 +12,8 @@ import Profile from "./pages/Profile";
 import ManageRoom from "./pages/room/manageRoom";
 import UpdateRoom from './pages/room/updateRoom';
 
+import MyBooking from "./pages/myBooking";
+import ConfirmBooking from "./pages/room/confirmBooking";
 
 function App() {
   return (
@@ -26,6 +28,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/member/home" element={<Profile />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/browseRooms" element={<BrowseRoom />} />
+        <Route path="/rooms/:id" element={<RoomDetail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/member/home" element={<Profile />} />
+        <Route path="/myBooking" element={<MyBooking />} />
+        <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
       </Routes>
     </BrowserRouter>
   );

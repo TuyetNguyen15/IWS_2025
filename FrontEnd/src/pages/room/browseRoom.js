@@ -15,7 +15,7 @@ const BrowseRoom = () => {
     fetchRooms()
       .then((response) => {
         setRoom(response.data);
-        
+
       })
       .catch((err) => console.error("load data err", err));
   }, []);
@@ -34,7 +34,7 @@ const BrowseRoom = () => {
         <h1 className="text-center mb-4">Browse Rooms</h1>
         <div className="row">
           {currentRooms.map((room) => (
-            
+
             <div className="col-md-3 my-4" key={room.id}>
               <div className="room-cardb">
                 <img
@@ -66,6 +66,12 @@ const BrowseRoom = () => {
                       style={{ backgroundColor: "#edeaea", color: "#a5a5a5" }}
                     >
                       Details
+                    </Link>
+                    <Link
+                      to={`/confirmBooking/${room.id}`}
+                      className="btn btn1"
+                    >
+                      Book Now
                     </Link>
                     <button className="btn" >Book Now</button>
                   </div>
