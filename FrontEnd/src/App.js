@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import 'bootstrap-icons/font/bootstrap-icons.css';
+// import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Home from './pages/home';
 import BrowseRoom from "./pages/room/browseRoom";
@@ -11,9 +11,9 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ManageRoom from "./pages/room/manageRoom";
 import UpdateRoom from './pages/room/updateRoom';
-
 import MyBooking from "./pages/myBooking";
 import ConfirmBooking from "./pages/room/confirmBooking";
+import AdminBooking from "./pages/adminBooking"; // đã thêm
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
         <Route path="/member/home" element={<Profile />} />
         <Route path="/myBooking" element={<MyBooking />} />
         <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
+        <Route path="/adminBooking" element={<AdminBooking />} /> {/* ✅ chính xác */}
       </Routes>
     </BrowserRouter>
   );

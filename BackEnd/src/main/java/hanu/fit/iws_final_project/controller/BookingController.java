@@ -70,15 +70,22 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
+    // 🔥 SỬA Ở ĐÂY
     @PutMapping("/admin/bookings/{id}/status")
-    public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long id, @RequestParam BookingStatus status) {
+    public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long id, @RequestParam String status) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
         if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
 
         Booking booking = optionalBooking.get();
-        booking.setStatus(status);
-        bookingRepository.save(booking);
-        return ResponseEntity.ok(booking);
+
+        try {
+            BookingStatus newStatus = BookingStatus.valueOf(status.toUpperCase());
+            booking.setStatus(newStatus);
+            bookingRepository.save(booking);
+            return ResponseEntity.ok(booking);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @DeleteMapping("/admin/bookings/{id}")

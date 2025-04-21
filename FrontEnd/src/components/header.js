@@ -66,7 +66,7 @@ const Header = () => {
                     <Link className="nav-link" to="/manageRooms">Manage Rooms</Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="#">Manage Bookings</Link>
+                    <Link className="nav-link" to="/adminBooking">Manage Bookings</Link>
                   </li>
                 </>
               )}

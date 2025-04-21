@@ -2,5 +2,5 @@
 package hanu.fit.iws_final_project.model;
 
 public enum BookingStatus {
-    PENDING, ACCEPTED, DECLINED, CANCELLED
+    PENDING, ACCEPTED, DECLINED, CANCELLED, CHECKED_OUT
 }
