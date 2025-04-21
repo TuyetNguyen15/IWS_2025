@@ -376,8 +376,63 @@ body {
   color: white;
   text-decoration: none;
 }
+
+/* manage room */
+.title {
+  text-align: center;
+  color: #583101;
+  margin-bottom: 30px;
+}
+input.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ced4da;
+}
+.table-container {
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+}
+.table-responsive {
+  text-align: center;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.table thead {
+
+  background-color: #583101;
+  color: white;
+}
+.action{
+  text-align: center;
+}
+.action-btn {
+  background-color: none;
+  color: #583101;
+  text-decoration: none;
+  margin: 0 20px;
+  cursor: pointer;
+  display: inline-flex;
+  border: none;
+  align-items: center;
+  gap: 5px;
+}
+.action-btn:hover {
+  color: #90232f;
+}
+.add-room{
+  color: #583101;
+  margin-bottom: 20px;
+
+}
+.col-md-9{
+  width: 100%;
+}
+
 /* ========== RESPONSIVE STYLES ========== */
-/* @media (max-width: 992px) {
+@media (max-width: 992px) {
   .col-md-3 {
       flex: 0 0 50%;
       max-width: 50%;
@@ -437,26 +492,24 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .footer-container {
     flex-direction: column;
-    padding: 20px 10px;
   }
   
   .element {
-    margin: 8px 0;
     width: 100%;
     justify-content: center;
     text-align: center;
   }
   
   .element i {
-    margin-right: 6px;
-    font-size: 1.1em;
+    margin-right: 4px;
+    font-size: 1em;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 400px) {
   .element {
     font-size: 0.9em;
     flex-direction: column;
@@ -469,58 +522,3 @@ body {
     font-size: 1em;
   }
 }
- */
-/* manage room */
-.title {
-  text-align: center;
-  color: #583101;
-  margin-bottom: 30px;
-}
-input.form-control:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: #ced4da;
-}
-.table-container {
-  justify-content: center;
-  margin: 0 auto;
-  max-width: 1200px;
-  width: 100%;
-}
-.table-responsive {
-  text-align: center;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-.table thead {
-
-  background-color: #583101;
-  color: white;
-}
-.action{
-  text-align: center;
-}
-.action-btn {
-  background-color: none;
-  color: #583101;
-  text-decoration: none;
-  margin: 0 20px;
-  cursor: pointer;
-  display: inline-flex;
-  border: none;
-  align-items: center;
-  gap: 5px;
-}
-.action-btn:hover {
-  color: #90232f;
-}
-.add-room{
-  color: #583101;
-  margin-bottom: 20px;
-
-}
-.col-md-9{
-  width: 100%;
-}
-
