@@ -8,6 +8,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [fullName, setFullName] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -16,6 +18,8 @@ const Header = () => {
         if (response.status === 200) {
           setIsAuthenticated(true);
           setFullName(response.data.fullName || 'User');
+          setRoles(response.data.roles || []);
+          setAvatar(response.data.avatar || 'https://i.pravatar.cc/40');
         }
       } catch (err) {
         setIsAuthenticated(false);
@@ -29,11 +33,16 @@ const Header = () => {
       await logout();
       setIsAuthenticated(false);
       setFullName('');
+      setRoles([]);
+      setAvatar('');
       navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
     }
   };
+
+  const isAdmin = roles.includes('ROLE_ADMIN');
+  const isUser = roles.includes('ROLE_USER');
 
   return (
     <nav className="navbar navbar-expand-lg bg-customer px-4">
@@ -51,12 +60,21 @@ const Header = () => {
           </li>
           {isAuthenticated && (
             <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/manageRooms">Manage Room</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/myBooking">My Booking</Link>
-              </li>
+              {isAdmin && (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/manageRooms">Manage Rooms</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="#">Manage Bookings</Link>
+                  </li>
+                </>
+              )}
+              {isUser && (
+                <li className="nav-item">
+                  <Link className="nav-link" to="/myBooking">My Booking</Link>
+                </li>
+              )}
             </>
           )}
         </ul>
@@ -73,16 +91,40 @@ const Header = () => {
             </>
           ) : (
             <div className="d-flex align-items-center">
-              <li className="nav-item me-3">
-                <Link to="/member/home" className="nav-link fw-bold">{fullName}</Link>
-              </li>
-              <li className="nav-item">
-                <button 
-                  onClick={handleLogout} 
-                  className="btn btn-sm"
+              <li className="nav-item dropdown">
+                <a 
+                  className="nav-link d-flex align-items-center" 
+                  href="#" 
+                  id="navbarDropdown" 
+                  role="button" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false"
                 >
-                  Logout
-                </button>
+                  <span className="fw-bold me-2">{fullName}</span>
+                  {isAdmin && <span className="badge bg-danger me-2">Admin</span>}
+                  <img 
+                    src={avatar} 
+                    alt="avatar" 
+                    className="rounded-circle me-2" 
+                    style={{ width: "40px", height: "40px", objectFit: "cover", marginLeft:"7px" }} 
+                  />
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li>
+                    <Link className="dropdown-item" to="/member/home">
+                      <i className="bi bi-person-fill me-2"></i>Profile
+                    </Link>
+                  </li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li>
+                    <button 
+                      className="dropdown-item" 
+                      onClick={handleLogout}
+                    >
+                      <i className="bi bi-box-arrow-right me-2"></i>Logout
+                    </button>
+                  </li>
+                </ul>
               </li>
             </div>
           )}

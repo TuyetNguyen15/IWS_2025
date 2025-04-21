@@ -21,7 +21,7 @@ const Login = () => {
       const response = await login({ username: credentials.username, password: credentials.password });
       if (response.status === 200) {
         localStorage.setItem('userEmail', credentials.username);
-        navigate("/member/home");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error details:", error.response);
