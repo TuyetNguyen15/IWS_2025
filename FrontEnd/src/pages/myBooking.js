@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import '../components/styles.css';
-import { getCustomerBookings, cancelBooking, deleteBooking } from "../services/bookingService";
+import { getCustomerBookings, deleteBooking } from "../services/bookingService";
 import { fetchRoomById } from "../services/roomService";
 import { getRoomThumbnail } from "../utils/imageUtils";
 
@@ -30,12 +30,6 @@ const MyBooking = () => {
         setBookings(bookingsWithRooms);
       })
       .catch((err) => console.error("Error fetching bookings:", err));
-  };
-
-  const handleCancel = (id) => {
-    cancelBooking(id)
-      .then(() => fetchBookings())
-      .catch((err) => console.error("Error cancelling booking:", err));
   };
 
   const handleDelete = (id) => {
@@ -68,13 +62,25 @@ const MyBooking = () => {
                     <p><strong>Customer:</strong> {booking.customerName || "Unknown"}</p>
                     <p><strong>Check-in:</strong> {booking.checkInDate}</p>
                     <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
-                    <p><strong>Status:</strong> <span className={`badge ${booking.status === "CONFIRMED" ? "bg-success" : booking.status === "CANCELLED" ? "bg-danger" : "bg-warning text-dark"}`}>{booking.status}</span></p>
+                    <p><strong>Status:</strong> <span className={`badge ${
+                      booking.status === "ACCEPTED"
+                        ? "bg-success"
+                        : booking.status === "DECLINED" || booking.status === "CANCELLED"
+                        ? "bg-danger"
+                        : "bg-warning text-dark"
+                    }`}>{booking.status}</span></p>
+                    
                     <div className="mt-3">
-                      {booking.status !== "CANCELLED" && (
-                        <button className="btn btn-sm me-2" onClick={() => handleCancel(booking.id)}>Cancel</button>
+                      {/* Chỉ cho Delete nếu booking đã DECLINED hoặc CANCELLED */}
+                      {(booking.status === "DECLINED" || booking.status === "CANCELLED") && (
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
                       )}
-                      <button className="btn btn-sm" onClick={() => handleDelete(booking.id)}>Delete</button>
+                      {/* Nếu còn PENDING thì Cancel (thực ra là xóa luôn) */}
+                      {booking.status === "PENDING" && (
+                        <button className="btn btn-warning btn-sm" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
+                      )}
                     </div>
+
                   </div>
                 </div>
               </div>

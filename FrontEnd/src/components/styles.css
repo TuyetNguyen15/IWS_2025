@@ -1,18 +1,20 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 /* container */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
+  font-family: 'Playfair Display', serif;
   background-color: #f8f9fa;
   color: #583101;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
+
 
 .app-wrapper {
   display: flex;
@@ -105,58 +107,36 @@ body {
   margin-bottom: 80px;
 }
 
-/* room card */
-.room-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.room-card-link:hover {
-  transform: translateY(-5px);
-}
-
-.room-card {
-  position: relative;
-  border-radius: 10px;
+/* Browse Room - Card */
+.room-cardb {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   overflow: hidden;
-  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  background-color: #000;
 }
 
-.room-img {
+.room-cardb:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.room-cardb img {
   width: 100%;
-  height: 550px;
+  height: 250px;
   object-fit: cover;
-  transition: transform 0.3s ease;
-  display: block;
+  border-radius: 12px 12px 0 0;
+  transition: transform 0.4s ease;
 }
 
-.room-card:hover .room-img {
-  transform: scale(1.03);
+.room-cardb:hover img {
+  transform: scale(1.05);
 }
 
-.card-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 25px;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
-  color: white;
-}
-
-.card-overlay h5 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-.card-overlay p {
-  margin: 5px 0 0;
-  font-size: 1rem;
-}
 
 /* browsePage */
 .btn{

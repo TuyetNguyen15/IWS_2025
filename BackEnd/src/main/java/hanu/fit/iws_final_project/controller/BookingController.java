@@ -1,4 +1,3 @@
-// --- BookingController.java ---
 package hanu.fit.iws_final_project.controller;
 
 import hanu.fit.iws_final_project.model.Booking;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -20,9 +20,28 @@ public class BookingController {
     private BookingRepository bookingRepository;
 
     @PostMapping("/bookings")
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+    public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
         booking.setStatus(BookingStatus.PENDING);
         booking.setCreatedAt(LocalDateTime.now());
+
+        // 🔥 Kiểm tra phòng đã bị đặt trùng ngày hay chưa
+        List<Booking> existingBookings = bookingRepository.findAll();
+
+        for (Booking b : existingBookings) {
+            if (b.getRoomId().equals(booking.getRoomId()) &&
+                    (b.getStatus() == BookingStatus.PENDING || b.getStatus() == BookingStatus.ACCEPTED)) {
+
+                // Nếu khoảng ngày overlap thì trả lỗi
+                boolean isOverlapping =
+                        !booking.getCheckOutDate().isBefore(b.getCheckInDate()) &&
+                                !booking.getCheckInDate().isAfter(b.getCheckOutDate());
+                if (isOverlapping) {
+                    return ResponseEntity.badRequest()
+                            .body("The room is already booked for the selected dates.");
+                }
+            }
+        }
+
         Booking saved = bookingRepository.save(booking);
         return ResponseEntity.ok(saved);
     }
@@ -39,6 +58,12 @@ public class BookingController {
         if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
 
         Booking booking = optionalBooking.get();
+
+        // 🛡️ Không cho cancel nếu status đã ACCEPTED
+        if (booking.getStatus() == BookingStatus.ACCEPTED) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         booking.setStatus(BookingStatus.CANCELLED);
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
@@ -46,7 +71,16 @@ public class BookingController {
 
     @DeleteMapping("/customer/bookings/{id}")
     public ResponseEntity<Void> deleteCustomerBooking(@PathVariable Long id) {
-        if (!bookingRepository.existsById(id)) return ResponseEntity.notFound().build();
+        Optional<Booking> optionalBooking = bookingRepository.findById(id);
+        if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
+
+        Booking booking = optionalBooking.get();
+
+        // 🛡️ Không cho delete nếu status đã ACCEPTED
+        if (booking.getStatus() == BookingStatus.ACCEPTED) {
+            return ResponseEntity.badRequest().build();
+        }
+
         bookingRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -70,7 +104,6 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    // 🔥 SỬA Ở ĐÂY
     @PutMapping("/admin/bookings/{id}/status")
     public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long id, @RequestParam String status) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
