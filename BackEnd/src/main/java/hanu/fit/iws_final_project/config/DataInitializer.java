@@ -15,7 +15,6 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Kiểm tra xem admin đã tồn tại chưa
             if (userRepository.findByUsername("admin").isEmpty()) {
                 User admin = new User();
                 admin.setUsername("admin");
@@ -25,8 +24,6 @@ public class DataInitializer {
                 admin.setRoles(List.of("ROLE_ADMIN"));
                 userRepository.save(admin);
             }
-
-            // Kiểm tra xem user thường đã tồn tại chưa
             if (userRepository.findByUsername("user").isEmpty()) {
                 User user = new User();
                 user.setUsername("user");

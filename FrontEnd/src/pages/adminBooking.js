@@ -46,13 +46,11 @@ const AdminBooking = () => {
       })
       .catch((err) => console.error("Error declining booking:", err));
   };
-
   const handleComplete = (id) => {
     updateBookingStatus(id, "CHECKED_OUT")
       .then(() => fetchBookings())
       .catch((err) => console.error("Error completing booking:", err));
   };
-
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
@@ -73,7 +71,6 @@ const AdminBooking = () => {
             )}
           </Button>
         </div>
-
         {/* Accepted bookings */}
         <h4>Accepted Bookings</h4>
         <div className="row">

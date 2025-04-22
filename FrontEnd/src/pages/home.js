@@ -5,6 +5,7 @@ import { getRoomThumbnail } from "../utils/imageUtils";
 import '../components/styles.css'; 
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
 
 const Home = () => {
   const [rooms, setRooms] = useState([]);
@@ -21,20 +22,21 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <SearchBox redirect={true}/>
       <div className="container">
       <div className="about-section">
         <div className="row">
-          <div class=" col-md-6 col-12 d-flex align-items-center ">
+          <div className=" col-md-6 col-12 d-flex align-items-center ">
                     <div class="about-content">
                         <h2>ABOUT US</h2>
-                        <p class="lead font-weight-bold">Welcome to Mercy Hotel!</p>
+                        <p className="lead font-weight-bold">Welcome to Mercy Hotel!</p>
                         <p>
                             At Mercy Hotel, we are committed to providing you with an exceptional stay. With luxurious and modern amenities, our hotel is the ideal destination for both leisure and business travelers. We take pride in our professional staff, who are always ready to serve and meet all your needs. From comfortable rooms to top-notch facilities, every detail is carefully curated to ensure your utmost satisfaction.
                         </p>
                     </div>
                 </div>
-                <div class="col-md-6 col-12">
-                    <div class="about-images">
+                <div className="col-md-6 col-12">
+                    <div className="about-images">
                         <img src="/assets/images/rooms/01.jpg" className="img-fluid img-back" alt="Hotel Image"/>
                         <img src="/assets/images/rooms/02.jpg" className="img-fluid img-front" alt="Hotel Image"/>
                     </div>
@@ -68,7 +70,7 @@ const Home = () => {
             <div className="col-md-8 my-4" style={{ height: '550px'}}>
               <Link to={`/rooms/${rooms[2].id}`} >
                 <div className="card room-card">
-                  <img src={getRoomThumbnail(rooms[1])}
+                  <img src={getRoomThumbnail(rooms[2])}
                     alt={`Room ${rooms[2].roomNumber}`}
                     className="room-img"/>
                     <div className="card-overlay">

@@ -69,8 +69,6 @@ public class BookingController {
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
     }
-
-    // 🔥 SỬA Ở ĐÂY
     @PutMapping("/admin/bookings/{id}/status")
     public ResponseEntity<Booking> updateBookingStatus(@PathVariable Long id, @RequestParam String status) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
