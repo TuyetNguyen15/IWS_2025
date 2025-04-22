@@ -38,7 +38,15 @@ const ConfirmBooking = () => {
   }, [checkInDate, checkOutDate]);
 
   const handleChange = (e) => {
-    setGuestInfo({ ...guestInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "phone") {
+      const phone = value.replace(/\D/g, ""); // chỉ giữ số
+      if (phone.length <= 11) {
+        setGuestInfo({ ...guestInfo, phone });
+      }
+    } else {
+      setGuestInfo({ ...guestInfo, [name]: value });
+    }
   };
 
   const handleCompleteBooking = async () => {
@@ -65,8 +73,7 @@ const ConfirmBooking = () => {
   if (!room) return <div>Loading room information...</div>;
 
   const roomRate = room.roomPrice;
-  const taxes = 81;
-  const total = roomRate * nights + taxes;
+  const total = roomRate * nights;
 
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
@@ -91,7 +98,16 @@ const ConfirmBooking = () => {
                 </div>
                 <div className="col-md-6 mb-3">
                   <label>Phone</label>
-                  <input type="text" name="phone" className="form-control" value={guestInfo.phone} onChange={handleChange} required />
+                  <input 
+                    type="text" 
+                    name="phone" 
+                    className="form-control" 
+                    value={guestInfo.phone} 
+                    onChange={handleChange} 
+                    required 
+                    maxLength="11" 
+                    placeholder="Enter phone number"
+                  />
                 </div>
                 <div className="col-12 mb-3">
                   <label>Special Requests</label>
@@ -120,7 +136,6 @@ const ConfirmBooking = () => {
               <p>Length of stay: {nights} nights</p>
               <hr />
               <p>Room rate: ${roomRate} × {nights} nights</p>
-              <p>Taxes & fees: ${taxes}</p>
               <h5>Total: ${total}</h5>
               <button className="btn btn-primary w-100 mt-3" onClick={handleCompleteBooking}>Complete Booking</button>
             </div>

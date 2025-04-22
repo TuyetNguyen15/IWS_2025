@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
 /* container */
 html, body {
   height: 100%;
@@ -6,13 +8,14 @@ html, body {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Playfair Display', serif;
   background-color: #f8f9fa;
   color: #583101;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
 
 .app-wrapper {
   display: flex;
@@ -157,6 +160,37 @@ body {
   margin: 5px 0 0;
   font-size: 1rem;
 }
+.room-cardb {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.room-cardb:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.room-cardb img {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px 8px 0 0;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.room-cardb:hover img {
+  transform: scale(1.05);
+}
+
 
 /* browsePage */
 .btn{
