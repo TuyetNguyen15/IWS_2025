@@ -56,7 +56,6 @@ const AdminBooking = () => {
       <Header />
 
       <div className="container my-4 flex-grow-1">
-        {/* Tiêu đề và chuông */}
         <div className="d-flex justify-content-center align-items-center position-relative mb-4">
           <h1 className="text-center m-0">Manage Bookings</h1>
           <Button 
@@ -71,7 +70,6 @@ const AdminBooking = () => {
             )}
           </Button>
         </div>
-        {/* Accepted bookings */}
         <h4>Accepted Bookings</h4>
         <div className="row">
           {acceptedBookings.length > 0 ? (

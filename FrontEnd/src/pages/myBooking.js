@@ -73,11 +73,11 @@ const MyBooking = () => {
                     <div className="mt-3">
                       {/* Chỉ cho Delete nếu booking đã DECLINED hoặc CANCELLED */}
                       {(booking.status === "DECLINED" || booking.status === "CANCELLED") && (
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
+                        <button className="btn btn-sm" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
                       )}
                       {/* Nếu còn PENDING thì Cancel (thực ra là xóa luôn) */}
                       {booking.status === "PENDING" && (
-                        <button className="btn btn-warning btn-sm" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
+                        <button className="btn  btn-sm" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
                       )}
                     </div>
 

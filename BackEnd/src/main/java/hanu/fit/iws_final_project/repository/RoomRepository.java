@@ -15,5 +15,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findAvailableRoomsExcludeBooked(
             @Param("roomType") String roomType,
             @Param("bookedRoomIds") List<Long> bookedRoomIds);
-    
+
 }

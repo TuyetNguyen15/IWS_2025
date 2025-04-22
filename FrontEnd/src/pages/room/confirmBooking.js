@@ -66,7 +66,7 @@ const ConfirmBooking = () => {
       navigate("/myBooking");
     } catch (err) {
       console.error("Booking failed:", err);
-      alert("Booking failed. Please try again.");
+      alert("Booking failed. No rooms available today ");
     }
   };
 
