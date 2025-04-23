@@ -218,7 +218,6 @@ body {
   opacity: 0.85;
 }
 
-
 /* BrowsePage - Buttons */
 .btn {
   background-color: #794b31;
@@ -317,29 +316,30 @@ body {
   margin-top: 10px;
 }
 
-
-/* footer */
-.footer-container {
-  background-color: #E6E6E6;
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+/* profilePage */
+.profile-avatar-wrapper {
+  width: 400px;
+  height: 400px;
+  position: relative;
 }
 
-.element {
-  font-size: 1em;
-  color: #794b31;
-  margin: 10px;
-  display: flex;
-  align-items: center;
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.element i {
-  margin-right: 8px;
-  font-size: 1.2em;
-  color: #794b31;
+.profile-avatar-placeholder {
+  width: 400px;
+  height: 400px;
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* roomDetailPage */
@@ -516,6 +516,30 @@ input.form-control:focus {
   width: 100%;
 }
 
+/* footer */
+.footer-container {
+  background-color: #E6E6E6;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.element {
+  font-size: 1em;
+  color: #794b31;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.element i {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color: #794b31;
+}
+
 /* ========== RESPONSIVE STYLES ========== */
 @media (max-width: 992px) {
   .col-md-3 {
@@ -563,6 +587,56 @@ input.form-control:focus {
       width: 50%;
       right: 40%;
       bottom: -5px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .profile-avatar-wrapper {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-avatar-placeholder {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-page-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-page-avatar-col, 
+  .profile-page-info-col {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 572px) {
+  .profile-avatar-wrapper {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-avatar-placeholder {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-page-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-page-avatar-col, 
+  .profile-page-info-col {
+    width: 100%;
+    text-align: center;
   }
 }
 

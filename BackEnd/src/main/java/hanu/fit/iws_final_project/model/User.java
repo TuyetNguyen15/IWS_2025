@@ -2,6 +2,8 @@ package hanu.fit.iws_final_project.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
@@ -24,6 +26,12 @@ public class User {
 
     private String avatar;
 
+    @Column
+    private String gender;
+
+    @Column
+    private LocalDate dateOfBirth;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -40,13 +48,15 @@ public class User {
         this.roles = userDto.getRoles();
     }
 
-    // Getters and Setters
+    // Getters
     public Long getId() { return id; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public String getEmail() { return email; }
     public String getFullName() { return fullName; }
     public String getAvatar() { return avatar; }
+    public String getGender() { return gender; }
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
     public Collection<String> getRoles() { return roles; }
 
     // Setters
@@ -56,5 +66,7 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public void setFullName(String fullName) { this.fullName = fullName; }
     public void setAvatar(String avatar) { this.avatar = avatar; }
+    public void setGender(String gender) { this.gender = gender; }
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
     public void setRoles(Collection<String> roles) { this.roles = roles; }
 }

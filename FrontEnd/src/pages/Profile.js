@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { checkAuth } from "../services/roomService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -8,6 +8,7 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [location.pathname]);
 
   const handleEdit = () => {
     navigate("/edit-profile");
@@ -41,7 +42,7 @@ const Profile = () => {
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
-      
+
       <main className="container py-5 flex-grow-1">
         <div className="row justify-content-center">
           <div className="col-md-10">
@@ -49,25 +50,24 @@ const Profile = () => {
               <h2 className="fw-bold">Profile Information</h2>
             </div>
 
-            <div className="row">
-              <div className="col-md-5 d-flex justify-content-center align-items-start mb-4 mb-md-0">
-                <div className="position-relative" style={{ width: "280px" }}>
+            <div className="row profile-page-row">
+              <div className="col-md-5 d-flex justify-content-center align-items-start mb-4 mb-md-0 profile-page-avatar-col">
+                <div className="profile-avatar-wrapper">
                   {userInfo?.avatar ? (
-                    <img 
-                      src={userInfo.avatar} 
-                      alt="Profile Avatar" 
-                      className="rounded-circle img-thumbnail shadow" 
-                      style={{ width: "280px", height: "280px", objectFit: "cover" }}
+                    <img
+                      src={userInfo.avatar.startsWith("/images/") ? `http://localhost:8080${userInfo.avatar}` : userInfo.avatar}
+                      alt="Profile Avatar"
+                      className="profile-avatar"
                     />
                   ) : (
-                    <div className="rounded-circle bg-light d-flex align-items-center justify-content-center shadow" style={{ width: "280px", height: "280px" }}>
+                    <div className="profile-avatar-placeholder">
                       <i className="bi bi-person text-secondary" style={{ fontSize: "7rem" }}></i>
                     </div>
                   )}
                 </div>
               </div>
-              
-              <div className="col-md-7">
+
+              <div className="col-md-7 profile-page-info-col">
                 <div className="list-group h-100">
                   <div className="list-group-item border-0 px-0 py-3">
                     <div className="d-flex align-items-center">
@@ -80,7 +80,7 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="list-group-item border-0 px-0 py-3">
                     <div className="d-flex align-items-center">
                       <div className="me-3">
@@ -92,7 +92,7 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="list-group-item border-0 px-0 py-3">
                     <div className="d-flex align-items-center">
                       <div className="me-3">
@@ -104,7 +104,7 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {userInfo?.email && (
                     <div className="list-group-item border-0 px-0 py-3">
                       <div className="d-flex align-items-center">
@@ -121,20 +121,20 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="d-flex justify-content-end mt-4">
-              <button 
-                onClick={handleEdit} 
+              <Link
+                to="/member/edit-profile"
                 className="btn btn-primary px-4 py-2"
               >
                 <i className="bi bi-pencil-square me-2"></i>
                 Edit Profile
-              </button>
+              </Link>
             </div>
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
