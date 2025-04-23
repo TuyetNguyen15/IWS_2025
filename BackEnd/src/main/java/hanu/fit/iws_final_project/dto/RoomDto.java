@@ -19,6 +19,6 @@ public class RoomDto {
     private int roomCapacity;
     private String amenities;
 
-    private List<MultipartFile> uploadedImages; // các file ảnh upload
-    private List<String> imageUrls;              // các link ảnh từ Internet
+    private List<MultipartFile> uploadedImages;
+    private List<String> imageUrls;
 }

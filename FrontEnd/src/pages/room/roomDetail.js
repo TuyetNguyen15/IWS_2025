@@ -119,7 +119,8 @@ const RoomDetail = () => {
                                 )}
                             </div>
                             <div className="mt-4">
-                                <Link className="btn btn-lg">
+                                <Link className="btn btn-lg"
+                                to={`/confirmBooking/${room.id}`}>
                                     Book Now
                                 </Link>
                             </div>

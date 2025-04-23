@@ -45,6 +45,7 @@ const Header = () => {
   const isUser = roles.includes('ROLE_USER');
 
   return (
+    <div>
     <nav className="navbar navbar-expand-lg bg-customer px-4">
       <span className="navbar-brand fw-bold">Mercy Hotel</span>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,8 +131,10 @@ const Header = () => {
           )}
         </ul>
       </div>
-      <div className="hero-section"></div>
+      
     </nav>
+    <div className="hero-section"></div>
+    </div>
   );
 };
 

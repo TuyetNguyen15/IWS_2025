@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hanu.fit.iws_final_project.model.Room;
 import hanu.fit.iws_final_project.model.RoomImage;
 import hanu.fit.iws_final_project.repository.RoomRepository;
+import hanu.fit.iws_final_project.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,9 @@ public class RoomController {
     private RoomRepository roomRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private RoomService roomService;
+
 
     @GetMapping("/rooms")
     public List<Room> getAllRooms() {
@@ -38,6 +43,14 @@ public class RoomController {
         }
     }
 
+    @GetMapping("/rooms/search")
+    public List<Room> searchRooms(
+            @RequestParam LocalDate checkInDate,
+            @RequestParam LocalDate checkOutDate,
+            @RequestParam(required = false) String roomType
+    ) {
+        return roomService.searchRooms(checkInDate, checkOutDate, roomType);
+    }
     @PostMapping(value = "/rooms", consumes = {"multipart/form-data"})
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Room> createRoomWithImages(
@@ -68,7 +81,7 @@ public class RoomController {
         return ResponseEntity.ok(exists);
     }
 
-//    updateRoom api
+
 @PutMapping(value = "/rooms/{id}", consumes = {"multipart/form-data"})
 @PreAuthorize("hasRole('ADMIN')")
 public ResponseEntity<Room> updateRoomWithImages(

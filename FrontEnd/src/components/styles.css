@@ -86,11 +86,11 @@ body {
   /* .hero-section {
     width: 100%;
     height: 250px;
-    background-image: 'assets/images/rooms/01.jpg';
+    background-image: url("../../public/assets/images/rooms/03.jpg");
     background-size: cover;
     background-position: 30% 80%;
     background-repeat: no-repeat;
-} */
+}
 
 /* home */
 .about-images {

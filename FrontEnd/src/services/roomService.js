@@ -86,3 +86,13 @@ export const updateRoom = (id, formData) => {
 export const deleteRoom = (id) => {
   return api.delete(`/rooms/${id}`);
 };
+
+export const searchRooms = (checkInDate, checkOutDate, roomType) => {
+  return api.get("/rooms/search", {
+    params: {
+      checkInDate,
+      checkOutDate,
+      roomType: roomType || null,
+    },
+  });
+};

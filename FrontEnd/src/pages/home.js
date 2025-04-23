@@ -5,6 +5,7 @@ import { getRoomThumbnail } from "../utils/imageUtils";
 import '../components/styles.css'; 
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
 
 const Home = () => {
   const [rooms, setRooms] = useState([]);
@@ -21,6 +22,7 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <SearchBox redirect={true}/>
       <div className="container">
         {/* ABOUT US */}
         <div className="about-section">
