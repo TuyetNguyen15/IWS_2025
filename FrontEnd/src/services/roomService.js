@@ -54,6 +54,11 @@ return api.put("/member/edit-profile", formData, {
 });
 };
 
+//Privacy API
+export const updatePrivacySettings = (data) => {
+  return api.put("/member/privacy", data);
+};
+
 
 // Rooms API (update your existing roomService.js)
 export const fetchRooms = () => api.get("/rooms");

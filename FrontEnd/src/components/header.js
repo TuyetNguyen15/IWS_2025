@@ -128,17 +128,37 @@ const Header = () => {
 
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <li>
-                    <Link className="dropdown-item" to="/member/home">
-                      <i className="bi bi-person-fill me-2"></i>Profile
-                    </Link>
-                  </li>
+                  {isUser && (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/member/home">
+                          <i className="bi bi-person-fill me-2"></i>Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/member/privacy">
+                          <i className="bi bi-shield-lock me-2"></i>Privacy
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  {isAdmin && (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/admin/dashboard">
+                          <i className="bi bi-speedometer2 me-2"></i>Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/member/privacy">
+                          <i className="bi bi-shield-lock me-2"></i>Privacy
+                        </Link>
+                      </li>
+                    </>
+                  )}
                   <li><hr className="dropdown-divider" /></li>
                   <li>
-                    <button 
-                      className="dropdown-item" 
-                      onClick={handleLogout}
-                    >
+                    <button className="dropdown-item" onClick={handleLogout}>
                       <i className="bi bi-box-arrow-right me-2"></i>Logout
                     </button>
                   </li>

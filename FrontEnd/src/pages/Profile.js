@@ -27,10 +27,6 @@ const Profile = () => {
     fetchUserData();
   }, [location.pathname]);
 
-  const handleEdit = () => {
-    navigate("/edit-profile");
-  };
-
   if (loading) {
     return <div className="text-center mt-5">Loading...</div>;
   }
@@ -44,94 +40,71 @@ const Profile = () => {
       <Header />
 
       <main className="container py-5 flex-grow-1">
-        <div className="row justify-content-center">
-          <div className="col-md-10">
-            <div className="text-center mb-4">
-              <h2 className="fw-bold">Profile Information</h2>
-            </div>
+        <div className="text-center mb-5">
+          <h2 className="fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>
+            Profile Information
+          </h2>
+        </div>
 
-            <div className="row profile-page-row">
-              <div className="col-md-5 d-flex justify-content-center align-items-start mb-4 mb-md-0 profile-page-avatar-col">
-                <div className="profile-avatar-wrapper">
-                  {userInfo?.avatar ? (
-                    <img
-                      src={userInfo.avatar.startsWith("/images/") ? `http://localhost:8080${userInfo.avatar}` : userInfo.avatar}
-                      alt="Profile Avatar"
-                      className="profile-avatar"
-                    />
-                  ) : (
-                    <div className="profile-avatar-placeholder">
-                      <i className="bi bi-person text-secondary" style={{ fontSize: "7rem" }}></i>
-                    </div>
-                  )}
+        <div className="row profile-page-row align-items-start justify-content-center">
+          {/* Avatar Section */}
+          <div className="col-md-5 profile-page-avatar-col d-flex justify-content-center mb-4 mb-md-0">
+            <div className="profile-avatar-wrapper">
+              {userInfo?.avatar ? (
+                <img
+                  src={
+                    userInfo.avatar.startsWith("/images/")
+                      ? `http://localhost:8080${userInfo.avatar}`
+                      : userInfo.avatar
+                  }
+                  alt="Profile Avatar"
+                  className="profile-avatar"
+                />
+              ) : (
+                <div className="profile-avatar-placeholder">
+                  <i className="bi bi-person text-secondary" style={{ fontSize: "7rem" }}></i>
                 </div>
-              </div>
-
-              <div className="col-md-7 profile-page-info-col">
-                <div className="list-group h-100">
-                  <div className="list-group-item border-0 px-0 py-3">
-                    <div className="d-flex align-items-center">
-                      <div className="me-3">
-                        <i className="bi bi-person-fill text-primary" style={{ fontSize: "1.5rem" }}></i>
-                      </div>
-                      <div>
-                        <p className="text-muted mb-0">Full Name</p>
-                        <h5 className="mb-0">{userInfo?.fullName || "Not specified"}</h5>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="list-group-item border-0 px-0 py-3">
-                    <div className="d-flex align-items-center">
-                      <div className="me-3">
-                        <i className="bi bi-gender-ambiguous text-primary" style={{ fontSize: "1.5rem" }}></i>
-                      </div>
-                      <div>
-                        <p className="text-muted mb-0">Gender</p>
-                        <h5 className="mb-0">{userInfo?.gender || "Not specified"}</h5>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="list-group-item border-0 px-0 py-3">
-                    <div className="d-flex align-items-center">
-                      <div className="me-3">
-                        <i className="bi bi-calendar-date text-primary" style={{ fontSize: "1.5rem" }}></i>
-                      </div>
-                      <div>
-                        <p className="text-muted mb-0">Date of Birth</p>
-                        <h5 className="mb-0">{userInfo?.dateOfBirth || "Not specified"}</h5>
-                      </div>
-                    </div>
-                  </div>
-
-                  {userInfo?.email && (
-                    <div className="list-group-item border-0 px-0 py-3">
-                      <div className="d-flex align-items-center">
-                        <div className="me-3">
-                          <i className="bi bi-envelope text-primary" style={{ fontSize: "1.5rem" }}></i>
-                        </div>
-                        <div>
-                          <p className="text-muted mb-0">Email</p>
-                          <h5 className="mb-0">{userInfo.email}</h5>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-end mt-4">
-              <Link
-                to="/member/edit-profile"
-                className="btn btn-primary px-4 py-2"
-              >
-                <i className="bi bi-pencil-square me-2"></i>
-                Edit Profile
-              </Link>
+              )}
             </div>
           </div>
+
+          {/* Info Section */}
+          <div className="col-md-7 profile-page-info-col">
+            <div className="profile-info-block">
+              <div className="info-item">
+                <i className="bi bi-person-fill text-primary info-icon" />
+                <div>
+                  <p className="info-label">Full Name</p>
+                  <h5 className="info-value">{userInfo?.fullName || ""}</h5>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <i className="bi bi-gender-ambiguous text-primary info-icon" />
+                <div>
+                  <p className="info-label">Gender</p>
+                  <h5 className="info-value">{userInfo?.gender || ""}</h5>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <i className="bi bi-calendar-date text-primary info-icon" />
+                <div>
+                  <p className="info-label">Date of Birth</p>
+                  <h5 className="info-value">{userInfo?.dateOfBirth || ""}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ✅ Nút Edit xuống dưới, nằm giữa khi thu nhỏ */}
+          <div className="mt-4 d-flex justify-content-md-end justify-content-center align-self-end">
+  <Link to="/member/edit-profile" className="btn btn-primary px-4 py-2">
+    <i className="bi bi-pencil-square me-2"></i>
+    Edit Profile
+  </Link>
+</div>
+
         </div>
       </main>
 

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
+import PrivacySettings from './pages/PrivacySettings';
 import ManageRoom from "./pages/room/manageRoom";
 import UpdateRoom from './pages/room/updateRoom';
 import MyBooking from "./pages/myBooking";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/member/home" element={<Profile />} />
         <Route path="/member/edit-profile" element={<EditProfile />} />
+        <Route path="/member/privacy" element={<PrivacySettings />} />
         <Route path="/myBooking" element={<MyBooking />} />
         <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
         <Route path="/adminBooking" element={<AdminBooking />} /> {/* ✅ chính xác */}

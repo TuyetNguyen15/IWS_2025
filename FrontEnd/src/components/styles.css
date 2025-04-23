@@ -342,6 +342,62 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
+.profile-info-block {
+  padding: 0 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-icon {
+  font-size: 1.8rem;
+  color: #794b31;
+}
+
+.info-label {
+  margin: 0;
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.info-value {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #583101;
+  font-weight: 600;
+}
+
+/* privacy page */
+.btn-save {
+  background-color: #583101;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-save:hover {
+  background-color: #794b31;
+}
+
+.btn-cancel {
+  background-color: #e0e0e0;
+  color: #583101;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-cancel:hover {
+  background-color: #cfcfcf;
+}
+
 /* roomDetailPage */
 .main-room-image{
   width: 100%;
