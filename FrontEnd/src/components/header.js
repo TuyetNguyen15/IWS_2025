@@ -150,6 +150,11 @@ const Header = () => {
                         </Link>
                       </li>
                       <li>
+                        <Link className="dropdown-item" to="/member/home">
+                          <i className="bi bi-person-fill me-2"></i>Profile
+                        </Link>
+                      </li>
+                      <li>
                         <Link className="dropdown-item" to="/member/privacy">
                           <i className="bi bi-shield-lock me-2"></i>Privacy
                         </Link>
