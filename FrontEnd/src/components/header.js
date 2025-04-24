@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logout, checkAuth } from "../services/roomService";
+import { Dropdown, Collapse } from 'bootstrap';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,6 +30,14 @@ const Header = () => {
       }
     };
     verifyAuth();
+
+    // Kích hoạt dropdown và navbar toggle sau khi DOM đã render
+    setTimeout(() => {
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach((el) => {
+        new Dropdown(el);
+      });
+    }, 100);
+
   }, []);
 
   const handleLogout = async () => {
@@ -50,17 +58,10 @@ const Header = () => {
 
   return (
     <nav className="navbar navbar-expand-xl bg-customer">
-      <div className="container-fluid d-flex justify-content-between align-items-center">
+      <div className="container-fluid">
         <span className="navbar-brand fw-bold">Mercy Hotel</span>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
 
@@ -83,18 +84,18 @@ const Header = () => {
                       <NavLink to="/adminBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Manage Bookings</NavLink>
                     </li>
                     <li className="nav-item">
-                    <NavLink to="/adminHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
-                  </li>
+                      <NavLink to="/adminHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
+                    </li>
                   </>
                 )}
                 {isUser && (
                   <>
-                  <li className="nav-item">
-                    <NavLink to="/myBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>My Booking</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/userHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
-                  </li>
+                    <li className="nav-item">
+                      <NavLink to="/myBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>My Booking</NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink to="/userHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
+                    </li>
                   </>
                 )}
               </>
@@ -112,82 +113,43 @@ const Header = () => {
                 </li>
               </>
             ) : (
-              <div className="d-flex align-items-center">
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link d-flex align-items-center"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <span className="nav-name">{fullName}</span>
-                    {isAdmin && <span className="badge badge-blue me-2">Admin</span>}
-                    {avatar ? (
-                      <img
-                        src={avatar}
-                        alt="avatar"
-                        className="rounded-circle me-2"
-                        style={{ width: "60px", height: "60px", objectFit: "cover", marginLeft: "7px" }}
-                      />
-                    ) : (
-                      <div
-                        className="rounded-circle bg-light d-flex align-items-center justify-content-center me-2"
-                        style={{ width: "40px", height: "40px", objectFit: "cover", marginLeft: "7px" }}
-                      >
-                        <i className="bi bi-person text-secondary" style={{ fontSize: "1.5rem" }}></i>
-                      </div>
-                    )}
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    {isUser && (
-                      <>
-                        <li>
-                          <NavLink to="/member/home" className="dropdown-item">
-                            <i className="bi bi-person-fill me-2"></i>Profile
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink to="/member/privacy" className="dropdown-item">
-                            <i className="bi bi-shield-lock me-2"></i>Privacy
-                          </NavLink>
-                        </li>
-                      </>
-                    )}
-                    {isAdmin && (
-                      <>
-                        <li>
-                          <NavLink to="/admin/dashboard" className="dropdown-item">
-                            <i className="bi bi-speedometer2 me-2"></i>Dashboard
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink to="/member/home" className="dropdown-item">
-                            <i className="bi bi-person-fill me-2"></i>Profile
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink to="/member/privacy" className="dropdown-item">
-                            <i className="bi bi-shield-lock me-2"></i>Privacy
-                          </NavLink>
-                        </li>
-                      </>
-                    )}
-                    <li><hr className="dropdown-divider" /></li>
-                    <li>
-                      <button className="dropdown-item" onClick={handleLogout}>
-                        <i className="bi bi-box-arrow-right me-2"></i>Logout
-                      </button>
-                    </li>
-                  </ul>
-                </li>
-              </div>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  {avatar ? (
+                    <img src={avatar} alt="avatar" className="rounded-circle ms-2"
+                      style={{ width: "50px", height: "50px", objectFit: "cover" }} />
+                  ) : (
+                    <div className="rounded-circle bg-light d-flex align-items-center justify-content-center ms-2"
+                      style={{ width: "40px", height: "40px" }}>
+                      <i className="bi bi-person text-secondary" style={{ fontSize: "1.5rem" }}></i>
+                    </div>
+                  )}
+                  <span className="nav-name">{fullName}</span>
+                  {isAdmin && <span className="badge badge-blue ms-2">Admin</span>}
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  {isUser && (
+                    <>
+                      <li><NavLink to="/member/home" className="dropdown-item"><i className="bi bi-person-fill me-2"></i>Profile</NavLink></li>
+                      <li><NavLink to="/member/privacy" className="dropdown-item"><i className="bi bi-shield-lock me-2"></i>Privacy</NavLink></li>
+                    </>
+                  )}
+                  {isAdmin && (
+                    <>
+                      <li><NavLink to="/admin/dashboard" className="dropdown-item"><i className="bi bi-speedometer2 me-2"></i>Dashboard</NavLink></li>
+                      <li><NavLink to="/member/home" className="dropdown-item"><i className="bi bi-person-fill me-2"></i>Profile</NavLink></li>
+                      <li><NavLink to="/member/privacy" className="dropdown-item"><i className="bi bi-shield-lock me-2"></i>Privacy</NavLink></li>
+                    </>
+                  )}
+                  <li><hr className="dropdown-divider" /></li>
+                  <li><button className="dropdown-item" onClick={handleLogout}><i className="bi bi-box-arrow-right me-2"></i>Logout</button></li>
+                </ul>
+              </li>
             )}
           </ul>
         </div>
       </div>
-      <div className="hero-section"></div>
     </nav>
   );
 };
