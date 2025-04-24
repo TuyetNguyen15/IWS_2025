@@ -38,7 +38,6 @@ const Profile = () => {
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
-
       <main className="container py-5 flex-grow-1">
         <div className="text-center mb-5">
           <h2 className="fw-bold text-uppercase" style={{ letterSpacing: '1px' }}>
@@ -97,17 +96,18 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* ✅ Nút Edit xuống dưới, nằm giữa khi thu nhỏ */}
           <div className="mt-4 d-flex justify-content-md-end justify-content-center align-self-end">
-  <Link to="/member/edit-profile" className="btn btn-primary px-4 py-2">
-    <i className="bi bi-pencil-square me-2"></i>
-    Edit Profile
-  </Link>
-</div>
-
+          <Link
+            to="/member/edit-profile"
+            className="btn btn-primary px-4 py-2"
+            style={{ border: "none" }}
+          >
+            <i className="bi bi-pencil-square me-2"></i>
+            Edit Profile
+          </Link>
+          </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );

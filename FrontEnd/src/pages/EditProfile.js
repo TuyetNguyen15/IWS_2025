@@ -60,7 +60,7 @@ const EditProfile = () => {
     if (gender) formData.append("gender", gender);
     if (dateOfBirth) formData.append("dateOfBirth", dateOfBirth.toISOString().split('T')[0]);
     if (avatarFile) formData.append("avatar", avatarFile);
-  
+
     try {
       await updateProfile(formData);
       window.location.href = "/member/home";
@@ -69,30 +69,33 @@ const EditProfile = () => {
       alert("Update failed!");
     }
   };
-  
 
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
       <main className="container py-5 flex-grow-1">
-        <h2 className="mb-4">Edit Profile</h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className="fw-bold text-uppercase mb-5 text-center" style={{ fontSize: "2rem", letterSpacing: "1px" }}>
+          Edit Profile
+        </h2>
+
+        <form onSubmit={handleSubmit} className="px-md-5">
           {/* Fullname */}
-          <div className="mb-3">
-            <label className="form-label">Full Name</label>
+          <div className="mb-4">
+            <label className="form-label fs-5">Full Name</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control form-control-lg"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
+              placeholder="Enter your full name"
             />
           </div>
 
           {/* Gender Dropdown */}
-          <div className="mb-3">
-            <label className="form-label">Gender</label>
+          <div className="mb-4">
+            <label className="form-label fs-5">Gender</label>
             <select
-              className="form-select"
+              className="form-select form-select-lg"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
@@ -104,45 +107,69 @@ const EditProfile = () => {
           </div>
 
           {/* Date of Birth */}
-          <div className="mb-3">
-            <label className="form-label">Date of Birth</label>
+          <div className="mb-4">
+            <label className="form-label fs-5">Date of Birth</label>
             <DatePicker
               selected={dateOfBirth}
               onChange={(date) => setDateOfBirth(date)}
               dateFormat="yyyy-MM-dd"
-              className="form-control"
+              className="form-control form-control-lg"
               showYearDropdown
               scrollableYearDropdown
               yearDropdownItemNumber={100}
-              maxDate={new Date()} // Không cho chọn ngày tương lai
+              maxDate={new Date()}
               placeholderText="Select date"
             />
           </div>
 
           {/* Avatar Upload */}
-          <div className="mb-3">
-            <label className="form-label">Avatar</label>
+          <div className="mb-4">
+            <label className="form-label fs-5">Avatar</label>
             <div
               {...getRootProps()}
-              className={`dropzone p-4 border border-2 rounded ${isDragActive ? "border-primary" : "border-secondary"}`}
-              style={{ cursor: "pointer", textAlign: "center", minHeight: "200px" }}
+              className={`dropzone p-4 border border-2 rounded d-flex justify-content-center align-items-center flex-column ${isDragActive ? "border-primary" : "border-secondary"}`}
+              style={{ cursor: "pointer", minHeight: "220px", backgroundColor: "#fdfdfd" }}
             >
               <input {...getInputProps()} />
               {avatarPreview ? (
                 <img
                   src={avatarPreview}
                   alt="Preview Avatar"
-                  className="img-thumbnail rounded-circle"
-                  style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                  className="rounded-circle shadow"
+                  style={{ width: "160px", height: "160px", objectFit: "cover" }}
                 />
               ) : (
-                <p>Drag & drop an image here, or click to select</p>
+                <p className="text-muted fs-5">Drag & drop an image here, or click to select</p>
               )}
             </div>
           </div>
 
-          {/* Submit Button */}
-          <button type="submit" className="btn btn-primary">Save Changes</button>
+          {/* Buttons */}
+          <div className="d-flex justify-content-between align-items-center flex-column flex-md-row mt-5 gap-3">
+            {/* Cancel Button - Left */}
+            <button
+              type="button"
+              className="btn btn-lg px-5 py-2 fs-5"
+              style={{
+                backgroundColor: "#d6d6d6", 
+                color: "#333",              
+              }}
+              onClick={() => navigate("/member/home")}
+            >
+              <i className="bi bi-x-circle me-2"></i>
+              Cancel
+            </button>
+
+            {/* Save Button - Right */}
+            <button
+              type="submit"
+              className="btn btn-primary btn-lg px-5 py-2 fs-5"
+              style={{ border: "none" }}
+            >
+              <i className="bi bi-check-circle me-2"></i>
+              Save
+            </button>
+          </div>
         </form>
       </main>
       <Footer />
