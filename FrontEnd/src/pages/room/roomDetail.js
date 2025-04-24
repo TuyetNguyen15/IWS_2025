@@ -49,14 +49,17 @@ const RoomDetail = () => {
     setSubmitting(true);
     setError(null);
 
+    const userId = localStorage.getItem("userId");
     const customerName = localStorage.getItem("userName");
-    if (!customerName) {
+
+    if (!userId || !customerName) {
       setError("You must be logged in to review.");
       setSubmitting(false);
       return;
     }
 
     const reviewPayload = {
+      userId: parseInt(localStorage.getItem("userId")),
       roomId: parseInt(id),
       customerName: customerName,
       rating: newReview.rating,
@@ -176,32 +179,40 @@ const RoomDetail = () => {
               ))
             ) : <p>No reviews yet.</p>}
 
-            <h4 className="mt-5">Write a Review</h4>
-            {error && <p className="text-danger">{error}</p>}
-            <div className="mb-3">
-              <label>Rating</label>
-              <select
-                className="form-select"
-                value={newReview.rating}
-                onChange={(e) => setNewReview({ ...newReview, rating: parseInt(e.target.value) })}
-              >
-                {[5, 4, 3, 2, 1].map(star => (
-                  <option key={star} value={star}>{star} ⭐</option>
-                ))}
-              </select>
+            <div className="card mt-4">
+              <div className="card-body">
+                <h5 className="card-title">Leave a Review</h5>
+                {error && <div className="alert alert-danger">{error}</div>}
+                <div className="mb-3">
+                  <label className="form-label">Rating (1-5)</label>
+                  <select
+                    className="form-select"
+                    value={newReview.rating}
+                    onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
+                    required
+                  >
+                    {[5, 4, 3, 2, 1].map((num) => (
+                      <option key={num} value={num}>{num} ★</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Comment</label>
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    value={newReview.comment}
+                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    required
+                  ></textarea>
+                </div>
+
+                <button className="btn btn-primary" disabled={submitting} onClick={handleSubmitReview}>
+                  {submitting ? "Submitting..." : "Submit Review"}
+                </button>
+              </div>
             </div>
-            <div className="mb-3">
-              <label>Comment</label>
-              <textarea
-                className="form-control"
-                rows={3}
-                value={newReview.comment}
-                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-              />
-            </div>
-            <button className="btn " onClick={handleSubmitReview} disabled={submitting}>
-              {submitting ? "Submitting..." : "Submit Review"}
-            </button>
           </div>
         </div>
       ) : <h3>Loading...</h3>}

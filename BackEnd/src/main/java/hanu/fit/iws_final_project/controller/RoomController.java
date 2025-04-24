@@ -147,6 +147,7 @@ public ResponseEntity<Room> updateRoomWithImages(
 
 
 //    review
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 @PostMapping("/reviews")
 public ResponseEntity<?> addReview(@RequestBody ReviewDto dto) {
     try {

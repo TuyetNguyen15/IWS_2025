@@ -7,6 +7,7 @@ import hanu.fit.iws_final_project.model.User;
 import hanu.fit.iws_final_project.model.BookingStatus;
 import hanu.fit.iws_final_project.repository.ReviewRepository;
 import hanu.fit.iws_final_project.repository.BookingRepository;
+import hanu.fit.iws_final_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,19 @@ public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepo;
+    @Autowired
+    private UserRepository userRepository;
 
     public ReviewModel saveReview(ReviewDto dto) {
-        boolean isCheckedOut = bookingRepo.existsByUserNameAndRoomIdAndStatus(
-                dto.getUserName(), dto.getRoomId(), BookingStatus.CHECKED_OUT
+        boolean isCheckedOut = bookingRepo.existsByUserIdAndRoomIdAndStatus(
+                dto.getUserId(), dto.getRoomId(), BookingStatus.CHECKED_OUT
         );
 
         if (!isCheckedOut) {
             throw new RuntimeException("You can only review rooms you've stayed in.");
         }
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         ReviewModel review = new ReviewModel();
         review.setRating(dto.getRating());
@@ -39,7 +44,8 @@ public class ReviewService {
         room.setId(dto.getRoomId());
         review.setRoom(room);
 
-        review.setCustomerName(dto.getUserName());
+        review.setCustomerID(dto.getUserId());
+        review.setCustomerName(user.getFullName());
 
         return reviewRepo.save(review);
     }

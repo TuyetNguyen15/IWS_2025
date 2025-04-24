@@ -63,7 +63,7 @@ const EditProfile = () => {
   
     try {
       await updateProfile(formData);
-      window.location.href = "/member/home"; // ✅ reload trang, header sẽ gọi checkAuth()
+      window.location.href = "/member/home";
     } catch (err) {
       console.error("Update failed:", err);
       alert("Update failed!");

@@ -31,13 +31,13 @@ public class MemberController {
         this.userRepository = userRepository;
     }
 
-    // API lấy thông tin trang Profile
+
     @GetMapping("/home")
     public ResponseEntity<?> memberHome(Authentication authentication) {
         MyUserDetail userDetails = (MyUserDetail) authentication.getPrincipal();
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+        Long userId = user.getId();
         String avatarUrl = null;
         if (user.getAvatar() != null) {
             avatarUrl = "http://localhost:8080" + user.getAvatar();
@@ -49,6 +49,7 @@ public class MemberController {
         }
 
         MemberInfoResponse response = new MemberInfoResponse(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getFullName(),
@@ -123,6 +124,7 @@ public class MemberController {
 
     // DTO trả về frontend
     private static class MemberInfoResponse {
+        private Long id;
         private String username;
         private String email;
         private String fullName;
@@ -131,7 +133,8 @@ public class MemberController {
         private String dateOfBirth;
         private List<String> roles;
 
-        public MemberInfoResponse(String username, String email, String fullName, String avatar, String gender, String dateOfBirth, List<String> roles) {
+        public MemberInfoResponse(Long id, String username, String email, String fullName, String avatar, String gender, String dateOfBirth, List<String> roles) {
+            this.id = id;
             this.username = username;
             this.email = email;
             this.fullName = fullName;
@@ -140,6 +143,7 @@ public class MemberController {
             this.dateOfBirth = dateOfBirth;
             this.roles = roles;
         }
+        public Long getId() { return id; }
 
         public String getUsername() { return username; }
         public String getEmail() { return email; }

@@ -22,7 +22,10 @@ public class UserDto {
     private String fullName;
 
     private Collection<String> roles;
+    private Long id;
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     // Getters and Setters
     public String getUsername() { return username; }
     public String getPassword() { return password; }

@@ -1,4 +1,4 @@
-  {
+{
   "name": "final_project",
   "version": "0.1.0",
   "private": true,
@@ -7,9 +7,12 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
     "bootstrap-icons": "^1.11.3",
+    "browser-image-compression": "^2.0.2",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.9",
+    "react-datepicker": "^8.3.0",
     "react-dom": "^19.1.0",
+    "react-dropzone": "^14.3.8",
     "react-router-dom": "^7.5.0",
     "react-scripts": "^5.0.1"
   },

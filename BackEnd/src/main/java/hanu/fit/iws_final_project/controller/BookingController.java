@@ -1,8 +1,11 @@
+// --- BookingController.java ---
 package hanu.fit.iws_final_project.controller;
 
 import hanu.fit.iws_final_project.model.Booking;
 import hanu.fit.iws_final_project.model.BookingStatus;
 import hanu.fit.iws_final_project.repository.BookingRepository;
+import hanu.fit.iws_final_project.repository.UserRepository;
+import hanu.fit.iws_final_project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,21 +24,24 @@ public class BookingController {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/bookings")
     public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) return ResponseEntity.badRequest().body("User not found");
 
-        booking.setUserName(username);
+        booking.setUserId(user.get().getId());
         booking.setStatus(BookingStatus.PENDING);
         booking.setCreatedAt(LocalDateTime.now());
 
         List<Booking> existingBookings = bookingRepository.findAll();
-
         for (Booking b : existingBookings) {
             if (b.getRoomId().equals(booking.getRoomId()) &&
                     (b.getStatus() == BookingStatus.PENDING || b.getStatus() == BookingStatus.ACCEPTED)) {
-
 
                 boolean isOverlapping =
                         !booking.getCheckOutDate().isBefore(b.getCheckInDate()) &&
@@ -52,8 +58,12 @@ public class BookingController {
     }
 
     @GetMapping("/customer/bookings")
-    public ResponseEntity<List<Booking>> getCustomerBookings(@RequestParam String userName) {
-        List<Booking> bookings = bookingRepository.findByUserName(userName);
+    public ResponseEntity<List<Booking>> getCustomerBookings() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) return ResponseEntity.badRequest().build();
+        List<Booking> bookings = bookingRepository.findByUserId(user.get().getId());
         return ResponseEntity.ok(bookings);
     }
 

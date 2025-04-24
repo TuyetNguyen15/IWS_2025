@@ -20,7 +20,8 @@ const MyBooking = () => {
   
     getCustomerBookings(username)
       .then(async (res) => {
-        const bookingsWithRooms = await Promise.all(res.data.map(async (booking) => {
+        const filtered = res.data.filter((b) => b.status !== "CHECKED_OUT");
+        const bookingsWithRooms = await Promise.all(filtered.map(async (booking) => {
           try {
             const roomRes = await fetchRoomById(booking.roomId);
             return { ...booking, room: roomRes.data };

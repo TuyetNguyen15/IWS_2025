@@ -13,12 +13,14 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    List<Booking> findByUserName(String userName);
+    List<Booking> findByUserId(Long userId);
+
     @Query("SELECT b.roomId FROM Booking b WHERE "
             + "(b.status = 'PENDING' OR b.status = 'ACCEPTED') "
             + "AND (b.checkInDate < :checkOutDate AND b.checkOutDate > :checkInDate)")
     List<Long> findBookedRoomIdsByDateOverlap(
             @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate);
-    boolean existsByUserNameAndRoomIdAndStatus(String userName, Long roomId, BookingStatus status);
+
+    boolean existsByUserIdAndRoomIdAndStatus(Long userId, Long roomId, BookingStatus status);
 }

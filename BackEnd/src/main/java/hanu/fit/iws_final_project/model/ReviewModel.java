@@ -18,9 +18,10 @@ public class ReviewModel {
     @JoinColumn(name = "room_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Room room;
-
     @Column(nullable = false)
     private String customerName;
+    @Column(nullable = false)
+    private Long customerID;
 
     private int rating;
 

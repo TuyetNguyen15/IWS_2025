@@ -44,8 +44,8 @@ body {
 .bg-customer {
   background-color: #ffffff;
   padding: 12px 30px;
-  border-radius: 12px;
-  margin: 12px 16px;
+  /* border-radius: 12px;
+  margin: 12px 16px; */
   border: 1px solid #d1cfcf;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
   transition: all 0.3s ease-in-out;
@@ -54,7 +54,7 @@ body {
 .bg-customer .nav-link {
   color: #794b31;
   font-weight: 500;
-  padding: 10px 16px;
+  padding: 5px 8px;
   border-radius: 8px;
   margin: 0 8px;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -62,8 +62,8 @@ body {
 
 .bg-customer .nav-link:hover,
 .bg-customer .nav-link.active {
-  background-color: #794b31;
-  color: #fff !important;
+  background-color: #e3e3e3;
+  color: #794b31!important;
 }
 
 .bg-customer .navbar-brand {

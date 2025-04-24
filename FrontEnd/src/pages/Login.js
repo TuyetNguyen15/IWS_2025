@@ -26,7 +26,12 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        localStorage.setItem('userName', credentials.username);
+        const userResponse = await checkAuth(); 
+        const userData = userResponse.data;
+  
+        localStorage.setItem("userId", userData.id);
+        localStorage.setItem("userName", userData.fullName); 
+  
         navigate("/");
       }
     } catch (err) {

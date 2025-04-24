@@ -24,8 +24,7 @@ public class Booking {
     private String customerName;
 
     @Column(nullable = false)
-    private String userName;
-
+    private Long userId;
     @Column(nullable = false)
     private LocalDate checkInDate;
 
