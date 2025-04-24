@@ -9,16 +9,15 @@ import { Link } from "react-router-dom";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
-  const username = localStorage.getItem("userName")
+  const username = localStorage.getItem("userName");
 
   useEffect(() => {
-    console.log("Username:", username);
     fetchBookings();
   }, []);
 
   const fetchBookings = () => {
     if (!username) return;
-  
+
     getCustomerBookings(username)
       .then(async (res) => {
         const filtered = res.data.filter((b) => b.status !== "CHECKED_OUT");
@@ -46,26 +45,23 @@ const MyBooking = () => {
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
       <div className="container my-4 flex-grow-1">
-        <h1 className="text-center mb-4">MY BOOKINGS</h1>
-
         <div className="row">
           {bookings.length > 0 ? (
-            bookings.map((booking) => (
+            bookings.map((booking, index) => (
               <div key={booking.id} className="col-md-12 mb-4">
-                <div className="card d-flex flex-row">
-                  <div className="col-md-4 p-2">
+                <div className="d-flex">
+                  <div className="me-4" style={{ width: "300px" }}>
                     <img
                       src={booking.room ? getRoomThumbnail(booking.room) : "https://via.placeholder.com/400x300"}
                       alt="Room Thumbnail"
                       className="img-fluid rounded"
-                      style={{ height: "100%", objectFit: "cover" }}
+                      style={{ height: "200px", objectFit: "cover", width: "100%" }}
                     />
                   </div>
-                  <div className="col-md-8 p-3">
-                  <Link to={`/booking/${booking.id}`} className="stretched-link text-decoration-none">
-                    <h4>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
+                  <div className="flex-grow-1">
+                    <Link to={`/booking/${booking.id}`} className=" text-decoration-none ">
+                      <h4 style={{color:"#1f2d5c"}}>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
                     </Link>
-                    <p><strong>Customer:</strong> {booking.customerName || "Unknown"}</p>
                     <p><strong>Check-in:</strong> {booking.checkInDate}</p>
                     <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
                     <p><strong>Status:</strong> <span className={`badge ${
@@ -75,18 +71,15 @@ const MyBooking = () => {
                         ? "bg-danger"
                         : "bg-warning text-dark"
                     }`}>{booking.status}</span></p>
-                    
-                    <div className="mt-3">
-                      {(booking.status === "DECLINED" || booking.status === "CANCELLED") && (
-                        <button className="btn btn-sm" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
-                      )}
-                      {booking.status === "PENDING" && (
-                        <button className="btn  btn-sm" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
-                      )}
-                    </div>
-
+                    {(booking.status === "DECLINED" || booking.status === "CANCELLED") && (
+                      <button className="btn btn-sm mt-2" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
+                    )}
+                    {booking.status === "PENDING" && (
+                      <button className="btn btn-sm mt-2" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
+                    )}
                   </div>
                 </div>
+                {index < bookings.length - 1 && <hr className="my-4" />}
               </div>
             ))
           ) : (
