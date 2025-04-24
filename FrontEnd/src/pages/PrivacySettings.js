@@ -113,7 +113,7 @@ const PrivacySettings = () => {
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
       <main className="container py-5 flex-grow-1">
-        <h2 className="mb-4 text-center fw-bold fs-2" style={{ color: "#583101" }}>Privacy Settings</h2>
+        <h2 className="mb-4 text-center fw-bold fs-2">Privacy Settings</h2>
         {generalError && <div className="alert alert-danger text-center">{generalError}</div>}
         <div className="col-md-6 mx-auto">
           {renderEditBlock("username", "Username", userInfo.username)}

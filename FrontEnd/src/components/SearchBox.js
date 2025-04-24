@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchRooms } from "../services/roomService"; 
+
 const SearchBox = ({ redirect = false, onSearchResults }) => {
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [roomType, setRoomType] = useState("");
-  
+  const [hover, setHover] = useState(false);
+
   const today = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const SearchBox = ({ redirect = false, onSearchResults }) => {
       }
     }
   };
-  
+
   return (
     <div style={styles.wrapper}>
       <div style={styles.container}>
@@ -72,16 +74,25 @@ const SearchBox = ({ redirect = false, onSearchResults }) => {
             >
               <option value="">Select a room types</option>
               <option value="Standard Room">Standard Room</option>
-                  <option value="Deluxe Room">Deluxe Room</option>
-                  <option value="Superior Room">Superior Room</option>
-                  <option value="Family Room">Family Room</option>
-                  <option value="Couple Simple Room">Couple Simple Room</option>
+              <option value="Deluxe Room">Deluxe Room</option>
+              <option value="Superior Room">Superior Room</option>
+              <option value="Family Room">Family Room</option>
+              <option value="Couple Simple Room">Couple Simple Room</option>
             </select>
           </div>
         </div>
 
         <div style={styles.buttonRow}>
-          <button style={styles.button} onClick={handleSearch}>
+          <button
+            style={{
+              ...styles.button,
+              backgroundColor: hover ? "#0077cc" : "#1f2d5c",
+              transition: "all 0.1s ease",
+            }}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
@@ -94,11 +105,10 @@ const styles = {
   wrapper: {
     display: "flex",
     justifyContent: "center",
-   
     marginBottom: "20px",
   },
   container: {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#ffffff",
     padding: "20px",
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -137,7 +147,6 @@ const styles = {
   },
   button: {
     padding: "10px 40px",
-    backgroundColor: "#5c3d0d", 
     color: "white",
     border: "none",
     borderRadius: "6px",

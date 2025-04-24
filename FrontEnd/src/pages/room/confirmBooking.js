@@ -40,8 +40,8 @@ const ConfirmBooking = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
-      const phone = value.replace(/\D/g, ""); // chỉ giữ số
-      if (phone.length <= 11) {
+      const phone = value.replace(/\D/g, ""); 
+      if (phone.length == 10) {
         setGuestInfo({ ...guestInfo, phone });
       }
     } else {
@@ -50,6 +50,11 @@ const ConfirmBooking = () => {
   };
 
   const handleCompleteBooking = async () => {
+    if (!userEmail) {
+      alert("Login first");
+      navigate("/login");
+      return;
+    }
     if (!checkInDate || !checkOutDate || nights <= 0) {
       alert("Please select valid Check-in and Check-out dates.");
       return;

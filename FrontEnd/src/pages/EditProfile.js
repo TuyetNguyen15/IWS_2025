@@ -81,7 +81,7 @@ const EditProfile = () => {
         <form onSubmit={handleSubmit} className="px-md-5">
           {/* Fullname */}
           <div className="mb-4">
-            <label className="form-label fs-5">Full Name</label>
+            <label className="form-label fs-5 fw-bold">Full Name</label>
             <input
               type="text"
               className="form-control form-control-lg"
@@ -93,7 +93,7 @@ const EditProfile = () => {
 
           {/* Gender Dropdown */}
           <div className="mb-4">
-            <label className="form-label fs-5">Gender</label>
+            <label className="form-label fs-5 fw-bold">Gender</label>
             <select
               className="form-select form-select-lg"
               value={gender}
@@ -108,23 +108,25 @@ const EditProfile = () => {
 
           {/* Date of Birth */}
           <div className="mb-4">
-            <label className="form-label fs-5">Date of Birth</label>
-            <DatePicker
-              selected={dateOfBirth}
-              onChange={(date) => setDateOfBirth(date)}
-              dateFormat="yyyy-MM-dd"
-              className="form-control form-control-lg"
-              showYearDropdown
-              scrollableYearDropdown
-              yearDropdownItemNumber={100}
-              maxDate={new Date()}
-              placeholderText="Select date"
-            />
+            <label className="form-label fs-5 fw-bold mb-2">Date of Birth</label>
+            <div style={{ marginTop: '6px' }}>
+              <DatePicker
+                selected={dateOfBirth}
+                onChange={(date) => setDateOfBirth(date)}
+                dateFormat="yyyy-MM-dd"
+                className="form-control form-control-lg"
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={100}
+                maxDate={new Date()}
+                placeholderText="Select date"
+              />
+            </div>
           </div>
 
           {/* Avatar Upload */}
           <div className="mb-4">
-            <label className="form-label fs-5">Avatar</label>
+            <label className="form-label fs-5 fw-bold">Avatar</label>
             <div
               {...getRootProps()}
               className={`dropzone p-4 border border-2 rounded d-flex justify-content-center align-items-center flex-column ${isDragActive ? "border-primary" : "border-secondary"}`}
@@ -152,7 +154,7 @@ const EditProfile = () => {
               className="btn btn-lg px-5 py-2 fs-5"
               style={{
                 backgroundColor: "#d6d6d6", 
-                color: "#333",              
+                color: "#000",              
               }}
               onClick={() => navigate("/member/home")}
             >
