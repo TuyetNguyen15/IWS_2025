@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
+import Footer from "../../components/footer";
 import { Link, useParams } from "react-router-dom";
 import {
   fetchRoomById,
@@ -8,47 +9,69 @@ import {
   submitReview
 } from "../../services/roomService";
 import { getAllRoomImages, getRoomThumbnail } from "../../utils/imageUtils";
-import Footer from "../../components/footer";
 
 const RoomDetail = () => {
+  const { id } = useParams();
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const { id } = useParams();
+
+  const images = room ? getAllRoomImages(room) : [];
 
   useEffect(() => {
-    fetchRoomById(id)
-      .then(response => {
-        setRoom(response.data);
-        const firstImage = getAllRoomImages(response.data)[0];
-        setMainImage(firstImage);
-      })
-      .catch(error => console.error("Load room detail error", error));
+    fetchRoomById(id).then(res => {
+      setRoom(res.data);
+      const imgs = getAllRoomImages(res.data);
+      setMainImage(imgs[0]);
+    });
 
-    fetchReviewsByRoomId(id)
-      .then(response => setReviews(response.data))
-      .catch(error => console.error("Load reviews error", error));
-
-    fetchAverageRating(id)
-      .then(response => setAverageRating(response.data))
-      .catch(error => console.error("Failed to fetch average rating", error));
+    fetchReviewsByRoomId(id).then(res => setReviews(res.data));
+    fetchAverageRating(id).then(res => setAverageRating(res.data));
   }, [id]);
+
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setActiveIndex(prev => {
+          const next = (prev + 1) % images.length;
+          setMainImage(images[next]);
+
+          const gallery = document.getElementById("galleryContainer");
+          const thumbnails = gallery?.children;
+          if (thumbnails && thumbnails[next]) {
+            thumbnails[next].scrollIntoView({
+              behavior: "smooth",
+              inline: "center",
+              block: "nearest"
+            });
+          }
+
+          return next;
+        });
+        setIsTransitioning(false);
+      }, 500); // thời gian để fade out trước khi đổi ảnh
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [images]);
 
   const scrollGallery = (amount) => {
     const gallery = document.getElementById("galleryContainer");
-    if (gallery) {
-      gallery.scrollBy({ left: amount, behavior: "smooth" });
-    }
+    if (gallery) gallery.scrollBy({ left: amount, behavior: "smooth" });
   };
 
   const handleSubmitReview = () => {
     setSubmitting(true);
     setError(null);
-
     const userId = localStorage.getItem("userId");
     const customerName = localStorage.getItem("userName");
 
@@ -58,15 +81,13 @@ const RoomDetail = () => {
       return;
     }
 
-    const reviewPayload = {
-      userId: parseInt(localStorage.getItem("userId")),
+    submitReview({
+      userId: parseInt(userId),
       roomId: parseInt(id),
-      customerName: customerName,
+      customerName,
       rating: newReview.rating,
-      comment: newReview.comment,
-    };
-
-    submitReview(reviewPayload)
+      comment: newReview.comment
+    })
       .then(res => {
         setReviews(prev => [...prev, res.data]);
         setNewReview({ rating: 5, comment: "" });
@@ -79,17 +100,17 @@ const RoomDetail = () => {
   };
 
   const amenityIcons = {
-    "WiFi": "💓",
-    "TV": "📺",
-    "Kitchen": "🍳",
-    "Parking": "🚗",
-    "Pool": "🏊",
-    "Breakfast": "🍳",
-    "Air Conditioner": "❄️",
-    "Heater": "🔥",
-    "Bathtub": "🛁",
-    "Gym": "🏋️",
-    "Bar": "🍷"
+    "WiFi": <i className="fas fa-wifi" />,
+    "TV": <i className="fas fa-tv" />,
+    "Kitchen": <i className="fas fa-utensils" />,
+    "Parking": <i className="fas fa-parking" />,
+    "Pool": <i className="fas fa-swimming-pool" />,
+    "Breakfast": <i className="fas fa-coffee" />,
+    "Air Conditioner": <i className="fas fa-snowflake" />,
+    "Heater": <i className="fas fa-fire" />,
+    "Bathtub": <i className="fas fa-bath" />,
+    "Gym": <i className="fas fa-dumbbell" />,
+    "Bar": <i className="fas fa-cocktail" />
   };
 
   return (
@@ -99,104 +120,109 @@ const RoomDetail = () => {
         <div className="container my-5">
           <div className="row">
             <div className="col-md-7">
-              <img
-                src={mainImage || getRoomThumbnail(room)}
-                alt={`Room ${room.roomNumber}`}
-                className="main-room-image"
-              />
-              <div className="gallery-wrapper">
+              <div className="image-container position-relative overflow-hidden" style={{ height: "400px" }}>
+                <img
+                  key={activeIndex}
+                  src={mainImage || getRoomThumbnail(room)}
+                  alt="Main Room"
+                  className={`main-room-image ${isTransitioning ? "transitioning" : ""}`}
+                />
+              </div>
+
+              <div className="gallery-wrapper position-relative mt-3">
                 <button className="scroll-btn left" onClick={() => scrollGallery(-150)}>
-                  <i className="fas fa-chevron-left"></i>
+                  <i className="fas fa-chevron-left" />
                 </button>
+
                 <div className="gallery-container" id="galleryContainer">
-                  {getAllRoomImages(room).map((url, index) => (
+                  {images.map((url, index) => (
                     <img
                       key={index}
                       src={url}
-                      alt={`Room ${room.roomNumber} - ${index + 1}`}
-                      className="gallery-thumbnail"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => setMainImage(url)}
+                      className={`gallery-thumbnail ${index === activeIndex ? "active-thumbnail" : ""}`}
+                      onClick={() => {
+                        setMainImage(url);
+                        setActiveIndex(index);
+                        const gallery = document.getElementById("galleryContainer");
+                        const thumbnails = gallery?.children;
+                        if (thumbnails && thumbnails[index]) {
+                          thumbnails[index].scrollIntoView({
+                            behavior: "smooth",
+                            inline: "center",
+                            block: "nearest"
+                          });
+                        }
+                      }}
+                      alt={`Image ${index}`}
                     />
                   ))}
                 </div>
+
                 <button className="scroll-btn right" onClick={() => scrollGallery(150)}>
-                  <i className="fas fa-chevron-right"></i>
+                  <i className="fas fa-chevron-right" />
                 </button>
               </div>
             </div>
 
-            <div className="col-md-4 mx-auto">
+            <div className="col-md-5">
               <div className="d-flex align-items-center gap-2 mb-3">
-                <h2 className="mb-0">{room.roomType}</h2>
-                <span className="badge bg-warning text-dark">
-                  ⭐ {averageRating.toFixed(1)} / 5
+                <h2 className="mb-0 text-primary fw-bold">{room.roomType}</h2>
+                <span className="badge bg-warning text-dark shadow-sm">
+                  <i className="fas fa-star" /> {averageRating.toFixed(1)} / 5
                 </span>
               </div>
-              <div className="room-meta mb-4">
-                <ul className="list">
-                  <li><strong>Room Number:</strong> {room.roomNumber}</li>
-                  <li><strong>Area:</strong> {room.roomArea} m²</li>
-                  <li><strong>Capacity:</strong> {room.roomCapacity} people</li>
-                  <li><strong>Price:</strong> ${room.roomPrice}/night</li>
-                  <li><strong>Description:</strong> {room.description}</li>
-                </ul>
+
+              <ul className="list text-muted mb-4">
+                <li><strong>Room Number:</strong> {room.roomNumber}</li>
+                <li><strong>Area:</strong> {room.roomArea} m²</li>
+                <li><strong>Capacity:</strong> {room.roomCapacity} people</li>
+                <li><strong>Price:</strong> ${room.roomPrice}/night</li>
+                <li><strong>Description:</strong> {room.description}</li>
+              </ul>
+
+              <div className="row g-3 mb-4">
+                {room.amenities?.split(",").map((a, i) => (
+                  <div key={i} className="col-6 d-flex align-items-center gap-2">
+                    <div className="fs-5 text-primary">{amenityIcons[a.trim()]}</div>
+                    <span className="text-dark">{a.trim()}</span>
+                  </div>
+                ))}
               </div>
-              <div className="amenities-section">
-                <h3>Offered Amenities</h3>
-                {room.amenities ? (
-                  room.amenities.split(",").map((amenity, index) => {
-                    const clean = amenity.trim();
-                    const icon = amenityIcons[clean] || "✅";
-                    return (
-                      <div key={index} className="d-flex align-items-center gap-2 mb-2">
-                        <span style={{ fontSize: "1.5rem" }}>{icon}</span>
-                        <h5 className="mb-0">{clean}</h5>
-                      </div>
-                    );
-                  })
-                ) : <p>No amenities listed.</p>}
-              </div>
-              <div className="mt-4">
-                <Link className="btn btn-lg" to={`/confirmBooking/${room.id}`}>
-                  Book Now
-                </Link>
-              </div>
+
+              <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
+                Book Now
+              </Link>
             </div>
           </div>
 
-          {/* Review Section */}
           <div className="mt-5">
             <h3>Customer Reviews</h3>
             {reviews.length > 0 ? (
               reviews.map((r, i) => (
-                <div key={i} className="border p-3 mb-3 rounded shadow-sm">
-                  <p><strong>Name:</strong> {r.customerName}</p>
-                  <p><strong>Rating:</strong> {r.rating} ⭐</p>
-                  <p><strong>Comment:</strong> {r.comment}</p>
+                <div key={i} className="review-box">
+                  <p><strong>{r.customerName}</strong> <span className="text-warning">{"★".repeat(r.rating)}</span></p>
+                  <p>{r.comment}</p>
                   <p className="text-muted"><small>{new Date(r.createdAt).toLocaleString()}</small></p>
                 </div>
               ))
             ) : <p>No reviews yet.</p>}
 
-            <div className="card mt-4">
+            <div className="card mt-4 review-form">
               <div className="card-body">
                 <h5 className="card-title">Leave a Review</h5>
                 {error && <div className="alert alert-danger">{error}</div>}
                 <div className="mb-3">
-                  <label className="form-label">Rating (1-5)</label>
+                  <label className="form-label">Rating</label>
                   <select
                     className="form-select"
                     value={newReview.rating}
                     onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
-                    required
                   >
-                    {[5, 4, 3, 2, 1].map((num) => (
-                      <option key={num} value={num}>{num} ★</option>
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <option key={n} value={n}>{"★".repeat(n)}</option>
                     ))}
                   </select>
                 </div>
-
                 <div className="mb-3">
                   <label className="form-label">Comment</label>
                   <textarea
@@ -204,11 +230,9 @@ const RoomDetail = () => {
                     rows="3"
                     value={newReview.comment}
                     onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                    required
-                  ></textarea>
+                  />
                 </div>
-
-                <button className="btn btn-primary" disabled={submitting} onClick={handleSubmitReview}>
+                <button className="btn" disabled={submitting} onClick={handleSubmitReview}>
                   {submitting ? "Submitting..." : "Submit Review"}
                 </button>
               </div>

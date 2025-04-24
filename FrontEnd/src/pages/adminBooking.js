@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllBookings, updateBookingStatus } from "../services/bookingService";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import '../components/styles.css';
-import { Modal, Button } from 'react-bootstrap';
+import { Button, Overlay, Popover } from 'react-bootstrap';
 
 const AdminBooking = () => {
   const navigate = useNavigate();
+  const bellRef = useRef(null);
+  const [showPopover, setShowPopover] = useState(false);
   const [pendingBookings, setPendingBookings] = useState([]);
   const [acceptedBookings, setAcceptedBookings] = useState([]);
   const [checkedOutBookings, setCheckedOutBookings] = useState([]);
-  const [showPendingModal, setShowPendingModal] = useState(false);
 
   useEffect(() => {
     fetchBookings();
@@ -23,7 +24,7 @@ const AdminBooking = () => {
         const allBookings = res.data;
         setPendingBookings(allBookings.filter(b => b.status === 'PENDING'));
         setAcceptedBookings(allBookings.filter(b => b.status === 'ACCEPTED'));
-        setCheckedOutBookings(allBookings.filter(b => b.status === 'CHECKED_OUT')); 
+        setCheckedOutBookings(allBookings.filter(b => b.status === 'CHECKED_OUT'));
       })
       .catch((err) => console.error("Error fetching bookings:", err));
   };
@@ -32,7 +33,7 @@ const AdminBooking = () => {
     updateBookingStatus(id, "ACCEPTED")
       .then(() => {
         fetchBookings();
-        setShowPendingModal(false);
+        setShowPopover(false);
         navigate('/adminBooking');
       })
       .catch((err) => console.error("Error confirming booking:", err));
@@ -42,89 +43,114 @@ const AdminBooking = () => {
     updateBookingStatus(id, "DECLINED")
       .then(() => {
         fetchBookings();
-        setShowPendingModal(false);
+        setShowPopover(false);
       })
       .catch((err) => console.error("Error declining booking:", err));
   };
+
   const handleComplete = (id) => {
     updateBookingStatus(id, "CHECKED_OUT")
       .then(() => fetchBookings())
       .catch((err) => console.error("Error completing booking:", err));
   };
+
+  const togglePopover = () => {
+    setShowPopover(!showPopover);
+  };
+
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
 
       <div className="container my-4 flex-grow-1">
-        <div className="d-flex justify-content-center align-items-center position-relative mb-4">
-          <h1 className="text-center m-0">Manage Bookings</h1>
-          <Button 
-            variant="light" 
-            onClick={() => setShowPendingModal(true)}
-            className="position-absolute end-0"
-            style={{ top: '50%', transform: 'translateY(-50%)' }}
+
+        {/* Tiêu đề và chuông */}
+        <div className="position-relative text-center mb-4">
+          <h1 className="fw-bold">Manage Bookings</h1>
+          <Button
+            ref={bellRef}
+            variant="light"
+            onClick={togglePopover}
+            className="position-absolute top-50 end-0 translate-middle-y"
           >
-            <i className="bi bi-bell"></i>
+            <i className="bi bi-bell-fill"></i>
             {pendingBookings.length > 0 && (
               <span className="badge bg-danger ms-1">{pendingBookings.length}</span>
             )}
           </Button>
-        </div>
-        <h4>Accepted Bookings</h4>
-        <div className="row">
-          {acceptedBookings.length > 0 ? (
-            acceptedBookings.map((booking) => (
-              <div key={booking.id} className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Booking #{booking.id}</h5>
-                    <p className="card-text">Customer: {booking.customerName}</p>
-                    <p className="card-text">Room ID: {booking.roomId}</p>
-                    <p className="card-text">Check-in: {booking.checkInDate}</p>
-                    <p className="card-text">Check-out: {booking.checkOutDate}</p>
-                    <p className="card-text">
-                      <strong>Status:</strong> <span className="badge bg-success">{booking.status}</span>
-                    </p>
-                    <Button variant="primary" size="sm" onClick={() => handleComplete(booking.id)}>Complete</Button>
+
+          <Overlay target={bellRef.current} show={showPopover} placement="bottom-end" rootClose onHide={() => setShowPopover(false)}>
+            <Popover className="shadow" style={{ minWidth: "320px" }}>
+              <Popover.Header as="h5" className="d-flex justify-content-between align-items-center">
+                <span><i className="bi bi-clock-history me-2"></i>Pending Bookings</span>
+                <Button variant="outline-secondary" size="sm" onClick={() => setShowPopover(false)}>✕</Button>
+              </Popover.Header>
+              <Popover.Body style={{ maxHeight: "350px", overflowY: "auto" }}>
+                {pendingBookings.length > 0 ? (
+                  pendingBookings.map((b) => (
+                    <div key={b.id} className="border-bottom pb-2 mb-2">
+                      <strong>#{b.id}</strong> - {b.customerName}<br />
+                      <small className="text-muted">Room: {b.roomId} | {b.checkInDate} → {b.checkOutDate}</small>
+                      <div className="mt-2 d-flex justify-content-end gap-2">
+                        <Button size="sm" variant="success" onClick={() => handleConfirm(b.id)}>✔ Accept</Button>
+                        <Button size="sm" variant="danger" onClick={() => handleDecline(b.id)}>✖ Decline</Button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-3 text-muted">
+                    <i className="bi bi-bell-slash" style={{ fontSize: "1.5rem" }}></i><br />
+                    No pending bookings
                   </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center">No accepted bookings yet.</p>
-          )}
+                )}
+              </Popover.Body>
+            </Popover>
+          </Overlay>
         </div>
 
-     
+        {/* Accepted Bookings */}
+        <h4 className="mb-3">Accepted Bookings</h4>
+        {acceptedBookings.length > 0 ? (
+          <div className="table-responsive">
+            <table className="table table-bordered text-center table-hover align-middle">
+              <thead className="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Customer</th>
+                  <th>Room ID</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {acceptedBookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <td>{booking.id}</td>
+                    <td>{booking.customerName}</td>
+                    <td>{booking.roomId}</td>
+                    <td>{booking.checkInDate}</td>
+                    <td>{booking.checkOutDate}</td>
+                    <td><span className="badge bg-success">{booking.status}</span></td>
+                    <td>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => handleComplete(booking.id)}
+                      >
+                        Complete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-center">No accepted bookings yet.</p>
+        )}
       </div>
-
-      {/* Popup Pending */}
-      <Modal show={showPendingModal} onHide={() => setShowPendingModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Pending Bookings</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {pendingBookings.length > 0 ? (
-            pendingBookings.map((booking) => (
-              <div key={booking.id} className="border p-2 mb-2 rounded">
-                <p><strong>Customer:</strong> {booking.customerName}</p>
-                <p><strong>Room ID:</strong> {booking.roomId}</p>
-                <p><strong>Check-in:</strong> {booking.checkInDate}</p>
-                <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
-                <div className="d-flex justify-content-between">
-                  <Button variant="success" size="sm" onClick={() => handleConfirm(booking.id)}>Accept</Button>
-                  <Button variant="danger" size="sm" onClick={() => handleDecline(booking.id)}>Decline</Button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No pending bookings.</p>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowPendingModal(false)}>Close</Button>
-        </Modal.Footer>
-      </Modal>
 
       <Footer />
     </div>
