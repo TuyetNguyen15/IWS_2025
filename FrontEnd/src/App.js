@@ -13,7 +13,9 @@ import ManageRoom from "./pages/room/manageRoom";
 import UpdateRoom from './pages/room/updateRoom';
 import MyBooking from "./pages/myBooking";
 import ConfirmBooking from "./pages/room/confirmBooking";
-import AdminBooking from "./pages/adminBooking"; // đã thêm
+import AdminBooking from "./pages/adminBooking";
+import AdminHistory from './pages/booking/adminHistory';
+import UserHistory from './pages/booking/userHistory';
 
 function App() {
   return (
@@ -25,12 +27,15 @@ function App() {
         <Route path="/addroom" element={<AddRoom />} />
         <Route path="/updateRoom/:id" element={<UpdateRoom />} />
         <Route path="/manageRooms" element={<ManageRoom />} />
+        <Route path="/adminHistory" element={<AdminHistory />} /> 
+        <Route path="/userHistory" element={<UserHistory />} />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/member/home" element={<Profile />} />
         <Route path="/myBooking" element={<MyBooking />} />
         <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
-        <Route path="/adminBooking" element={<AdminBooking />} /> {/* ✅ chính xác */}
+        <Route path="/adminBooking" element={<AdminBooking />} /> 
       </Routes>
     </BrowserRouter>
   );

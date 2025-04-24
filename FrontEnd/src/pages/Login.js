@@ -20,7 +20,7 @@ const Login = () => {
     try {
       const response = await login({ username: credentials.username, password: credentials.password });
       if (response.status === 200) {
-        localStorage.setItem('userEmail', credentials.username);
+        localStorage.setItem('userName', credentials.username);
         navigate("/");
       }
     } catch (error) {

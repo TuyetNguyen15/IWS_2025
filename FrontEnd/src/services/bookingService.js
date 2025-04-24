@@ -18,8 +18,8 @@ export const createBooking = (bookingData) => {
 };
 
 // Customer: Get Own Bookings
-export const getCustomerBookings = (email) => {
-  return axiosInstance.get(`/customer/bookings`, { params: { email } });
+export const getCustomerBookings = (userName) => {
+  return axiosInstance.get(`/customer/bookings`, { params: { userName } });
 };
 
 // Customer: Cancel a Booking

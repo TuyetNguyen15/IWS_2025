@@ -1,11 +1,15 @@
 package hanu.fit.iws_final_project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hanu.fit.iws_final_project.dto.ReviewDto;
+import hanu.fit.iws_final_project.model.ReviewModel;
 import hanu.fit.iws_final_project.model.Room;
 import hanu.fit.iws_final_project.model.RoomImage;
 import hanu.fit.iws_final_project.repository.RoomRepository;
 import hanu.fit.iws_final_project.service.RoomService;
+import hanu.fit.iws_final_project.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +30,8 @@ public class RoomController {
     private ObjectMapper objectMapper;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private ReviewService reviewService;
 
 
     @GetMapping("/rooms")
@@ -137,5 +143,28 @@ public ResponseEntity<Room> updateRoomWithImages(
         }
         roomRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+//    review
+@PostMapping("/reviews")
+public ResponseEntity<?> addReview(@RequestBody ReviewDto dto) {
+    try {
+        ReviewModel saved = reviewService.saveReview(dto);
+        return ResponseEntity.ok(saved);
+    } catch (RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+}
+
+    @GetMapping("/reviews/room/{roomId}")
+    public ResponseEntity<?> getReviewsByRoom(@PathVariable Long roomId) {
+        return ResponseEntity.ok(reviewService.getReviewsByRoom(roomId));
+    }
+
+    @GetMapping("/reviews/room/{roomId}/average")
+    public ResponseEntity<?> getAverageRating(@PathVariable Long roomId) {
+        Double avg = reviewService.getAverageRating(roomId);
+        return ResponseEntity.ok(avg != null ? avg : 0.0);
     }
 }

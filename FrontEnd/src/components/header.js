@@ -69,12 +69,21 @@ const Header = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/adminBooking">Manage Bookings</Link>
                   </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/adminHistory">History</Link>
+                  </li>
                 </>
               )}
               {isUser && (
+                <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/myBooking">My Booking</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/userHistory">History</Link>
+                  </li>
+                </>
+                
               )}
             </>
           )}

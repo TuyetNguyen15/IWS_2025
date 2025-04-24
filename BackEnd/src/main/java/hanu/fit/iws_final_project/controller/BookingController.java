@@ -5,6 +5,8 @@ import hanu.fit.iws_final_project.model.BookingStatus;
 import hanu.fit.iws_final_project.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,17 +23,20 @@ public class BookingController {
 
     @PostMapping("/bookings")
     public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        booking.setUserName(username);
         booking.setStatus(BookingStatus.PENDING);
         booking.setCreatedAt(LocalDateTime.now());
 
-        // 🔥 Kiểm tra phòng đã bị đặt trùng ngày hay chưa
         List<Booking> existingBookings = bookingRepository.findAll();
 
         for (Booking b : existingBookings) {
             if (b.getRoomId().equals(booking.getRoomId()) &&
                     (b.getStatus() == BookingStatus.PENDING || b.getStatus() == BookingStatus.ACCEPTED)) {
 
-                // Nếu khoảng ngày overlap thì trả lỗi
+
                 boolean isOverlapping =
                         !booking.getCheckOutDate().isBefore(b.getCheckInDate()) &&
                                 !booking.getCheckInDate().isAfter(b.getCheckOutDate());
@@ -47,8 +52,8 @@ public class BookingController {
     }
 
     @GetMapping("/customer/bookings")
-    public ResponseEntity<List<Booking>> getCustomerBookings(@RequestParam String email) {
-        List<Booking> bookings = bookingRepository.findByCustomerEmail(email);
+    public ResponseEntity<List<Booking>> getCustomerBookings(@RequestParam String userName) {
+        List<Booking> bookings = bookingRepository.findByUserName(userName);
         return ResponseEntity.ok(bookings);
     }
 
@@ -58,8 +63,6 @@ public class BookingController {
         if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
 
         Booking booking = optionalBooking.get();
-
-        // 🛡️ Không cho cancel nếu status đã ACCEPTED
         if (booking.getStatus() == BookingStatus.ACCEPTED) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -75,8 +78,6 @@ public class BookingController {
         if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
 
         Booking booking = optionalBooking.get();
-
-        // 🛡️ Không cho delete nếu status đã ACCEPTED
         if (booking.getStatus() == BookingStatus.ACCEPTED) {
             return ResponseEntity.badRequest().build();
         }

@@ -8,15 +8,17 @@ import { getRoomThumbnail } from "../utils/imageUtils";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
-  const customerEmail = localStorage.getItem("userEmail");
+  const username = localStorage.getItem("userName")
 
   useEffect(() => {
+    console.log("Username:", username);
     fetchBookings();
   }, []);
 
   const fetchBookings = () => {
-    if (!customerEmail) return;
-    getCustomerBookings(customerEmail)
+    if (!username) return;
+  
+    getCustomerBookings(username)
       .then(async (res) => {
         const bookingsWithRooms = await Promise.all(res.data.map(async (booking) => {
           try {
@@ -71,11 +73,9 @@ const MyBooking = () => {
                     }`}>{booking.status}</span></p>
                     
                     <div className="mt-3">
-                      {/* Chỉ cho Delete nếu booking đã DECLINED hoặc CANCELLED */}
                       {(booking.status === "DECLINED" || booking.status === "CANCELLED") && (
                         <button className="btn btn-sm" onClick={() => handleDelete(booking.id)}>Delete Booking</button>
                       )}
-                      {/* Nếu còn PENDING thì Cancel (thực ra là xóa luôn) */}
                       {booking.status === "PENDING" && (
                         <button className="btn  btn-sm" onClick={() => handleDelete(booking.id)}>Cancel Booking</button>
                       )}

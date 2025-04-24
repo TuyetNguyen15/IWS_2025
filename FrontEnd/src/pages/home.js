@@ -27,7 +27,7 @@ const Home = () => {
       <div className="about-section">
         <div className="row">
           <div className=" col-md-6 col-12 d-flex align-items-center ">
-                    <div class="about-content">
+                    <div className="about-content">
                         <h2>ABOUT US</h2>
                         <p className="lead font-weight-bold">Welcome to Mercy Hotel!</p>
                         <p>

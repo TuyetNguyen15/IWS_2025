@@ -2,6 +2,7 @@
 package hanu.fit.iws_final_project.repository;
 
 import hanu.fit.iws_final_project.model.Booking;
+import hanu.fit.iws_final_project.model.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,11 +13,12 @@ import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    List<Booking> findByCustomerEmail(String email);
+    List<Booking> findByUserName(String userName);
     @Query("SELECT b.roomId FROM Booking b WHERE "
             + "(b.status = 'PENDING' OR b.status = 'ACCEPTED') "
             + "AND (b.checkInDate < :checkOutDate AND b.checkOutDate > :checkInDate)")
     List<Long> findBookedRoomIdsByDateOverlap(
             @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate);
+    boolean existsByUserNameAndRoomIdAndStatus(String userName, Long roomId, BookingStatus status);
 }

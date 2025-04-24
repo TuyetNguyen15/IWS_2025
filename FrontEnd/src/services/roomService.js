@@ -3,7 +3,7 @@ import axios from "axios";
 // Create axios instance with base URL and credentials
 const api = axios.create({
     baseURL: "http://localhost:8080/api",
-    withCredentials: true, // Important for session cookies
+    withCredentials: true, 
     headers: {
     "Content-Type": "application/json",
   },
@@ -95,4 +95,15 @@ export const searchRooms = (checkInDate, checkOutDate, roomType) => {
       roomType: roomType || null,
     },
   });
+};
+
+// review
+export const submitReview = (reviewData) => {
+  return api.post("/reviews", reviewData);
+};
+export const fetchReviewsByRoomId = (roomId) => {
+  return api.get(`/reviews/room/${roomId}`); 
+};
+export const fetchAverageRating = (roomId) => {
+  return api.get(`/reviews/room/${roomId}/average`);
 };

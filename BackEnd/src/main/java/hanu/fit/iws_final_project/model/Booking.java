@@ -24,7 +24,7 @@ public class Booking {
     private String customerName;
 
     @Column(nullable = false)
-    private String customerEmail;
+    private String userName;
 
     @Column(nullable = false)
     private LocalDate checkInDate;

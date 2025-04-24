@@ -51,6 +51,10 @@ public class Room {
     public Room() {
 
     }
+    public Room(Long id) {
+        this.id = id;
+    }
+
     public void setImages(List<RoomImage> images) {
         this.images = images;
         for (RoomImage image : images) {
