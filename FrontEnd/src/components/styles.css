@@ -28,7 +28,8 @@ body {
 }
 
 .container {
-  padding-bottom: 20px;
+  padding: 10px 50px 20px 50px;
+  
   flex: 1;
   color: #1f2d5c;
 }

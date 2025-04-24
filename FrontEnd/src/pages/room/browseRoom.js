@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"; 
-import { fetchRooms, searchRooms } from "../../services/roomService"; // Đúng file bạn vừa update
+import { fetchRooms, searchRooms } from "../../services/roomService"; 
 import { getRoomThumbnail } from "../../utils/imageUtils";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -70,7 +70,7 @@ const BrowseRoom = () => {
                     className="room-img"
                   />
                   <div className="content">
-                    <h3>{room.roomType}</h3>
+                    <Link to={`/rooms/${room.id}`} className="h4 text-decoration-none " >{room.roomType}</Link>
                     <p>{room.description}</p>
                     <div className="room-features flex justify-between w-full gap-4">
                       <div className="flex flex-1 items-center p-2 text-center border rounded-md">
@@ -86,17 +86,11 @@ const BrowseRoom = () => {
                       </div>
                     </div>
                     <div className="price">${room.roomPrice}</div>
-                    <div className="d-flex justify-content-between align-items-center mt-2">
-                      <Link
-                        to={`/rooms/${room.id}`}
-                        className="btn"
-                        style={{ backgroundColor: "#edeaea", color: "#a5a5a5" }}
-                      >
-                        Details
-                      </Link>
+                    <div className="text-center mt-2">
+                     
                       <Link
                         to={`/confirmBooking/${room.id}`}
-                        className="btn"
+                        className="btn w-100"
                       >
                         Book Now
                       </Link>

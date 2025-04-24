@@ -9,7 +9,7 @@ import { createBooking } from "../../services/bookingService";
 const ConfirmBooking = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const userEmail = localStorage.getItem("userEmail");
+  const userId = localStorage.getItem("userId");
   const [room, setRoom] = useState(null);
   const [guestInfo, setGuestInfo] = useState({
     firstName: "",
@@ -50,7 +50,7 @@ const ConfirmBooking = () => {
   };
 
   const handleCompleteBooking = async () => {
-    if (!userEmail) {
+    if (!userId) {
       alert("Login first");
       navigate("/login");
       return;
@@ -63,9 +63,11 @@ const ConfirmBooking = () => {
     try {
       await createBooking({
         customerName: `${guestInfo.firstName} ${guestInfo.lastName}`,
-        customerEmail: userEmail,
+        userId: userId,
         checkInDate,
         checkOutDate,
+        phone: guestInfo.phone, 
+  specialRequests: guestInfo.specialRequests || "",
         roomId: room.id
       });
       navigate("/myBooking");
@@ -110,7 +112,7 @@ const ConfirmBooking = () => {
                     value={guestInfo.phone} 
                     onChange={handleChange} 
                     required 
-                    maxLength="11" 
+                    maxLength="10" 
                     placeholder="Enter phone number"
                   />
                 </div>

@@ -18,6 +18,7 @@ import ConfirmBooking from "./pages/room/confirmBooking";
 import AdminBooking from "./pages/adminBooking";
 import AdminHistory from './pages/booking/adminHistory';
 import UserHistory from './pages/booking/userHistory';
+import BookingDetail from './pages/booking/BookingDetail';
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
         <Route path="/manageRooms" element={<ManageRoom />} />
         <Route path="/adminHistory" element={<AdminHistory />} /> 
         <Route path="/userHistory" element={<UserHistory />} />
-        
+        <Route path="/booking/:bookingId" element={<BookingDetail />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/member/home" element={<Profile />} />

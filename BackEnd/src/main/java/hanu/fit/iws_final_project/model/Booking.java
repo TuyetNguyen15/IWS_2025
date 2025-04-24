@@ -22,7 +22,10 @@ public class Booking {
 
     @Column(nullable = false)
     private String customerName;
-
+@Column(length = 10, nullable = false)
+private String phone;
+@Column()
+private String specialRequests;
     @Column(nullable = false)
     private Long userId;
     @Column(nullable = false)

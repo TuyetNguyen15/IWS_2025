@@ -5,6 +5,7 @@ import '../components/styles.css';
 import { getCustomerBookings, deleteBooking } from "../services/bookingService";
 import { fetchRoomById } from "../services/roomService";
 import { getRoomThumbnail } from "../utils/imageUtils";
+import { Link } from "react-router-dom";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
@@ -61,7 +62,9 @@ const MyBooking = () => {
                     />
                   </div>
                   <div className="col-md-8 p-3">
+                  <Link to={`/booking/${booking.id}`} className="stretched-link text-decoration-none">
                     <h4>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
+                    </Link>
                     <p><strong>Customer:</strong> {booking.customerName || "Unknown"}</p>
                     <p><strong>Check-in:</strong> {booking.checkInDate}</p>
                     <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
