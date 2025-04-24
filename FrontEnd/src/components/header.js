@@ -19,7 +19,13 @@ const Header = () => {
           setIsAuthenticated(true);
           setFullName(response.data.fullName || 'User');
           setRoles(response.data.roles || []);
-          setAvatar(response.data.avatar || 'https://i.pravatar.cc/40');
+          let avatarUrl = response.data.avatar;
+        if (avatarUrl && avatarUrl.startsWith("/images/")) {
+          avatarUrl = "http://localhost:8080" + avatarUrl;
+        }
+        setAvatar(avatarUrl || ''); // ✅ Nếu không có avatar thì để chuỗi rỗng
+
+
         }
       } catch (err) {
         setIsAuthenticated(false);
@@ -45,13 +51,14 @@ const Header = () => {
   const isUser = roles.includes('ROLE_USER');
 
   return (
-    <div>
     <nav className="navbar navbar-expand-lg bg-customer px-4">
-      <span className="navbar-brand fw-bold">Mercy Hotel</span>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse justify-content-between" id="navbarContent">
+      <div className="container-fluid d-flex justify-content-between align-items-center">
+        <span className="navbar-brand fw-bold">Mercy Hotel</span>
+        <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse justify-content-between" id="navbarContent">
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link className="nav-link" to="/">Home</Link>
@@ -112,25 +119,60 @@ const Header = () => {
                 >
                   <span className="fw-bold me-2">{fullName}</span>
                   {isAdmin && <span className="badge bg-danger me-2">Admin</span>}
-                  <img 
-                    src={avatar} 
-                    alt="avatar" 
-                    className="rounded-circle me-2" 
-                    style={{ width: "40px", height: "40px", objectFit: "cover", marginLeft:"7px" }} 
-                  />
+                  {avatar ? (
+                    <img 
+                      src={avatar} 
+                      alt="avatar" 
+                      className="rounded-circle me-2" 
+                      style={{ width: "60px", height: "60px", objectFit: "cover", marginLeft:"7px" }}
+                    />
+                  ) : (
+                    <div
+                      className="rounded-circle bg-light d-flex align-items-center justify-content-center me-2"
+                      style={{ width: "40px", height: "40px", objectFit: "cover", marginLeft:"7px" }}
+                    >
+                      <i className="bi bi-person text-secondary" style={{ fontSize: "1.5rem" }}></i>
+                    </div>
+                  )}
+
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <li>
-                    <Link className="dropdown-item" to="/member/home">
-                      <i className="bi bi-person-fill me-2"></i>Profile
-                    </Link>
-                  </li>
+                  {isUser && (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/member/home">
+                          <i className="bi bi-person-fill me-2"></i>Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/member/privacy">
+                          <i className="bi bi-shield-lock me-2"></i>Privacy
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                  {isAdmin && (
+                    <>
+                      <li>
+                        <Link className="dropdown-item" to="/admin/dashboard">
+                          <i className="bi bi-speedometer2 me-2"></i>Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/member/home">
+                          <i className="bi bi-person-fill me-2"></i>Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="/member/privacy">
+                          <i className="bi bi-shield-lock me-2"></i>Privacy
+                        </Link>
+                      </li>
+                    </>
+                  )}
                   <li><hr className="dropdown-divider" /></li>
                   <li>
-                    <button 
-                      className="dropdown-item" 
-                      onClick={handleLogout}
-                    >
+                    <button className="dropdown-item" onClick={handleLogout}>
                       <i className="bi bi-box-arrow-right me-2"></i>Logout
                     </button>
                   </li>
@@ -140,10 +182,9 @@ const Header = () => {
           )}
         </ul>
       </div>
-      
+      </div>
+      <div className="hero-section"></div>
     </nav>
-    <div className="hero-section"></div>
-    </div>
   );
 };
 

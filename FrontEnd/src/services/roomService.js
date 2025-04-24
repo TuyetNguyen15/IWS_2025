@@ -27,24 +27,37 @@ api.interceptors.response.use(
   }
 );
 
+
 // Auth API
 export const login = async (credentials) => {
-    const formData = new URLSearchParams();
-    formData.append('username', credentials.username);
-    formData.append('password', credentials.password);
-  
-    return api.post('/login', formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
-  };
+  const formData = new URLSearchParams();
+  formData.append('username', credentials.username);
+  formData.append('password', credentials.password);
+
+  return api.post('/login', formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+};
 export const logout = () => api.post("/logout");
 export const register = (userData) => api.post("/auth/register", userData);
+
+
+//Profile API
 export const checkAuth = () => api.get("/member/home");
+export const updateProfile = (formData) => {
+return api.put("/member/edit-profile", formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+});
+};
 
-
-
+//Privacy API
+export const updatePrivacySettings = (data) => {
+  return api.put("/member/privacy", data);
+};
 
 
 // Rooms API (update your existing roomService.js)

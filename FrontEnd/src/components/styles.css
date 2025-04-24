@@ -40,23 +40,50 @@ body {
   margin-left: -15px;
 }
 
-/* header */
-.bg-customer{
-    background-color:#E6E6E6;
-    padding: 10px 0; 
+/* HEADER MODERN STYLES */
+.bg-customer {
+  background-color: #ffffff;
+  padding: 12px 30px;
+  border-radius: 12px;
+  margin: 12px 16px;
+  border: 1px solid #d1cfcf;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-in-out;
 }
+
 .bg-customer .nav-link {
-    color: #794b31;
-    margin: 5px;
-  }
-  .bg-customer .navbar-brand{
-    color: #794b31;
-  }
- 
-  .nav-item{
-    border-radius: 0;
-  }
-  .hero-section {
+  color: #794b31;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin: 0 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-customer .nav-link:hover,
+.bg-customer .nav-link.active {
+  background-color: #794b31;
+  color: #fff !important;
+}
+
+.bg-customer .navbar-brand {
+  font-size: 1.5rem;
+  color: #794b31;
+  font-weight: 700;
+  margin-right: 20px;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.bg-customer .navbar-brand:hover {
+  color: #583101;
+}
+
+.nav-item {
+  border-radius: 8px;
+}
+
+  /* .hero-section {
     width: 100%;
     height: 250px;
     background-image: url("../../public/assets/images/rooms/03.jpg");
@@ -66,16 +93,6 @@ body {
 }
 
 /* home */
-/* about seaction */
-.about-section {
-  margin-bottom: 40px;
-}
-
-.about-content {
-  text-align: left;
-  padding: 20px;
-}
-
 .about-images {
   position: relative;
   display: flex;
@@ -87,6 +104,13 @@ body {
 .about-images img {
   border-radius: 10px;
   object-fit: cover;
+  transition: transform 0.6s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.about-images img:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .img-back {
@@ -98,14 +122,37 @@ body {
   width: 50%;
   height: auto;
   position: absolute;
-  bottom: -20px;
+  bottom: 0; /* ✅ Không tràn xuống nữa */
   right: 40%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.6s ease, box-shadow 0.3s ease;
+  z-index: 1; /* đảm bảo ảnh không nằm trên chữ nếu có lớp chồng */
 }
 
-.box2 {
-  margin-top: 100px;
-  margin-bottom: 80px;
+.img-front:hover {
+  transform: scale(1.05) rotate(-2deg); /* 👌 Nhẹ hơn để đỡ tràn ra ngoài */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+
+.btn-find-out {
+  background-color: #794b31;
+  color: white;
+  border: 2px solid #794b31;
+  padding: 10px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-find-out:hover {
+  background-color: transparent;
+  color: #794b31;
+  border-color: #794b31;
+  transform: translateY(-2px);
 }
 
 /* room card */
@@ -117,16 +164,23 @@ body {
 }
 
 .room-card-link:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
 .room-card {
   position: relative;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   border: none;
   height: 100%;
   background-color: #000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.room-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .room-img {
@@ -138,108 +192,97 @@ body {
 }
 
 .room-card:hover .room-img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .card-overlay {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 25px;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1));
+  padding: 20px 25px;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.1));
   color: white;
+  transition: background 0.3s ease;
 }
 
 .card-overlay h5 {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .card-overlay p {
   margin: 5px 0 0;
   font-size: 1rem;
+  opacity: 0.85;
 }
+
+/* BrowsePage - Buttons */
+.btn {
+  background-color: #794b31;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #583101;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(88, 49, 1, 0.2);
+}
+
+/* Room Card */
 .room-cardb {
   background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .room-cardb:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .room-cardb img {
   width: 100%;
   height: 200px;
-  border-radius: 8px 8px 0 0;
+  border-radius: 10px 10px 0 0;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
 .room-cardb:hover img {
-  transform: scale(1.05);
-}
-
-
-/* browsePage */
-.btn{
-  background-color: #794b31;
-  
-  color: #ffffff;
-
-}
-.btn:hover{
-  background-color: #583101;
-  color: #ffffff;
-  
-}
-
-.room-cardb {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 0;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.room-cardb img {
-  width: 100%;
-  height: 200px;
-  border-radius: 8px 8px 0 0;
-  object-fit: cover;
+  transform: scale(1.03);
 }
 
 .room-cardb .content {
-  padding: 15px;
+  padding: 16px 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 }
 
 .room-cardb h3 {
   font-size: 1.5em;
   color: #1E0E62;
   margin-bottom: 10px;
+  transition: color 0.2s ease;
 }
 
 .room-cardb p {
   font-size: 1em;
-  color: #666;
+  color: #555;
   margin-bottom: 15px;
   flex-grow: 1;
 }
@@ -257,38 +300,102 @@ body {
   font-weight: 500;
   display: inline-block;
   margin-top: 10px;
+  transition: color 0.2s ease;
 }
 
 .room-cardb .linking-view-details:hover {
   text-decoration: underline;
+  color: #402100;
 }
-.room-features{
+
+/* Room features */
+.room-features {
   display: flex;
   justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-/* footer */
-.footer-container {
-  background-color: #E6E6E6;
-  padding: 10px 0;
+/* profilePage */
+.profile-avatar-wrapper {
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.profile-avatar-placeholder {
+  width: 400px;
+  height: 400px;
+  background-color: #f8f9fa;
+  border-radius: 50%;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.element {
-  font-size: 1em;
-  color: #794b31;
-  margin: 10px;
+.profile-info-block {
+  padding: 0 20px;
+}
+
+.info-item {
   display: flex;
   align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.element i {
-  margin-right: 8px;
-  font-size: 1.2em;
+.info-icon {
+  font-size: 1.8rem;
   color: #794b31;
+}
+
+.info-label {
+  margin: 0;
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.info-value {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #583101;
+  font-weight: 600;
+}
+
+/* privacy page */
+.btn-save {
+  background-color: #583101;
+  color: white;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-save:hover {
+  background-color: #794b31;
+}
+
+.btn-cancel {
+  background-color: #e0e0e0;
+  color: #583101;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-cancel:hover {
+  background-color: #cfcfcf;
 }
 
 /* roomDetailPage */
@@ -465,6 +572,30 @@ input.form-control:focus {
   width: 100%;
 }
 
+/* footer */
+.footer-container {
+  background-color: #E6E6E6;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.element {
+  font-size: 1em;
+  color: #794b31;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.element i {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color: #794b31;
+}
+
 /* ========== RESPONSIVE STYLES ========== */
 @media (max-width: 992px) {
   .col-md-3 {
@@ -512,6 +643,56 @@ input.form-control:focus {
       width: 50%;
       right: 40%;
       bottom: -5px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .profile-avatar-wrapper {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-avatar-placeholder {
+    width: 350px;
+    height: 350px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-page-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-page-avatar-col, 
+  .profile-page-info-col {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 572px) {
+  .profile-avatar-wrapper {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-avatar-placeholder {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+  }
+
+  .profile-page-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-page-avatar-col, 
+  .profile-page-info-col {
+    width: 100%;
+    text-align: center;
   }
 }
 

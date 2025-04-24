@@ -20,20 +20,33 @@ public class MyUserDetail implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    // Thêm các getters mới
-    public String getEmail() {
-        return user.getEmail();
+    @Override
+    public String getPassword() {
+        return user.getPassword();
     }
 
-    public String getFullName() {
-        return user.getFullName();
+    @Override
+    public String getUsername() {
+        return user.getUsername();
     }
 
-    // Các methods cũ giữ nguyên
-    @Override public String getPassword() { return user.getPassword(); }
-    @Override public String getUsername() { return user.getUsername(); }
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
