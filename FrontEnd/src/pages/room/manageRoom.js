@@ -3,11 +3,12 @@ import Header from "../../components/header";
 import { fetchRooms, deleteRoom } from "../../services/roomService";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/pagination";
+import "../../components/styles.css";
 
 const ManageRoom = () => {
   const [roomList, setRoomList] = useState([]);
-  const [filteredRooms, setFilteredRooms] = useState([]); 
-  const [searchKeyword, setSearchKeyword] = useState(""); 
+  const [filteredRooms, setFilteredRooms] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const roomsPerPage = 2;
 
@@ -15,7 +16,7 @@ const ManageRoom = () => {
     fetchRooms()
       .then((response) => {
         setRoomList(response.data);
-        setFilteredRooms(response.data); 
+        setFilteredRooms(response.data);
       })
       .catch((err) => console.error("Error loading rooms", err));
   }, []);
@@ -57,47 +58,49 @@ const ManageRoom = () => {
   };
 
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
   };
 
   return (
     <div className="app-wrapper d-flex flex-column min-vh-100">
       <Header />
       <div className="container py-4 flex-grow-1">
-        <h1 className="text-center mb-4">Manage Rooms</h1>
 
-        <div className="d-flex justify-content-between mb-4">
-          <div>
-            <Link to="/addRoom" className="add-room d-flex align-items-center gap-2">
-              <i className="bi bi-plus-circle"></i> Add Room
-            </Link>
-          </div>
-
-          <div className="search-box">
-            <form onSubmit={handleSearchSubmit}>
-              <div className="input-group" style={{ width: "400px" }}>
-                <input
-                  type="text"
-                  name="search"
-                  className="form-control"
-                  placeholder="Search by anything..."
-                  value={searchKeyword}
-                  onChange={handleSearchChange}
-                />
-              </div>
-            </form>
-          </div>
+        {/* Tiêu đề căn giữa */}
+        <div className="text-center mb-4">
+          <h1 className="fw-bold">Manage Rooms</h1>
         </div>
 
+        {/* Tìm kiếm & Thêm phòng */}
+        <div className="d-flex justify-content-between mb-4">
+          <Link to="/addRoom" className="add-room d-flex align-items-center gap-2">
+            <i className="bi bi-plus-circle"></i> Add Room
+          </Link>
+
+          <form onSubmit={handleSearchSubmit}>
+            <div className="input-group" style={{ width: "400px" }}>
+              <input
+                type="text"
+                name="search"
+                className="form-control"
+                placeholder="Search by anything..."
+                value={searchKeyword}
+                onChange={handleSearchChange}
+              />
+            </div>
+          </form>
+        </div>
+
+        {/* Bảng hiển thị phòng */}
         <div className="table-responsive">
-          <table className="table table-striped table-hover">
-            <thead>
+          <table className="table table-bordered text-center table-hover align-middle">
+            <thead className="table-dark">
               <tr>
                 <th>ID</th>
                 <th>Room Number</th>
                 <th>Room Type</th>
                 <th>Price</th>
-                <th className="text-center">Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -108,19 +111,13 @@ const ManageRoom = () => {
                     <td>{room.roomNumber}</td>
                     <td>{room.roomType}</td>
                     <td>${room.roomPrice}</td>
-                    <td className="text-center">
-                      <Link
-                        to={`/updateRoom/${room.id}`}
-                        className="action-btn"
-                      >
+                    <td>
+                      <Link to={`/updateRoom/${room.id}`} className="action-btn me-3">
                         <i className="bi bi-pencil-square"></i> Edit
                       </Link>
-                      <Link
-                        className="action-btn"
-                        onClick={() => handleDeleteRoom(room.id)}
-                      >
+                      <span className="action-btn" onClick={() => handleDeleteRoom(room.id)}>
                         <i className="bi bi-trash-fill"></i> Delete
-                      </Link>
+                      </span>
                     </td>
                   </tr>
                 ))
@@ -132,7 +129,13 @@ const ManageRoom = () => {
             </tbody>
           </table>
         </div>
-        <Pagination totalPages={totalPages} currentPage={currentPage} paginate={paginate} />
+
+        {/* Phân trang */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
       </div>
     </div>
   );
