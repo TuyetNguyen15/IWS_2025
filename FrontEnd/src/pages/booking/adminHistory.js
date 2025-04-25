@@ -23,11 +23,10 @@ const AdminHistory = () => {
   };
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
 
       <div className="container my-4 flex-grow-1">
-        {/* Tiêu đề căn giữa */}
         <div className="text-center mb-4">
           <h1 className="fw-bold">History</h1>
         </div>
@@ -39,6 +38,7 @@ const AdminHistory = () => {
               <thead className="table-dark">
                 <tr>
                   <th>ID</th>
+                  <th>Booking Code</th> {/* ✅ THÊM CỘT */}
                   <th>Customer</th>
                   <th>Room ID</th>
                   <th>Check-in</th>
@@ -50,11 +50,14 @@ const AdminHistory = () => {
                 {checkedOutBookings.map((booking) => (
                   <tr key={booking.id}>
                     <td>{booking.id}</td>
+                    <td>{booking.bookingCode || "N/A"}</td> {/* ✅ HIỂN THỊ MÃ CODE */}
                     <td>{booking.customerName}</td>
                     <td>{booking.roomId}</td>
                     <td>{booking.checkInDate}</td>
                     <td>{booking.checkOutDate}</td>
-                    <td><span className="badge bg-secondary">{booking.status}</span></td>
+                    <td>
+                      <span className="badge bg-secondary">{booking.status}</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>

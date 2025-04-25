@@ -33,37 +33,39 @@ const UserHistory = () => {
   }, [username]);
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
       <div className="container my-4 flex-grow-1">
-        <h1 className="text-center mb-4">CHECKED OUT ROOMS</h1>
-
         <div className="row">
           {checkedOutBookings.length > 0 ? (
-            checkedOutBookings.map((booking) => (
+            checkedOutBookings.map((booking, index) => (
               <div key={booking.id} className="col-md-12 mb-4">
-                <div className="card d-flex flex-row">
-                  <div className="col-md-4 p-2">
+                <div className="d-flex booking-card-custom">
+                  <div className="me-4" style={{ width: "300px" }}>
                     <img
                       src={booking.room ? getRoomThumbnail(booking.room) : "https://via.placeholder.com/400x300"}
                       alt="Room Thumbnail"
-                      className="img-fluid rounded"
-                      style={{ height: "100%", objectFit: "cover" }}
+                      className="img-fluid rounded booking-thumbnail"
                     />
                   </div>
-                  <div className="col-md-8 p-3">
-                    <h4>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
-                    <p><strong>Customer:</strong> {booking.customerName || "Unknown"}</p>
+                  <div className="flex-grow-1">
+                    <Link to={`/rooms/${booking.room.id}`} className="text-decoration-none">
+                      <h4 style={{ color: "#1f2d5c" }}>
+                        {booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}
+                      </h4>
+                    </Link>
+                    <p><strong>Booking Code:</strong> {booking.bookingCode || "N/A"}</p>
                     <p><strong>Check-in:</strong> {booking.checkInDate}</p>
                     <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
                     <p><strong>Status:</strong> <span className="badge bg-secondary">{booking.status}</span></p>
-                    <div className="mt-3">
+                    <div className="mt-2">
                       <Link to={`/rooms/${booking.room.id}`} className="btn btn-outline-primary btn-sm">
                         Leave a Review
                       </Link>
                     </div>
                   </div>
                 </div>
+                {index < checkedOutBookings.length - 1 && <hr className="my-4" />}
               </div>
             ))
           ) : (

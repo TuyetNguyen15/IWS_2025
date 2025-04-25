@@ -15,7 +15,6 @@ const RoomDetail = () => {
   const [room, setRoom] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
@@ -37,35 +36,6 @@ const RoomDetail = () => {
     fetchReviewsByRoomId(id).then(res => setReviews(res.data));
     fetchAverageRating(id).then(res => setAverageRating(res.data));
   }, [id]);
-
-  useEffect(() => {
-    if (!images || images.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setActiveIndex(prev => {
-          const next = (prev + 1) % images.length;
-          setMainImage(images[next]);
-
-          const gallery = document.getElementById("galleryContainer");
-          const thumbnails = gallery?.children;
-          if (thumbnails && thumbnails[next]) {
-            thumbnails[next].scrollIntoView({
-              behavior: "smooth",
-              inline: "center",
-              block: "nearest"
-            });
-          }
-
-          return next;
-        });
-        setIsTransitioning(false);
-      }, 500);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [images]);
 
   const scrollGallery = (amount) => {
     const gallery = document.getElementById("galleryContainer");
@@ -103,17 +73,10 @@ const RoomDetail = () => {
   };
 
   const amenityIcons = {
-    "WiFi": <i className="fas fa-wifi" />,
-    "TV": <i className="fas fa-tv" />,
-    "Kitchen": <i className="fas fa-utensils" />,
-    "Parking": <i className="fas fa-parking" />,
-    "Pool": <i className="fas fa-swimming-pool" />,
-    "Breakfast": <i className="fas fa-coffee" />,
-    "Air Conditioner": <i className="fas fa-snowflake" />,
-    "Heater": <i className="fas fa-fire" />,
-    "Bathtub": <i className="fas fa-bath" />,
-    "Gym": <i className="fas fa-dumbbell" />,
-    "Bar": <i className="fas fa-cocktail" />
+    "WiFi": <i className="fas fa-wifi" />, "TV": <i className="fas fa-tv" />, "Kitchen": <i className="fas fa-utensils" />,
+    "Parking": <i className="fas fa-parking" />, "Pool": <i className="fas fa-swimming-pool" />, "Breakfast": <i className="fas fa-coffee" />,
+    "Air Conditioner": <i className="fas fa-snowflake" />, "Heater": <i className="fas fa-fire" />, "Bathtub": <i className="fas fa-bath" />,
+    "Gym": <i className="fas fa-dumbbell" />, "Bar": <i className="fas fa-cocktail" />
   };
 
   return (
@@ -125,10 +88,9 @@ const RoomDetail = () => {
             <div className="col-md-7">
               <div className="image-container position-relative overflow-hidden" style={{ height: "400px" }}>
                 <img
-                  key={activeIndex}
                   src={mainImage || getRoomThumbnail(room)}
                   alt="Main Room"
-                  className={`main-room-image ${isTransitioning ? "transitioning" : ""}`}
+                  className="main-room-image"
                 />
               </div>
 
@@ -211,38 +173,38 @@ const RoomDetail = () => {
                 </div>
               ))
             ) : <p>No reviews yet.</p>}
-            
+
             {isUser && (
-            <div className="card mt-4 review-form">
-              <div className="card-body">
-                <h5 className="card-title">Leave a Review</h5>
-                {error && <div className="alert alert-danger">{error}</div>}
-                <div className="mb-3">
-                  <label className="form-label">Rating</label>
-                  <select
-                    className="form-select"
-                    value={newReview.rating}
-                    onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
-                  >
-                    {[5, 4, 3, 2, 1].map((n) => (
-                      <option key={n} value={n}>{"★".repeat(n)}</option>
-                    ))}
-                  </select>
+              <div className="card mt-4 review-form">
+                <div className="card-body">
+                  <h5 className="card-title">Leave a Review</h5>
+                  {error && <div className="alert alert-danger">{error}</div>}
+                  <div className="mb-3">
+                    <label className="form-label">Rating</label>
+                    <select
+                      className="form-select"
+                      value={newReview.rating}
+                      onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
+                    >
+                      {[5, 4, 3, 2, 1].map((n) => (
+                        <option key={n} value={n}>{"★".repeat(n)}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Comment</label>
+                    <textarea
+                      className="form-control"
+                      rows="3"
+                      value={newReview.comment}
+                      onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    />
+                  </div>
+                  <button className="btn" disabled={submitting} onClick={handleSubmitReview}>
+                    {submitting ? "Submitting..." : "Submit Review"}
+                  </button>
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Comment</label>
-                  <textarea
-                    className="form-control"
-                    rows="3"
-                    value={newReview.comment}
-                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                  />
-                </div>
-                <button className="btn" disabled={submitting} onClick={handleSubmitReview}>
-                  {submitting ? "Submitting..." : "Submit Review"}
-                </button>
               </div>
-            </div>
             )}
           </div>
         </div>

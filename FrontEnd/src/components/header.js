@@ -3,11 +3,11 @@ import './styles.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { checkAuth } from "../services/ProfileService";
 import { logout } from "../services/AuthService";
-import { Dropdown, Collapse } from 'bootstrap';
+import { Dropdown } from 'bootstrap';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null -> chưa kiểm tra
   const [fullName, setFullName] = useState('');
   const [roles, setRoles] = useState([]);
   const [avatar, setAvatar] = useState('');
@@ -32,13 +32,11 @@ const Header = () => {
     };
     verifyAuth();
 
-    // Kích hoạt dropdown và navbar toggle sau khi DOM đã render
     setTimeout(() => {
       document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach((el) => {
         new Dropdown(el);
       });
     }, 100);
-
   }, []);
 
   const handleLogout = async () => {
@@ -69,33 +67,33 @@ const Header = () => {
         <div className="collapse navbar-collapse justify-content-between" id="navbarContent">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Home</NavLink>
+              <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/browseRooms" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Browse Rooms</NavLink>
+              <NavLink to="/browseRooms" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Browse Rooms</NavLink>
             </li>
             {isAuthenticated && (
               <>
                 {isAdmin && (
                   <>
                     <li className="nav-item">
-                      <NavLink to="/manageRooms" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Manage Rooms</NavLink>
+                      <NavLink to="/manageRooms" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Manage Rooms</NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/adminBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Manage Bookings</NavLink>
+                      <NavLink to="/adminBooking" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Manage Bookings</NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/adminHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Booking History</NavLink>
+                      <NavLink to="/adminHistory" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Booking History</NavLink>
                     </li>
                   </>
                 )}
                 {isUser && (
                   <>
                     <li className="nav-item">
-                      <NavLink to="/myBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>My Booking</NavLink>
+                      <NavLink to="/myBooking" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>My Booking</NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/userHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Booking Diary</NavLink>
+                      <NavLink to="/userHistory" className={({ isActive }) => `nav-link ${isActive ? "active-nav" : ""}`}>Booking Diary</NavLink>
                     </li>
                   </>
                 )}
@@ -104,7 +102,7 @@ const Header = () => {
           </ul>
 
           <ul className="navbar-nav">
-            {!isAuthenticated ? (
+            {isAuthenticated === false && fullName === '' ? (
               <>
                 <li className="nav-item me-2">
                   <NavLink
@@ -135,7 +133,7 @@ const Header = () => {
                   </NavLink>
                 </li>
               </>
-            ) : (
+            ) : isAuthenticated && (
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button"
                   data-bs-toggle="dropdown" aria-expanded="false">

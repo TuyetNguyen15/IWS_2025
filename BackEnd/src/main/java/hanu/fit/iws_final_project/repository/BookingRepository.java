@@ -1,4 +1,3 @@
-// --- BookingRepository.java ---
 package hanu.fit.iws_final_project.repository;
 
 import hanu.fit.iws_final_project.model.Booking;
@@ -23,4 +22,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("checkOutDate") LocalDate checkOutDate);
 
     boolean existsByUserIdAndRoomIdAndStatus(Long userId, Long roomId, BookingStatus status);
+
+    // ✅ Thêm dòng này để check trùng mã bookingCode
+    boolean existsByBookingCode(String bookingCode);
 }

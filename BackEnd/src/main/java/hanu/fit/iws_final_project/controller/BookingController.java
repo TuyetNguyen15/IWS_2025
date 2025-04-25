@@ -12,8 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +34,7 @@ public class BookingController {
         booking.setUserId(user.get().getId());
         booking.setStatus(BookingStatus.PENDING);
         booking.setCreatedAt(LocalDateTime.now());
+        booking.setBookingCode(generateBookingCode());
 
         List<Booking> existingBookings = bookingRepository.findAll();
         for (Booking b : existingBookings) {
@@ -44,6 +44,7 @@ public class BookingController {
                 boolean isOverlapping =
                         !booking.getCheckOutDate().isBefore(b.getCheckInDate()) &&
                                 !booking.getCheckInDate().isAfter(b.getCheckOutDate());
+
                 if (isOverlapping) {
                     return ResponseEntity.badRequest()
                             .body("The room is already booked for the selected dates.");
@@ -53,6 +54,19 @@ public class BookingController {
 
         Booking saved = bookingRepository.save(booking);
         return ResponseEntity.ok(saved);
+    }
+
+    private String generateBookingCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder code;
+        Random random = new Random();
+        do {
+            code = new StringBuilder();
+            for (int i = 0; i < 6; i++) {
+                code.append(characters.charAt(random.nextInt(characters.length())));
+            }
+        } while (bookingRepository.existsByBookingCode(code.toString()));
+        return code.toString();
     }
 
     @GetMapping("/customer/bookings")
@@ -119,7 +133,6 @@ public class BookingController {
         if (optionalBooking.isEmpty()) return ResponseEntity.notFound().build();
 
         Booking booking = optionalBooking.get();
-
         try {
             BookingStatus newStatus = BookingStatus.valueOf(status.toUpperCase());
             booking.setStatus(newStatus);

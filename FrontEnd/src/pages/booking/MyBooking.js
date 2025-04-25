@@ -1,3 +1,4 @@
+// ✅ MyBooking.js (đã thêm bookingCode hiển thị)
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -42,7 +43,7 @@ const MyBooking = () => {
   };
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
       <div className="container my-4 flex-grow-1">
         <div className="row">
@@ -60,8 +61,11 @@ const MyBooking = () => {
                   </div>
                   <div className="flex-grow-1">
                     <Link to={`/booking/${booking.id}`} className=" text-decoration-none ">
-                      <h4 style={{color:"#1f2d5c"}}>{booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}</h4>
+                      <h4 style={{ color: "#1f2d5c" }}>
+                        {booking.room ? booking.room.roomType : `Room ID: ${booking.roomId}`}
+                      </h4>
                     </Link>
+                    <p><strong>Booking Code:</strong> {booking.bookingCode}</p>
                     <p><strong>Check-in:</strong> {booking.checkInDate}</p>
                     <p><strong>Check-out:</strong> {booking.checkOutDate}</p>
                     <p><strong>Status:</strong> <span className={`badge ${

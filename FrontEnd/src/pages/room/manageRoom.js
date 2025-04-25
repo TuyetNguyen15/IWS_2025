@@ -62,16 +62,13 @@ const ManageRoom = () => {
   };
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
       <div className="container py-4 flex-grow-1">
-
-        {/* Tiêu đề căn giữa */}
         <div className="text-center mb-4">
           <h1 className="fw-bold">Manage Rooms</h1>
         </div>
 
-        {/* Tìm kiếm & Thêm phòng */}
         <div className="d-flex justify-content-between mb-4">
           <Link to="/addRoom" className="add-room d-flex align-items-center gap-2">
             <i className="bi bi-plus-circle"></i> Add Room
@@ -94,7 +91,6 @@ const ManageRoom = () => {
           </form>
         </div>
 
-        {/* Bảng hiển thị phòng */}
         <div className="table-responsive">
           <table className="table table-bordered text-center table-hover align-middle">
             <thead className="table-dark">
@@ -133,7 +129,6 @@ const ManageRoom = () => {
           </table>
         </div>
 
-        {/* Phân trang */}
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

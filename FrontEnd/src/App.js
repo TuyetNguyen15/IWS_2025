@@ -22,32 +22,33 @@ import AdminBooking from "./pages/booking/AdminBooking";
 import AdminHistory from './pages/booking/AdminHistory';
 import UserHistory from './pages/booking/UserHistory';
 import BookingDetail from './pages/booking/BookingDetail';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/browseRooms" element={<BrowseRoom />} />
-        <Route path="/rooms/:id" element={<RoomDetail />} />
-        <Route path="/addroom" element={<AddRoom />} />
-        <Route path="/updateRoom/:id" element={<UpdateRoom />} />
-        <Route path="/manageRooms" element={<ManageRoom />} />
-        <Route path="/adminHistory" element={<AdminHistory />} /> 
-        <Route path="/userHistory" element={<UserHistory />} />
-        <Route path="/booking/:bookingId" element={<BookingDetail />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/member/home" element={<Profile />} />
-        <Route path="/member/edit-profile" element={<EditProfile />} />
-        <Route path="/member/privacy" element={<PrivacySettings />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/myBooking" element={<MyBooking />} />
-        <Route path="/confirmBooking/:roomId" element={<ConfirmBooking />} />
-        <Route path="/adminBooking" element={<AdminBooking />} /> 
+        <Route path="/" element={<div className="fade-page"><Home /></div>} />
+        <Route path="/browseRooms" element={<div className="fade-page"><BrowseRoom /></div>} />
+        <Route path="/rooms/:id" element={<div className="fade-page"><RoomDetail /></div>} />
+        <Route path="/addroom" element={<div className="fade-page"><AddRoom /></div>} />
+        <Route path="/updateRoom/:id" element={<div className="fade-page"><UpdateRoom /></div>} />
+        <Route path="/manageRooms" element={<div className="fade-page"><ManageRoom /></div>} />
+        <Route path="/adminHistory" element={<div className="fade-page"><AdminHistory /></div>} /> 
+        <Route path="/userHistory" element={<div className="fade-page"><UserHistory /></div>} />
+        <Route path="/booking/:bookingId" element={<div className="fade-page"><BookingDetail /></div>} />
+        <Route path="/login" element={<div className="fade-page"><Login /></div>} />
+        <Route path="/register" element={<div className="fade-page"><Register /></div>} />
+        <Route path="/forgot-password" element={<div className="fade-page"><ForgotPassword /></div>} />
+        <Route path="/reset-password" element={<div className="fade-page"><ResetPassword /></div>} />
+        <Route path="/member/home" element={<div className="fade-page"><Profile /></div>} />
+        <Route path="/member/edit-profile" element={<div className="fade-page"><EditProfile /></div>} />
+        <Route path="/member/privacy" element={<div className="fade-page"><PrivacySettings /></div>} />
+        <Route path="/admin/dashboard" element={<div className="fade-page"><AdminDashboard /></div>} />
+        <Route path="/myBooking" element={<div className="fade-page"><MyBooking /></div>} />
+        <Route path="/confirmBooking/:roomId" element={<div className="fade-page"><ConfirmBooking /></div>} />
+        <Route path="/adminBooking" element={<div className="fade-page"><AdminBooking /></div>} /> 
       </Routes>
     </BrowserRouter>
   );

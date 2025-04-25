@@ -44,4 +44,7 @@ public class Booking {
     private BookingStatus status = BookingStatus.PENDING;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "booking_code", length = 6, unique = true)
+    private String bookingCode;
 }

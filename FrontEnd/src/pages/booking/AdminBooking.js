@@ -59,12 +59,10 @@ const AdminBooking = () => {
   };
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
 
       <div className="container my-4 flex-grow-1">
-
-        {/* Tiêu đề và chuông */}
         <div className="position-relative text-center mb-4">
           <h1 className="fw-bold">Manage Bookings</h1>
           <Button
@@ -108,7 +106,6 @@ const AdminBooking = () => {
           </Overlay>
         </div>
 
-        {/* Accepted Bookings */}
         <h4 className="mb-3">Accepted Bookings</h4>
         {acceptedBookings.length > 0 ? (
           <div className="table-responsive">
@@ -116,6 +113,7 @@ const AdminBooking = () => {
               <thead className="table-dark">
                 <tr>
                   <th>ID</th>
+                  <th>Booking Code</th> {/* ✅ THÊM CỘT */}
                   <th>Customer</th>
                   <th>Room ID</th>
                   <th>Check-in</th>
@@ -128,6 +126,7 @@ const AdminBooking = () => {
                 {acceptedBookings.map((booking) => (
                   <tr key={booking.id}>
                     <td>{booking.id}</td>
+                    <td>{booking.bookingCode || "N/A"}</td> {/* ✅ HIỂN THỊ BOOKING CODE */}
                     <td>{booking.customerName}</td>
                     <td>{booking.roomId}</td>
                     <td>{booking.checkInDate}</td>

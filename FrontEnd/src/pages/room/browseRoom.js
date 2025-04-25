@@ -57,7 +57,7 @@ const BrowseRoom = () => {
   };
 
   return (
-    <div className="app-wrapper d-flex flex-column min-vh-100">
+    <div className="app-wrapper d-flex flex-column min-vh-100 fade-page">
       <Header />
       <SearchBox onSearchResults={handleSearchResults} />
       <div className="container my-4 flex-grow-1">
@@ -73,7 +73,7 @@ const BrowseRoom = () => {
                     className="room-img"
                   />
                   <div className="content">
-                    <Link to={`/rooms/${room.id}`} className="h4 text-decoration-none " >{room.roomType}</Link>
+                    <Link to={`/rooms/${room.id}`} className="h4 text-decoration-none">{room.roomType}</Link>
                     <p>{room.description}</p>
                     <div className="room-features flex justify-between w-full gap-4">
                       <div className="flex flex-1 items-center p-2 text-center border rounded-md">
@@ -91,10 +91,7 @@ const BrowseRoom = () => {
                     <div className="price">${room.roomPrice}</div>
                     <div className="text-center mt-2">
                       {isUser && (
-                        <Link
-                          to={`/confirmBooking/${room.id}`}
-                          className="btn w-100"
-                        >
+                        <Link to={`/confirmBooking/${room.id}`} className="btn w-100">
                           Book Now
                         </Link>
                       )}

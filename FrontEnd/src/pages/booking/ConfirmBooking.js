@@ -41,9 +41,9 @@ const ConfirmBooking = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
-      const phone = value.replace(/\D/g, ""); 
-      if (phone.length === 10) {
-        setGuestInfo({ ...guestInfo, phone });
+      const onlyDigits = value.replace(/\D/g, "");
+      if (onlyDigits.length <= 10) {
+        setGuestInfo({ ...guestInfo, phone: onlyDigits });
       }
     } else {
       setGuestInfo({ ...guestInfo, [name]: value });
@@ -62,7 +62,7 @@ const ConfirmBooking = () => {
         userId: userId,
         checkInDate,
         checkOutDate,
-        phone: guestInfo.phone, 
+        phone: guestInfo.phone,
         specialRequests: guestInfo.specialRequests || "",
         roomId: room.id
       });
@@ -93,28 +93,50 @@ const ConfirmBooking = () => {
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <label>First Name</label>
-                  <input type="text" name="firstName" className="form-control" value={guestInfo.firstName} onChange={handleChange} required />
+                  <input
+                    type="text"
+                    name="firstName"
+                    className="form-control"
+                    value={guestInfo.firstName}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="col-md-6 mb-3">
                   <label>Last Name</label>
-                  <input type="text" name="lastName" className="form-control" value={guestInfo.lastName} onChange={handleChange} required />
+                  <input
+                    type="text"
+                    name="lastName"
+                    className="form-control"
+                    value={guestInfo.lastName}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="col-md-6 mb-3">
                   <label>Phone</label>
-                  <input 
-                    type="text" 
-                    name="phone" 
-                    className="form-control" 
-                    value={guestInfo.phone} 
-                    onChange={handleChange} 
-                    required 
-                    maxLength="10" 
+                  <input
+                    type="text"
+                    name="phone"
+                    inputMode="numeric"
+                    pattern="\d*"
+                    maxLength="10"
                     placeholder="Enter phone number"
+                    className="form-control"
+                    value={guestInfo.phone}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
                 <div className="col-12 mb-3">
                   <label>Special Requests</label>
-                  <textarea name="specialRequests" className="form-control" rows="3" value={guestInfo.specialRequests} onChange={handleChange}></textarea>
+                  <textarea
+                    name="specialRequests"
+                    className="form-control"
+                    rows="3"
+                    value={guestInfo.specialRequests}
+                    onChange={handleChange}
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -124,23 +146,46 @@ const ConfirmBooking = () => {
           <div className="col-md-4">
             <div className="card p-4">
               <h2 className="mb-3">Booking Summary</h2>
-              <img src={getRoomThumbnail(room)} alt="Room Thumbnail" className="img-fluid mb-3" />
+              <img
+                src={getRoomThumbnail(room)}
+                alt="Room Thumbnail"
+                className="img-fluid mb-3"
+              />
               <h5>{room.roomType}</h5>
-              <p><i className="fas fa-user-friends"></i> {room.roomCapacity} Guests</p>
+              <p>
+                <i className="fas fa-user-friends"></i> {room.roomCapacity} Guests
+              </p>
               <hr />
               <div className="mb-2">
                 <label>Check-in Date:</label>
-                <input type="date" className="form-control" min={today} value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
+                <input
+                  type="date"
+                  className="form-control"
+                  min={today}
+                  value={checkInDate}
+                  onChange={(e) => setCheckInDate(e.target.value)}
+                />
               </div>
               <div className="mb-2">
                 <label>Check-out Date:</label>
-                <input type="date" className="form-control" min={checkInDate || today} value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
+                <input
+                  type="date"
+                  className="form-control"
+                  min={checkInDate || today}
+                  value={checkOutDate}
+                  onChange={(e) => setCheckOutDate(e.target.value)}
+                />
               </div>
               <p>Length of stay: {nights} nights</p>
               <hr />
               <p>Room rate: ${roomRate} × {nights} nights</p>
               <h5>Total: ${total}</h5>
-              <button className="btn btn-primary w-100 mt-3" onClick={handleCompleteBooking}>Complete Booking</button>
+              <button
+                className="btn btn-primary w-100 mt-3"
+                onClick={handleCompleteBooking}
+              >
+                Complete Booking
+              </button>
             </div>
           </div>
         </div>
