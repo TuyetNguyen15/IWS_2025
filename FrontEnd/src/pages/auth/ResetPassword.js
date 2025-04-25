@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { resetPassword } from "../services/roomService";
-import AuthLayout from "../components/AuthLayout";
+import { resetPassword } from "../../services/AuthService";
+import AuthLayout from "../../components/AuthLayout";
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();

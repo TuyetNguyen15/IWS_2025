@@ -7,7 +7,6 @@ import hanu.fit.iws_final_project.repository.BookingRepository;
 import hanu.fit.iws_final_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,6 @@ public class BookingController {
     @Autowired
     private UserRepository userRepository;
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/bookings")
     public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +55,6 @@ public class BookingController {
         return ResponseEntity.ok(saved);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/customer/bookings")
     public ResponseEntity<List<Booking>> getCustomerBookings() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -68,7 +65,6 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PutMapping("/customer/bookings/{id}/cancel")
     public ResponseEntity<Booking> cancelBooking(@PathVariable Long id) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
@@ -84,7 +80,6 @@ public class BookingController {
         return ResponseEntity.ok(booking);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/customer/bookings/{id}")
     public ResponseEntity<Void> deleteCustomerBooking(@PathVariable Long id) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);

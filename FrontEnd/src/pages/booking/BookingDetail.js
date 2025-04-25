@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { fetchRoomById ,fetchRooms} from "../../services/roomService";
-import { getCustomerBookings } from "../../services/bookingService";
-import { getAllRoomImages } from "../../utils/imageUtils";
+import { fetchRoomById ,fetchRooms} from "../../services/RoomService";
+import { getCustomerBookings } from "../../services/BookingService";
+import { getAllRoomImages } from "../../utils/ImageUtils";
 
 const BookingDetail = () => {
   const { bookingId } = useParams();

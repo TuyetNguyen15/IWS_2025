@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { requestPasswordReset } from "../services/roomService";
-import AuthLayout from "../components/AuthLayout";
+import { requestPasswordReset } from "../../services/AuthService";
+import AuthLayout from "../../components/AuthLayout";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchRooms } from "../services/roomService"; 
+import { searchRooms } from "../services/RoomService"; 
 
 const SearchBox = ({ redirect = false, onSearchResults }) => {
   const [checkInDate, setCheckInDate] = useState("");

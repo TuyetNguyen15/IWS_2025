@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../services/roomService";
-import AuthLayout from "../components/AuthLayout";
+import { register } from "../../services/AuthService";
+import AuthLayout from "../../components/AuthLayout";
 
 const Register = () => {
   const [userData, setUserData] = useState({

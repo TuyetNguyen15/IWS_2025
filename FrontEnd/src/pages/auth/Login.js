@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { login, checkAuth } from "../services/roomService";
-import AuthLayout from "../components/AuthLayout";
+import { checkAuth } from "../../services/ProfileService";
+import { login } from "../../services/AuthService";
+import AuthLayout from "../../components/AuthLayout";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
@@ -29,10 +30,11 @@ const Login = () => {
       if (response.status === 200) {
         const userResponse = await checkAuth(); 
         const userData = userResponse.data;
-  
+
         localStorage.setItem("userId", userData.id);
         localStorage.setItem("userName", userData.fullName); 
-  
+        localStorage.setItem("roles", JSON.stringify(userData.roles)); // ✅ Thêm lưu roles
+
         navigate("/");
       }
     } catch (err) {

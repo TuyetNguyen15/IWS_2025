@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { logout, checkAuth } from "../services/roomService";
+import { checkAuth } from "../services/ProfileService";
+import { logout } from "../services/AuthService";
 import { Dropdown, Collapse } from 'bootstrap';
 
 const Header = () => {

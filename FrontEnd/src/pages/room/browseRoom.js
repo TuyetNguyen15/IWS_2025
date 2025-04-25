@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"; 
-import { fetchRooms, searchRooms } from "../../services/roomService"; 
-import { getRoomThumbnail } from "../../utils/imageUtils";
+import { fetchRooms, searchRooms } from "../../services/RoomService"; 
+import { getRoomThumbnail } from "../../utils/ImageUtils";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Pagination from "../../components/pagination";
+import Pagination from "../../components/Pagination";
 import { Link } from "react-router-dom";
 import SearchBox from "../../components/SearchBox";
 
@@ -13,6 +13,9 @@ const BrowseRoom = () => {
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
+
+  const storedRoles = JSON.parse(localStorage.getItem("roles") || "[]");
+  const isUser = storedRoles.some(role => role.toUpperCase() === "ROLE_USER");
 
   const roomsPerPage = 2;
 
@@ -87,13 +90,14 @@ const BrowseRoom = () => {
                     </div>
                     <div className="price">${room.roomPrice}</div>
                     <div className="text-center mt-2">
-                     
-                      <Link
-                        to={`/confirmBooking/${room.id}`}
-                        className="btn w-100"
-                      >
-                        Book Now
-                      </Link>
+                      {isUser && (
+                        <Link
+                          to={`/confirmBooking/${room.id}`}
+                          className="btn w-100"
+                        >
+                          Book Now
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

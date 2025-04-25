@@ -7,8 +7,8 @@ import {
   fetchReviewsByRoomId,
   fetchAverageRating,
   submitReview
-} from "../../services/roomService";
-import { getAllRoomImages, getRoomThumbnail } from "../../utils/imageUtils";
+} from "../../services/RoomService";
+import { getAllRoomImages, getRoomThumbnail } from "../../utils/ImageUtils";
 
 const RoomDetail = () => {
   const { id } = useParams();
@@ -21,6 +21,9 @@ const RoomDetail = () => {
   const [newReview, setNewReview] = useState({ rating: 5, comment: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+
+  const storedRoles = JSON.parse(localStorage.getItem("roles") || "[]");
+  const isUser = storedRoles.some(role => role.toUpperCase() === "ROLE_USER");
 
   const images = room ? getAllRoomImages(room) : [];
 
@@ -58,7 +61,7 @@ const RoomDetail = () => {
           return next;
         });
         setIsTransitioning(false);
-      }, 500); // thời gian để fade out trước khi đổi ảnh
+      }, 500);
     }, 4000);
 
     return () => clearInterval(interval);
@@ -189,9 +192,11 @@ const RoomDetail = () => {
                 ))}
               </div>
 
-              <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
-                Book Now
-              </Link>
+              {isUser && (
+                <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
+                  Book Now
+                </Link>
+              )}
             </div>
           </div>
 
@@ -206,7 +211,8 @@ const RoomDetail = () => {
                 </div>
               ))
             ) : <p>No reviews yet.</p>}
-
+            
+            {isUser && (
             <div className="card mt-4 review-form">
               <div className="card-body">
                 <h5 className="card-title">Leave a Review</h5>
@@ -237,6 +243,7 @@ const RoomDetail = () => {
                 </button>
               </div>
             </div>
+            )}
           </div>
         </div>
       ) : <h3>Loading...</h3>}

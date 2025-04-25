@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllBookings } from "../../services/bookingService";
+import { getAllBookings } from "../../services/BookingService";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import '../../components/styles.css';

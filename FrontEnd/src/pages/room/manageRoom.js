@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
-import { fetchRooms, deleteRoom } from "../../services/roomService";
+import { fetchRooms, deleteRoom } from "../../services/RoomService";
 import { Link } from "react-router-dom";
-import Pagination from "../../components/pagination";
+import Pagination from "../../components/Pagination";
 import "../../components/styles.css";
 
 const ManageRoom = () => {

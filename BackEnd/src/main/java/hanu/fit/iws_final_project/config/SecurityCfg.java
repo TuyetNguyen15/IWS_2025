@@ -34,9 +34,8 @@ public class SecurityCfg {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/reviews").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/reviews").hasAnyRole("USER")
                         .requestMatchers("/api/member/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/customer/**", "/api/bookings").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .userDetailsService(jpaUserDetailsService)

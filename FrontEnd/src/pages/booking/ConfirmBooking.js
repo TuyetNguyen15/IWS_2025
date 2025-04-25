@@ -2,24 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { fetchRoomById } from "../../services/roomService";
-import { getRoomThumbnail } from "../../utils/imageUtils";
-import { createBooking } from "../../services/bookingService";
+import { fetchRoomById } from "../../services/RoomService";
+import { getRoomThumbnail } from "../../utils/ImageUtils";
+import { createBooking } from "../../services/BookingService";
 
 const ConfirmBooking = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
+
   const userId = localStorage.getItem("userId");
-  const userRoles = JSON.parse(localStorage.getItem("roles")) || [];
-
-  // Check login and role
-  useEffect(() => {
-    if (!userId || !userRoles.includes("USER")) {
-      alert("You must be logged in as a user to book a room.");
-      navigate("/login");
-    }
-  }, [userId, userRoles, navigate]);
-
   const [room, setRoom] = useState(null);
   const [guestInfo, setGuestInfo] = useState({
     firstName: "",

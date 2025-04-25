@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { checkAuth } from "../services/roomService";
+import { checkAuth } from "../../services/ProfileService";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);

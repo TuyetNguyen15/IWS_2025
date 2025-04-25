@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchRoomById, updateRoom, checkRoomNumberExists } from "../../services/roomService";
+import { fetchRoomById, updateRoom, checkRoomNumberExists } from "../../services/RoomService";
 import Header from "../../components/header";
-import { getAllRoomImages } from "../../utils/imageUtils";
+import { getAllRoomImages } from "../../utils/ImageUtils";
 
 function UpdateRoom() {
     const { id } = useParams();

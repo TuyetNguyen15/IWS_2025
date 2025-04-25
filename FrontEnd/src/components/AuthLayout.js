@@ -1,7 +1,7 @@
 // src/components/AuthLayout.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './authStyles.css';
+import './AuthStyles.css';
 
 const AuthLayout = ({ title, children, footerText, footerLink, footerLinkText }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { fetchRooms } from "../services/roomService";
+import { fetchRooms } from "../services/RoomService";
 import Header from "../components/header";
-import { getRoomThumbnail } from "../utils/imageUtils";
+import { getRoomThumbnail } from "../utils/ImageUtils";
 import '../components/styles.css'; 
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";

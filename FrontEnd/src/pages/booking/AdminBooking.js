@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllBookings, updateBookingStatus } from "../services/bookingService";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import '../components/styles.css';
+import { getAllBookings, updateBookingStatus } from "../../services/BookingService";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import '../../components/styles.css';
 import { Button, Overlay, Popover } from 'react-bootstrap';
 
 const AdminBooking = () => {

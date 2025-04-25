@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkAuth, updateProfile } from "../services/roomService";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import { checkAuth, updateProfile } from "../../services/ProfileService";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
 import { useDropzone } from "react-dropzone";
 import imageCompression from "browser-image-compression";
 import DatePicker from "react-datepicker";

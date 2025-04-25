@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import { checkAuth, updatePrivacySettings } from "../services/roomService";
-import '../components/styles.css'; 
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import { checkAuth, updatePrivacySettings } from "../../services/ProfileService";
+import '../../components/styles.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const PrivacySettings = () => {

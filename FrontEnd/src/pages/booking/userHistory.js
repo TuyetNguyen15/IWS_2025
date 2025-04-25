@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import '../../components/styles.css';
-import { getCustomerBookings } from "../../services/bookingService";
-import { fetchRoomById } from "../../services/roomService";
-import { getRoomThumbnail } from "../../utils/imageUtils";
+import { getCustomerBookings } from "../../services/BookingService";
+import { fetchRoomById } from "../../services/RoomService";
+import { getRoomThumbnail } from "../../utils/ImageUtils";
 import { Link } from "react-router-dom";
 
 const UserHistory = () => {

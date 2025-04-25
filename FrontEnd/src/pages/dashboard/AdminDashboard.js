@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { checkAuth } from "../../services/ProfileService";
 import { 
   fetchDashboardStats, 
   fetchMonthlyRevenue, 
   fetchMonthlyBookings, 
-  fetchTopRooms, 
-  checkAuth
-} from "../services/roomService";
-import Header from "../components/header";
-import Footer from "../components/footer";
+  fetchTopRooms
+} from "../../services/AdminService";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
   LineChart, Line, CartesianGrid

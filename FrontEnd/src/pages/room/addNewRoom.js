@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { checkRoomNumberExists, createRoom } from "../../services/roomService"; // Import API service
+import { checkRoomNumberExists, createRoom } from "../../services/RoomService"; // Import API service
 import Header from "../../components/header";
 
 function AddRoom() {
