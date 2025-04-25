@@ -94,7 +94,7 @@ const Header = () => {
                       <NavLink to="/myBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>My Booking</NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/userHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
+                      <NavLink to="/userHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Booking Diary</NavLink>
                     </li>
                   </>
                 )}

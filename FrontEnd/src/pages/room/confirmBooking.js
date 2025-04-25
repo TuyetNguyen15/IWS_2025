@@ -10,6 +10,16 @@ const ConfirmBooking = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
+  const userRoles = JSON.parse(localStorage.getItem("roles")) || [];
+
+  // Check login and role
+  useEffect(() => {
+    if (!userId || !userRoles.includes("USER")) {
+      alert("You must be logged in as a user to book a room.");
+      navigate("/login");
+    }
+  }, [userId, userRoles, navigate]);
+
   const [room, setRoom] = useState(null);
   const [guestInfo, setGuestInfo] = useState({
     firstName: "",
@@ -41,7 +51,7 @@ const ConfirmBooking = () => {
     const { name, value } = e.target;
     if (name === "phone") {
       const phone = value.replace(/\D/g, ""); 
-      if (phone.length == 10) {
+      if (phone.length === 10) {
         setGuestInfo({ ...guestInfo, phone });
       }
     } else {
@@ -50,11 +60,6 @@ const ConfirmBooking = () => {
   };
 
   const handleCompleteBooking = async () => {
-    if (!userId) {
-      alert("Login first");
-      navigate("/login");
-      return;
-    }
     if (!checkInDate || !checkOutDate || nights <= 0) {
       alert("Please select valid Check-in and Check-out dates.");
       return;
@@ -67,13 +72,13 @@ const ConfirmBooking = () => {
         checkInDate,
         checkOutDate,
         phone: guestInfo.phone, 
-  specialRequests: guestInfo.specialRequests || "",
+        specialRequests: guestInfo.specialRequests || "",
         roomId: room.id
       });
       navigate("/myBooking");
     } catch (err) {
       console.error("Booking failed:", err);
-      alert("Booking failed. No rooms available today ");
+      alert("Booking failed. No rooms available today");
     }
   };
 

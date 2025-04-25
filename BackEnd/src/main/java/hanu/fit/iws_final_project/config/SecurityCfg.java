@@ -36,6 +36,7 @@ public class SecurityCfg {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/reviews").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/member/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/customer/**", "/api/bookings").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .userDetailsService(jpaUserDetailsService)
