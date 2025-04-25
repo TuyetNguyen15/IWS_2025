@@ -21,9 +21,6 @@ const RoomDetail = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  const storedRoles = JSON.parse(localStorage.getItem("roles") || "[]");
-  const isUser = storedRoles.some(role => role.toUpperCase() === "ROLE_USER");
-
   const images = room ? getAllRoomImages(room) : [];
 
   useEffect(() => {
@@ -154,11 +151,9 @@ const RoomDetail = () => {
                 ))}
               </div>
 
-              {isUser && (
-                <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
-                  Book Now
-                </Link>
-              )}
+              <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
+                Book Now
+              </Link>
             </div>
           </div>
 
@@ -174,6 +169,7 @@ const RoomDetail = () => {
               ))
             ) : <p>No reviews yet.</p>}
 
+<<<<<<< HEAD
             {isUser && (
               <div className="card mt-4 review-form">
                 <div className="card-body">
@@ -203,9 +199,30 @@ const RoomDetail = () => {
                   <button className="btn" disabled={submitting} onClick={handleSubmitReview}>
                     {submitting ? "Submitting..." : "Submit Review"}
                   </button>
+=======
+            <div className="card mt-4 review-form">
+              <div className="card-body">
+                <h5 className="card-title">Leave a Review</h5>
+                {error && <div className="alert alert-danger">{error}</div>}
+                <div className="mb-3">
+                  <label className="form-label">Rating</label>
+                  <select
+                    className="form-select"
+                    value={newReview.rating}
+                    onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
+                  >
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <option key={n} value={n}>{"★".repeat(n)}</option>
+                    ))}
+                  </select>
+>>>>>>> 64c944bcdd9b209401ac0aeb3426ae3f819f2e2c
                 </div>
               </div>
+<<<<<<< HEAD
             )}
+=======
+            </div>
+>>>>>>> 64c944bcdd9b209401ac0aeb3426ae3f819f2e2c
           </div>
         </div>
       ) : <h3>Loading...</h3>}

@@ -14,9 +14,6 @@ const BrowseRoom = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
 
-  const storedRoles = JSON.parse(localStorage.getItem("roles") || "[]");
-  const isUser = storedRoles.some(role => role.toUpperCase() === "ROLE_USER");
-
   const roomsPerPage = 2;
 
   useEffect(() => {
@@ -90,11 +87,21 @@ const BrowseRoom = () => {
                     </div>
                     <div className="price">${room.roomPrice}</div>
                     <div className="text-center mt-2">
+<<<<<<< HEAD
                       {isUser && (
                         <Link to={`/confirmBooking/${room.id}`} className="btn w-100">
                           Book Now
                         </Link>
                       )}
+=======
+                      <Link
+                        to={`/confirmBooking/${room.id}`}
+                        className="btn w-100"
+                        title="Proceed to book this room"
+                      >
+                        Book Now
+                      </Link>
+>>>>>>> 64c944bcdd9b209401ac0aeb3426ae3f819f2e2c
                     </div>
                   </div>
                 </div>

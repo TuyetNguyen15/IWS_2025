@@ -160,7 +160,6 @@ const Header = () => {
                     <>
                       <li><NavLink to="/admin/dashboard" className="dropdown-item"><i className="bi bi-speedometer2 me-2"></i>Dashboard</NavLink></li>
                       <li><NavLink to="/member/home" className="dropdown-item"><i className="bi bi-person-fill me-2"></i>Profile</NavLink></li>
-                      <li><NavLink to="/member/privacy" className="dropdown-item"><i className="bi bi-shield-lock me-2"></i>Privacy</NavLink></li>
                     </>
                   )}
                   <li><hr className="dropdown-divider" /></li>

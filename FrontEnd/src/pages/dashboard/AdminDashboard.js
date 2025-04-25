@@ -65,9 +65,6 @@ const AdminDashboard = () => {
         </div>
           <nav className="nav flex-column">
             <a className="nav-link text-white" href="/member/edit-profile"><i className="bi bi-pencil-square me-2"></i>Edit Profile</a>
-            <a className="nav-link text-white" href="/member/privacy"><i className="bi bi-shield-lock-fill me-2"></i>Privacy</a>
-            <a className="nav-link text-white" href="/admin/promotions"><i className="bi bi-megaphone-fill me-2"></i>Promotions</a>
-            <a className="nav-link text-white" href="/admin/reports"><i className="bi bi-file-earmark-bar-graph me-2"></i>Sale Reports</a>
           </nav>
         </aside>
 
