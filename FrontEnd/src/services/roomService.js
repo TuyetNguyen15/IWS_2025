@@ -43,6 +43,15 @@ export const login = async (credentials) => {
 export const logout = () => api.post("/logout");
 export const register = (userData) => api.post("/auth/register", userData);
 
+// Forgot Password APIs
+export const requestPasswordReset = (email) => {
+  return api.post(`/auth/forgot-password?email=${encodeURIComponent(email)}`);
+};
+
+export const resetPassword = (token, newPassword) => {
+  return api.post(`/auth/reset-password?token=${encodeURIComponent(token)}&newPassword=${encodeURIComponent(newPassword)}`);
+};
+
 
 //Profile API
 export const checkAuth = () => api.get("/member/home");

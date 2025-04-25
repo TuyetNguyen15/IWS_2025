@@ -32,6 +32,9 @@ public class User {
     @Column
     private LocalDate dateOfBirth;
 
+    @Column
+    private String resetToken;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -57,6 +60,7 @@ public class User {
     public String getAvatar() { return avatar; }
     public String getGender() { return gender; }
     public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public String getResetToken() { return resetToken; }
     public Collection<String> getRoles() { return roles; }
 
     // Setters
@@ -68,5 +72,6 @@ public class User {
     public void setAvatar(String avatar) { this.avatar = avatar; }
     public void setGender(String gender) { this.gender = gender; }
     public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+    public void setResetToken(String resetToken) { this.resetToken = resetToken; }
     public void setRoles(Collection<String> roles) { this.roles = roles; }
 }

@@ -8,6 +8,8 @@ import RoomDetail from "./pages/room/roomDetail";
 import AddRoom from "./pages/room/addNewRoom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import PrivacySettings from './pages/PrivacySettings';
@@ -37,6 +39,8 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/member/home" element={<Profile />} />
         <Route path="/member/edit-profile" element={<EditProfile />} />
         <Route path="/member/privacy" element={<PrivacySettings />} />

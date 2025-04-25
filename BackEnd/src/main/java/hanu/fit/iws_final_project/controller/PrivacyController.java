@@ -94,4 +94,3 @@ public class PrivacyController {
         return ResponseEntity.ok(Map.of("message", "Privacy updated successfully."));
     }
 }
-

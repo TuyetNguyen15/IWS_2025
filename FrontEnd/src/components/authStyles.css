@@ -58,6 +58,22 @@
   text-decoration: underline;
 }
 
+.forgot-password-link {
+  font-size: 0.95rem;
+  color: #606060;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+/* Button style */
+.auth-form button {
+  display: block;
+  margin: 0 auto;
+}
+
 /* Invalid feedback */
 .invalid-feedback {
   display: block;
@@ -66,9 +82,9 @@
   color: #dc3545;
 }
 
-  /* Alert styles */
+/* Alert message styles */
 .success-message {
-  color: #28a745; /* Màu xanh */
+  color: #28a745;
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1rem;

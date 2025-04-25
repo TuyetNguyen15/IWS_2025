@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -67,4 +69,38 @@ public class AuthController {
 
         return ResponseEntity.ok().body("Login status checked");
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        var userOpt = userRepository.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Your email does not exist!");
+        }
+
+        User user = userOpt.get();
+        String resetToken = UUID.randomUUID().toString();
+        user.setResetToken(resetToken);
+        userRepository.save(user);
+
+        System.out.println("Reset link: http://localhost:3000/reset-password?token=" + resetToken);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Valid email! Redirect to Reset Password Page ...",
+                "token", resetToken
+        ));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        return userRepository.findByResetToken(token)
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    user.setResetToken(null);
+                    userRepository.save(user);
+                    return ResponseEntity.ok("Password reset successfully!");
+                })
+                .orElse(ResponseEntity.badRequest().body("Invalid token"));
+    }
+
 }

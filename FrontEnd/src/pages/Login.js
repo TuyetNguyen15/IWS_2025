@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { login, checkAuth } from "../services/roomService";
 import AuthLayout from "../components/AuthLayout";
 
@@ -10,6 +10,7 @@ const Login = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const registerSuccess = queryParams.has("registerSuccess");
+  const resetSuccess = queryParams.has("resetSuccess");
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -48,6 +49,7 @@ const Login = () => {
       footerLinkText="Register"
     >
       {registerSuccess && <p className="success-message">Registration successful! Please log in.</p>}
+      {resetSuccess && <p className="success-message">Password reset successfully! Please log in.</p>}
       {error && <p className="error-message">{error}</p>}
 
       <form onSubmit={handleSubmit} className="auth-form">
@@ -77,11 +79,15 @@ const Login = () => {
           />
         </div>
 
-        <div className="d-flex justify-content-center" style={{ gap: "46px" }}>
-          <button className="btn-back" onClick={() => navigate("/")}>Back</button>
-          <button type="submit" className="btn-signin-signup">Sign In</button>
+        {/* Forgot password link centered */}
+        <div className="mb-3 text-center">
+          <Link to="/forgot-password" className="forgot-password-link">Forgot your password?</Link>
         </div>
 
+        <div className="d-flex justify-content-center" style={{ gap: "46px" }}>
+          <button className="btn-back" type="button" onClick={() => navigate("/")}>Back</button>
+          <button type="submit" className="btn-signin-signup">Sign In</button>
+        </div>
       </form>
     </AuthLayout>
   );
