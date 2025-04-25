@@ -75,7 +75,7 @@ const AdminDashboard = () => {
         <section className="p-4 flex-grow-1">
           {/* Stats Row */}
           <div className="row mb-4">
-          {[
+          {[ 
             { label: "Total Rooms", value: stats.totalRooms, className: "pastel-purple" },
             { label: "Today's Bookings", value: stats.bookingsToday, className: "pastel-yellow" },
             { label: "Total Users", value: stats.totalUsers, className: "pastel-orange" },
@@ -91,9 +91,9 @@ const AdminDashboard = () => {
           </div>
 
           {/* Revenue + Top Rooms Row */}
-          <div className="row mb-4">
-            <div className="col-md-8">
-              <div className="bg-white p-3 shadow-sm rounded">
+          <div className="row mb-4 align-items-stretch">
+            <div className="col-md-8 d-flex">
+              <div className="bg-white p-4 shadow rounded flex-grow-1 w-100">
                 <h5>📈 Monthly Revenue</h5>
                 <ResponsiveContainer width="100%" height={250}>
                   <BarChart data={monthlyRevenue}>
@@ -109,17 +109,27 @@ const AdminDashboard = () => {
                 </ResponsiveContainer>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="bg-white p-3 shadow-sm rounded h-100">
+            <div className="col-md-4 d-flex">
+              <div className="bg-white p-4 shadow rounded flex-grow-1 w-100">
                 <h5>🔥 Top 5 Hot Rooms</h5>
-                <ol className="list-group list-group-numbered">
-                  {topRooms.map((room, idx) => (
-                    <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
-                      {room.roomNumber}
-                      <span className="badge bg-primary rounded-pill">{room.bookings}</span>
-                    </li>
-                  ))}
-                </ol>
+                <table className="table table-sm table-bordered table-hover text-center mb-0">
+                  <thead className="table-light">
+                    <tr>
+                      <th style={{ width: "15%" }}>No</th>
+                      <th>Room Number</th>
+                      <th>Bookings</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {topRooms.map((room, idx) => (
+                      <tr key={idx}>
+                        <td>{idx + 1}</td>
+                        <td>{room.roomNumber}</td>
+                        <td><span className="badge bg-primary">{room.bookings}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -127,7 +137,7 @@ const AdminDashboard = () => {
           {/* Monthly Bookings Line Chart */}
           <div className="row">
             <div className="col-12">
-              <div className="bg-white p-3 shadow-sm rounded">
+              <div className="bg-white p-4 shadow rounded">
                 <h5>📊 Monthly Bookings</h5>
                 <ResponsiveContainer width="100%" height={250}>
                   <LineChart data={monthlyBookings}>
