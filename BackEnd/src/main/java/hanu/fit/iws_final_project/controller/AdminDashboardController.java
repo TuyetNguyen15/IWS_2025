@@ -5,6 +5,7 @@ import hanu.fit.iws_final_project.model.BookingStatus;
 import hanu.fit.iws_final_project.model.Room;
 import hanu.fit.iws_final_project.repository.BookingRepository;
 import hanu.fit.iws_final_project.repository.RoomRepository;
+import hanu.fit.iws_final_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class AdminDashboardController {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/stats")
     public ResponseEntity<?> getDashboardStats() {
         long totalRooms = roomRepository.count();
@@ -37,12 +41,6 @@ public class AdminDashboardController {
                 .filter(b -> b.getCreatedAt().toLocalDate().equals(today))
                 .count();
 
-        long cancellationsToday = allBookings.stream()
-                .filter(b -> b.getStatus() == BookingStatus.CANCELLED &&
-                        b.getUpdatedAt() != null &&
-                        b.getUpdatedAt().toLocalDate().equals(today))
-                .count();
-
         long bookedRooms = allBookings.stream()
                 .filter(b -> b.getStatus() == BookingStatus.ACCEPTED || b.getStatus() == BookingStatus.CHECKED_OUT)
                 .map(Booking::getRoomId)
@@ -51,11 +49,13 @@ public class AdminDashboardController {
 
         double occupancyRate = totalRooms > 0 ? (double) bookedRooms / totalRooms * 100 : 0;
 
+        long totalUsers = userRepository.count();
+
         Map<String, Object> result = new HashMap<>();
         result.put("totalRooms", totalRooms);
         result.put("bookingsToday", bookingsToday);
-        result.put("cancellationsToday", cancellationsToday);
         result.put("occupancyRate", occupancyRate);
+        result.put("totalUsers", totalUsers);
 
         return ResponseEntity.ok(result);
     }

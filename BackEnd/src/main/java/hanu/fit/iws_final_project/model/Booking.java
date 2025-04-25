@@ -1,4 +1,3 @@
-// --- Booking.java ---
 package hanu.fit.iws_final_project.model;
 
 import jakarta.persistence.*;
@@ -43,9 +42,6 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.PENDING;
-
-    @Column
-    private LocalDateTime updatedAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }

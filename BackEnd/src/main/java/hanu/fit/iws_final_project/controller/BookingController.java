@@ -1,4 +1,3 @@
-// --- BookingController.java ---
 package hanu.fit.iws_final_project.controller;
 
 import hanu.fit.iws_final_project.model.Booking;
@@ -77,7 +76,6 @@ public class BookingController {
         }
 
         booking.setStatus(BookingStatus.CANCELLED);
-        booking.setUpdatedAt(LocalDateTime.now());
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
     }
@@ -125,7 +123,6 @@ public class BookingController {
         try {
             BookingStatus newStatus = BookingStatus.valueOf(status.toUpperCase());
             booking.setStatus(newStatus);
-            booking.setUpdatedAt(LocalDateTime.now());
             bookingRepository.save(booking);
             return ResponseEntity.ok(booking);
         } catch (IllegalArgumentException e) {

@@ -84,7 +84,7 @@ const Header = () => {
                       <NavLink to="/adminBooking" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Manage Bookings</NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/adminHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>History</NavLink>
+                      <NavLink to="/adminHistory" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Booking History</NavLink>
                     </li>
                   </>
                 )}
