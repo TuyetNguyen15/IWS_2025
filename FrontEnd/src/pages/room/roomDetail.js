@@ -22,9 +22,6 @@ const RoomDetail = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  const storedRoles = JSON.parse(localStorage.getItem("roles") || "[]");
-  const isUser = storedRoles.some(role => role.toUpperCase() === "ROLE_USER");
-
   const images = room ? getAllRoomImages(room) : [];
 
   useEffect(() => {
@@ -192,11 +189,9 @@ const RoomDetail = () => {
                 ))}
               </div>
 
-              {isUser && (
-                <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
-                  Book Now
-                </Link>
-              )}
+              <Link to={`/confirmBooking/${room.id}`} className="btn btn-primary btn-lg w-100">
+                Book Now
+              </Link>
             </div>
           </div>
 
@@ -211,8 +206,7 @@ const RoomDetail = () => {
                 </div>
               ))
             ) : <p>No reviews yet.</p>}
-            
-            {isUser && (
+
             <div className="card mt-4 review-form">
               <div className="card-body">
                 <h5 className="card-title">Leave a Review</h5>
@@ -243,7 +237,6 @@ const RoomDetail = () => {
                 </button>
               </div>
             </div>
-            )}
           </div>
         </div>
       ) : <h3>Loading...</h3>}

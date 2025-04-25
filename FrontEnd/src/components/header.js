@@ -32,7 +32,6 @@ const Header = () => {
     };
     verifyAuth();
 
-    // Kích hoạt dropdown và navbar toggle sau khi DOM đã render
     setTimeout(() => {
       document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach((el) => {
         new Dropdown(el);
@@ -162,7 +161,6 @@ const Header = () => {
                     <>
                       <li><NavLink to="/admin/dashboard" className="dropdown-item"><i className="bi bi-speedometer2 me-2"></i>Dashboard</NavLink></li>
                       <li><NavLink to="/member/home" className="dropdown-item"><i className="bi bi-person-fill me-2"></i>Profile</NavLink></li>
-                      <li><NavLink to="/member/privacy" className="dropdown-item"><i className="bi bi-shield-lock me-2"></i>Privacy</NavLink></li>
                     </>
                   )}
                   <li><hr className="dropdown-divider" /></li>
