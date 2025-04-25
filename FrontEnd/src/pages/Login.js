@@ -77,9 +77,11 @@ const Login = () => {
           />
         </div>
 
-        <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">Sign In</button>
+        <div className="d-flex justify-content-center" style={{ gap: "46px" }}>
+          <button className="btn-back" onClick={() => navigate("/")}>Back</button>
+          <button type="submit" className="btn-signin-signup">Sign In</button>
         </div>
+
       </form>
     </AuthLayout>
   );

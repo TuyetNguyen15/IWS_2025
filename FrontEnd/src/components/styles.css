@@ -137,13 +137,35 @@ body {
   margin: 8px 0;
 }
 
-  /* .hero-section {
-    width: 100%;
-    height: 250px;
-    background-image: url("../../public/assets/images/rooms/03.jpg");
-    background-size: cover;
-    background-position: 30% 80%;
-    background-repeat: no-repeat;
+/* login & register buttons */
+.btn-back {
+  padding: 10px 24px;
+  background-color: #dee2e6;
+  color: #1f2d5c;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 160px;
+  transition: background-color 0.2s ease;
+}
+.btn-back:hover {
+  background-color: #b9bbbd;
+}
+
+.btn-signin-signup {
+  padding: 10px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  min-width: 160px;
+  transition: background-color 0.2s ease;
+}
+.btn-signin-signup:hover {
+  background-color: #1f2d5c;
 }
 
 /* home */
@@ -345,6 +367,92 @@ body {
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
+}
+
+/* admin dashboard */
+.admin-sidebar {
+  background-color: #1f2d5c;
+  min-height: 100vh;
+  width: 260px;
+  color: white;
+  padding: 30px 0;
+  position: relative;
+  border-right: none;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}
+
+.admin-sidebar .text-center img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.admin-sidebar .text-center h6 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.admin-sidebar .nav {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.admin-sidebar .nav-link {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e0e0e0;
+  padding: 12px 20px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-radius: 0;
+  margin-bottom: 0;
+  width: 100%;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.admin-sidebar .nav-link i {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #ffd700;
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid #ffd700;
+}
+
+.pastel-purple {
+  background-color: #d8c9f3;
+  color: #1f2d5c;
+}
+
+.pastel-yellow {
+  background-color: #fff6cc;
+  color: #1f2d5c;
+}
+
+.pastel-red {
+  background-color: #f9c5c5;
+  color: #1f2d5c;
+}
+
+.pastel-green {
+  background-color: #d0f0c0;
+  color: #1f2d5c;
+}
+
+.chart-container {
+  background-color: #f8f9fc;
+  border: 2px solid #dee2e6;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
 }
 
 /* profilePage */

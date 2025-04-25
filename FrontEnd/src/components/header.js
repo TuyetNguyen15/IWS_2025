@@ -105,11 +105,33 @@ const Header = () => {
           <ul className="navbar-nav">
             {!isAuthenticated ? (
               <>
-                <li className="nav-item">
-                  <NavLink to="/login" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Login</NavLink>
+                <li className="nav-item me-2">
+                  <NavLink
+                    to="/login"
+                    className="btn d-flex align-items-center"
+                    style={{
+                      border: '2px solid #ffd700',
+                      color: '#ffd700',
+                      backgroundColor: 'transparent',
+                      fontWeight: '500',
+                    }}
+                  >
+                    <i className="bi bi-person-fill me-2"></i>Log In
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/register" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Register</NavLink>
+                  <NavLink
+                    to="/register"
+                    className="btn"
+                    style={{
+                      backgroundColor: '#ffd700',
+                      color: '#1f2d5c',
+                      fontWeight: '600',
+                      border: '2px solid #ffd700',
+                    }}
+                  >
+                    Register
+                  </NavLink>
                 </li>
               </>
             ) : (

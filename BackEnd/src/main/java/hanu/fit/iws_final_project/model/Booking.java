@@ -22,12 +22,16 @@ public class Booking {
 
     @Column(nullable = false)
     private String customerName;
-@Column(length = 10, nullable = false)
-private String phone;
-@Column()
-private String specialRequests;
+
+    @Column(length = 10, nullable = false)
+    private String phone;
+
+    @Column()
+    private String specialRequests;
+
     @Column(nullable = false)
     private Long userId;
+
     @Column(nullable = false)
     private LocalDate checkInDate;
 
@@ -39,6 +43,9 @@ private String specialRequests;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.PENDING;
+
+    @Column
+    private LocalDateTime updatedAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }

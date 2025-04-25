@@ -3,16 +3,15 @@ package hanu.fit.iws_final_project.controller;
 
 import hanu.fit.iws_final_project.model.Booking;
 import hanu.fit.iws_final_project.model.BookingStatus;
+import hanu.fit.iws_final_project.model.User;
 import hanu.fit.iws_final_project.repository.BookingRepository;
 import hanu.fit.iws_final_project.repository.UserRepository;
-import hanu.fit.iws_final_project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +77,7 @@ public class BookingController {
         }
 
         booking.setStatus(BookingStatus.CANCELLED);
+        booking.setUpdatedAt(LocalDateTime.now());
         bookingRepository.save(booking);
         return ResponseEntity.ok(booking);
     }
@@ -125,6 +125,7 @@ public class BookingController {
         try {
             BookingStatus newStatus = BookingStatus.valueOf(status.toUpperCase());
             booking.setStatus(newStatus);
+            booking.setUpdatedAt(LocalDateTime.now());
             bookingRepository.save(booking);
             return ResponseEntity.ok(booking);
         } catch (IllegalArgumentException e) {

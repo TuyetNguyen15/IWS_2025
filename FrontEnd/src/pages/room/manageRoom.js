@@ -87,6 +87,9 @@ const ManageRoom = () => {
                 value={searchKeyword}
                 onChange={handleSearchChange}
               />
+              <button className="btn btn-outline-secondary" type="submit">
+                <i className="bi bi-search"></i>
+              </button>
             </div>
           </form>
         </div>

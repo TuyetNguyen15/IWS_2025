@@ -40,7 +40,7 @@ const Register = () => {
 
     try {
       await register(userData);
-      navigate("/login?registerSuccess=true"); // Chuyển hướng ngay sau khi đăng ký thành công
+      navigate("/login?registerSuccess=true");
     } catch (err) {
       if (err.response && err.response.data) {
         setErrors({ server: err.response.data });
@@ -52,7 +52,7 @@ const Register = () => {
 
   return (
     <AuthLayout 
-      title="Sign Up"
+      title="Register"
       footerText="Already have an account?"
       footerLink="/login"
       footerLinkText="Login"
@@ -127,8 +127,9 @@ const Register = () => {
           )}
         </div>
 
-        <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">Create an account</button>
+        <div className="d-flex justify-content-center" style={{ gap: "46px" }}>
+          <button className="btn-back" onClick={() => navigate("/")}>Back</button>
+          <button type="submit" className="btn-signin-signup">Sign up</button>
         </div>
       </form>
     </AuthLayout>
